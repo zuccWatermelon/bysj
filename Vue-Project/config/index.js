@@ -31,52 +31,7 @@ module.exports = {
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {
-      // '/api': {
-      //   target: 'http://134.96.231.85:8090/',//设置你调用的接口域名和端口号 别忘了加http
-      //   changeOrigin: true,
-      //   pathRewrite: {
-      //     '^/api': '/'//这里理解成用‘/api’代替target里面的地址，后面组件中我们掉接口时直接用api代替 比如我要调用'http://40.00.100.100:3002/user/add'，直接写‘/api/user/add’即可
-      //   }
-      // },
-      '/netCloudUser': { //用户登录url
-        target: 'http://134.96.231.86:8090/netCloudUser/',//设置你调用的接口域名和端口号 别忘了加http
-        pathRewrite: {
-          '^/netCloudUser': '/'
-        }
-      },
-      '/netCloudOrder': { //订单及购物车
-        target: 'http://134.96.231.87:8094/netCloudOrder/',//设置你调用的接口域名和端口号 别忘了加http
-        // target:'http://134.96.231.87:8094',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/netCloudOrder': '/'
-        }
-      },
-      '/netCloudCustomer': { //客户
-        target: 'http://134.96.231.85:8094/netCloudCustomer/',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/netCloudCustomer': '/'
-        }
-      },
-      '/netCloudOffer': { //商品以及产品
-        target: 'http://134.96.231.85:8094/netCloudOffer/',//设置你调用的接口域名和端口号 别忘了加http
-        changeOrigin: true,
-        pathRewrite: {
-          '^/netCloudOffer': '/'
-        }
-      },
-      '/netCloudBusiness': { //镜像配置
-        target: 'http://134.96.231.88:8090/netcloud-businesscenter-web/',//设置你调用的接口域名和端口号 别忘了加http
-        changeOrigin: true,
-        pathRewrite: {
-        '^/netCloudBusiness': '/'
-      }
 
-   },
-
-},
     // CSS Sourcemaps off by default because relative paths are "buggy" CSS默认关闭源代码，因为相对路径是“buggy”
     // with this option, according to the CSS-Loader README   使用此选项，根据CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)

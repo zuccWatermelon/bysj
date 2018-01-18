@@ -1,23 +1,45 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+  <div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'app'
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  *{margin: 0; padding: 0;}
+  body{
+    font-family: "PingFang","微软雅黑";
+    background: #fff;
+    padding-right: 0px !important;
+    overflow: inherit !important;
+  }
+  li{list-style: none;}
+  img{vertical-align: top; border: 0 none;}
+  a{color: #000; text-decoration: none;}
+  a:hover{color: #000;text-decoration: none;}
+  a:visited{
+    color: #000;
+    text-decoration: none !important;
+  }
+  a:focus{
+    text-decoration: none !important;
+    outline:none !important;
+  }
+  .clearfix {
+    *zoom: 1;
+  }
+  .clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    font-size: 0;
+  }
+
 </style>
