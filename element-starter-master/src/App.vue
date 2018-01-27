@@ -62,8 +62,8 @@
     <h3><img src='./assets/cjt-icon.png'></h3>畅捷通</div></el-col>
   <el-col :span="6"><div class="grid-content ">
     <h3><img src='./assets/cloudBroad_icon.png'></h3>云专线</div></el-col>
-  <el-col :span="6"><div class="grid-content ">
-    <h3><img src='./assets/cloudNet_icon.png'></h3>云主机</div></el-col>
+  <el-col :span="6"><a href="http://www.baidu.com"><div class="grid-content ">
+    <h3><img src='./assets/cloudNet_icon.png'></h3>云主机</div></a></el-col>
   <el-col :span="6"><div class="grid-content ">
     <h3><img src='./assets/cloudProduct-icon.png'></h3>云网通</div></el-col>
   <el-col :span="6"><div class="grid-content ">
