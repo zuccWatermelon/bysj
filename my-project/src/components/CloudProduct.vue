@@ -1,5 +1,5 @@
 <template>
-  <div id="first">
+  <div id="CloudProduct">
     <el-menu
       :default-active="activeIndex"
       class="el-menu-demo"
@@ -15,11 +15,11 @@
           <template slot="title"> 管理平台 </template>
               <el-menu-item index="3-1"><router-link to="/">个人管理平台</router-link></el-menu-item>
           </el-submenu>
-          <el-menu-item index="4"> <router-link to="Log_in">帮助中心</router-link> </el-menu-item>
+          <el-menu-item index="4"> <router-link to="/">帮助中心</router-link> </el-menu-item>
         <div class="regist-login">
-          <el-menu-item index="5"> <el-button type="text" @click="regist = true" >注册 </el-button> </el-menu-item>
-          <el-menu-item index="6"><el-button type="text" @click="login = true" > 登录 </el-button> </el-menu-item>
-          <el-menu-item index="7"><el-button type="text" @click="research" > 查询客户 </el-button> </el-menu-item>
+<!--           <el-menu-item index="5"> <el-button type="text" @click="regist = true" >注册 </el-button> </el-menu-item> -->
+          <el-menu-item index="6"><el-button type="text" @click="login = true" > 您好！ </el-button> </el-menu-item>
+          <el-menu-item index="7"><el-button type="text" @click="research" > XXX </el-button> </el-menu-item>
         <el-dialog title="请输入登录账号" :visible.sync="login" width="30%">
           <el-form :model="form">
             <el-form-item label="账号" :label-width="formLabelWidth">
@@ -37,38 +37,13 @@
         </div>
       </div>
     </el-menu>
-    <el-carousel indicator-position="outside">
+        <el-carousel indicator-position="outside">
     <el-carousel-item>
-      <h3><img src='../assets/logo.png'></h3>
-    </el-carousel-item>
-    <el-carousel-item>
-      <h3><img src='../assets/cjt-icon.png'></h3>
-    </el-carousel-item>
-    <el-carousel-item>
-      <h3><img src='../assets/cloudBroad_icon.png'></h3>
-    </el-carousel-item>
-    <el-carousel-item>
-      <h3><img src='../assets/cloudNet_icon.png'></h3>
-    </el-carousel-item>
-    <el-carousel-item>
-      <h3><img src='../assets/cloudProduct-icon.png'></h3>
-    </el-carousel-item>
-    <el-carousel-item>
-      <h3><img src='../assets/cloudSpecialLine-icon.png'></h3>
+      <h1 align="center">云产品</h1>
+      <h3>云产品是依托于发达的基础网络，通过"2+31+x"和数据中心互联网（DCI）等资源布局，实现云网融合统一调度，已形成平台+应用的云计算和大数据产品体系，为用户提供云产品服务。</h3>
+
     </el-carousel-item>
   </el-carousel>
-  <el-row type="flex" class="row-bg" justify="space-around">
-  <el-col :span="6"><div class="grid-content">
-    <h3><img src='../assets/cjt-icon.png'></h3>畅捷通</div></el-col>
-  <el-col :span="6"><div class="grid-content ">
-    <h3><img src='../assets/cloudBroad_icon.png'></h3>云专线</div></el-col>
-  <el-col :span="6"><router-link  to="HelloWorld"><div class="grid-content ">
-    <h3><img src='../assets/cloudNet_icon.png'></h3>云主机</div></router-link></el-col>
-  <el-col :span="6"><div class="grid-content ">
-    <h3><img src='../assets/cloudProduct-icon.png'></h3>云网通</div></el-col>
-  <el-col :span="6"><div class="grid-content ">
-    <h3><img src='../assets/cloudSpecialLine-icon.png'></h3>云宽通</div></el-col>
-</el-row>
   </div>
 </template>
 
@@ -93,7 +68,6 @@ export default {
          this.$prompt('请输入客户姓名/证件号码/业务号码/服务号码', '查询客户', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          
         });
       }
     }
@@ -101,7 +75,7 @@ export default {
 </script>
 
 <style>
-#first {
+#CloudProduct {
   font-family: Helvetica, sans-serif;
   text-align: center;
 }
@@ -121,38 +95,12 @@ export default {
     margin: 0;
   }
   
-  .el-carousel__item:nth-child(2n) {
+  .el-carousel__item:nth-child(n) {
     background-color: #99a9bf;
 
   }
-  
+  /*
   .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
-  }
-  .el-row {
-    margin-bottom: 20px;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-  .el-col {
-    border-radius: 4px;
-  }
-  .bg-purple-dark {
-    background: #99a9bf;
-  }
-  .bg-purple {
-    background: #d3dce6;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
-  }
-  .row-bg {
-    padding: 10px 0;
-    background-color: #f9fafc;
-  }
+  }*/
 </style>

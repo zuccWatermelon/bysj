@@ -1,5 +1,5 @@
 <template>
-  <div class="hello":current="current">
+  <div id="hello">
     <h1>{{ msg }}</h1>
     <h2>Essential Links</h2>
     <ul>

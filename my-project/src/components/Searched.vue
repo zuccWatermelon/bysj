@@ -1,5 +1,5 @@
 <template>
-  <div id="first">
+  <div id="searched">
     <el-menu
       :default-active="activeIndex"
       class="el-menu-demo"
@@ -15,11 +15,11 @@
           <template slot="title"> 管理平台 </template>
               <el-menu-item index="3-1"><router-link to="/">个人管理平台</router-link></el-menu-item>
           </el-submenu>
-          <el-menu-item index="4"> <router-link to="Log_in">帮助中心</router-link> </el-menu-item>
+          <el-menu-item index="4"> <router-link to="/">帮助中心</router-link> </el-menu-item>
         <div class="regist-login">
-          <el-menu-item index="5"> <el-button type="text" @click="regist = true" >注册 </el-button> </el-menu-item>
-          <el-menu-item index="6"><el-button type="text" @click="login = true" > 登录 </el-button> </el-menu-item>
-          <el-menu-item index="7"><el-button type="text" @click="research" > 查询客户 </el-button> </el-menu-item>
+<!--           <el-menu-item index="5"> <el-button type="text" @click="regist = true" >注册 </el-button> </el-menu-item> -->
+          <el-menu-item index="6"><el-button type="text" @click="login = true" > 您好！ </el-button> </el-menu-item>
+          <el-menu-item index="7"><el-button type="text" @click="research" > XXX </el-button> </el-menu-item>
         <el-dialog title="请输入登录账号" :visible.sync="login" width="30%">
           <el-form :model="form">
             <el-form-item label="账号" :label-width="formLabelWidth">
@@ -62,7 +62,7 @@
     <h3><img src='../assets/cjt-icon.png'></h3>畅捷通</div></el-col>
   <el-col :span="6"><div class="grid-content ">
     <h3><img src='../assets/cloudBroad_icon.png'></h3>云专线</div></el-col>
-  <el-col :span="6"><router-link  to="HelloWorld"><div class="grid-content ">
+  <el-col :span="6"><router-link  to="CloudProduct"><div class="grid-content ">
     <h3><img src='../assets/cloudNet_icon.png'></h3>云主机</div></router-link></el-col>
   <el-col :span="6"><div class="grid-content ">
     <h3><img src='../assets/cloudProduct-icon.png'></h3>云网通</div></el-col>
@@ -93,7 +93,6 @@ export default {
          this.$prompt('请输入客户姓名/证件号码/业务号码/服务号码', '查询客户', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          
         });
       }
     }
@@ -101,7 +100,7 @@ export default {
 </script>
 
 <style>
-#first {
+#searched {
   font-family: Helvetica, sans-serif;
   text-align: center;
 }
