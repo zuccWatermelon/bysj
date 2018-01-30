@@ -5,6 +5,7 @@ import First from '@/components/First'
 import Log_in from '@/components/Log_in'
 import CloudProduct from '@/components/CloudProduct'
 import Searched from '@/components/Searched'
+import ShoppingCar from '@/components/ShoppingCar'
 Vue.use(Router)
 
 export default new Router({
@@ -33,6 +34,11 @@ export default new Router({
       path: '/Searched',
       name: '/Searched',
       component: Searched
+    },
+    {
+      path: '/ShoppingCar',
+      name: '/ShoppingCar',
+      component: ShoppingCar
     }
   ]
 })

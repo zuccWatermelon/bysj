@@ -1,5 +1,6 @@
 <template>
   <div id="CloudProduct">
+    <div class="top">
     <el-menu
       :default-active="activeIndex"
       class="el-menu-demo"
@@ -36,14 +37,25 @@
         </el-dialog>
         </div>
       </div>
-    </el-menu>
-        <el-carousel indicator-position="outside">
-    <el-carousel-item>
-      <h1 align="center">云产品</h1>
-      <h3>云产品是依托于发达的基础网络，通过"2+31+x"和数据中心互联网（DCI）等资源布局，实现云网融合统一调度，已形成平台+应用的云计算和大数据产品体系，为用户提供云产品服务。</h3>
-
-    </el-carousel-item>
-  </el-carousel>
+    </el-menu> 
+    <div class="box">
+    <p align="left" class="box-header">云产品</p>
+    <p align="left" class="box-nav">
+      依托发达的基础网络，通过“2+31+X”和数据中心互联网（DCI）等资源布局，实现云网融合和统一调度，已形成平台+应用的云计算和大数据产品体系，为用户提供云产品服务。
+      </p>
+    </div>
+    <div class="product_title">云产品</div>
+        <div class="product">
+            <span class="title">云产品</span>
+          <div class="content">云主机是云计算在基础设施应用上的重要组成部分，位于产业链金字塔底层，产品源自云计算平台</div>
+          <div class="passBuyBtn">
+            <img src="../assets/icon_jiarugouwuche.png"/>
+            <router-link class="color" to="/shoppingCar">
+            加入购物车
+          </router-link>
+          </div>
+    </div>
+    </div>
   </div>
 </template>
 
@@ -69,7 +81,116 @@ export default {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
         });
-      }
+      },
+            /**添加购物车**/
+
+      // addToShoppingCart(prodId, prodFuncType,statusCd){
+      //   var _this = this;
+      //   var user = window.sessionStorage.getItem('user');
+      //   var cust = window.sessionStorage.getItem('cust');
+      //   if(cust == null || cust == ""){
+      //     this.$alert('您未选择客户，请选择', '提示', {
+      //       confirmButtonText: '确定',
+      //       callback: action => {
+      //         return false;
+      //       }
+      //     });
+      //   };
+
+      //   var userType = JSON.parse(user).staffType;
+      //   var sysUserName = JSON.parse(user).sysUserName;
+      //   var loginUserId = JSON.parse(user).staffId;
+      //   var userId = JSON.parse(user).staffId;
+      //   var certId = JSON.parse(cust).CUST_ID;
+
+      //   if (loginUserId == "" || loginUserId == null) {
+      //     this.$alert('您未登录，请登录', '提示', {
+      //       confirmButtonText: '确定',
+      //       callback: action => {
+      //         return false;
+      //       }
+      //     });
+      //   };
+
+      //   if (certId == "" || certId == null || userType == null || userType == "") {
+      //     this.$alert('您未选择客户，请选择', '提示', {
+      //       confirmButtonText: '确定',
+      //       callback: action => {
+      //         return false;
+      //       }
+      //     });
+      //   }
+      //   if(prodId == '301'){
+      //     axios({
+      //       url: '/netCloudOrder/shoppingCartService/addShoppingCart',
+      //       method: 'post',
+      //       data: {
+      //         code:prodId,
+      //         itemCd:'1',     //1新装 2 试用
+      //         statusCd:statusCd,
+      //         actionCode:'添加',
+      //         loginUserId: loginUserId,
+      //         shoppingCart: {
+      //           userId: certId,
+      //           userType: userType
+      //         },
+      //         shoppingCartItem: {
+      //           applyObjId: prodId,
+      //           applyObjSpec: 1,
+      //         },
+      //         cartItemAttr: {
+      //           attrId: 0,
+      //           attrValue: 1,
+      //         },
+      //         offerId: prodId,
+      //       }
+      //     }).then(response => {
+      //       if (response.data.code == "0") {
+      //         this.$router.push({path: '/shoppingCartFrame'});
+      //       } else {
+      //         this.$alert(response.data.msg, '提示', {
+      //           confirmButtonText: '确定',
+      //           callback: action => {
+      //             return false;
+      //           }
+      //         });
+      //       }
+      //     }).catch(err => {
+      //     })
+      //   }else {
+      //     axios({
+      //       url: '/netCloudOrder/shoppingCartService/addToShoppingCart2',
+      //       method: 'post',
+      //       data: {
+      //         loginUserId: loginUserId,
+      //         shoppingCart: {
+      //           userId: certId,
+      //           userType: userType
+      //         },
+      //         shoppingCartItem: {
+      //           applyObjId: prodId,
+      //           applyObjSpec: 1,
+      //         },
+      //         cartItemAttr: {
+      //           attrId: 0,
+      //           attrValue: 1,
+      //         }
+      //       }
+      //     }).then(response => {
+      //       if (response.data.code == "0") {
+      //         this.$router.push({path: '/shoppingCartFrame'});
+      //       } else {
+      //         this.$alert('添加购物车出错!', '提示', {
+      //           confirmButtonText: '确定',
+      //           callback: action => {
+      //             return false;
+      //           }
+      //         });
+      //       }
+      //     }).catch(err => {
+      //     })
+      //   }
+      // },
     }
 }
 </script>
@@ -87,20 +208,117 @@ export default {
 .menu-item{
   margin-left: 100px; 
 }
- .el-carousel__item h3 {
-    color: #475669;
-    font-size: 18px;
-    opacity: 0.75;
-    line-height: 300px;
-    margin: 0;
+.box{
+    width: 1200px;
+    height: 225px;
+    margin: 0 auto;
+  }
+  .box-header{
+    font-size: 30px;
+    color: white;
+    margin-top: 45px;
+  }
+  .box-nav{
+    width: 800px;
+    margin-top: 16px;
+    font-size: 14px;
+    color: white;
+  }
+   .detail-button{
+    display: block;
+    width:140px;
+    height:36px;
+    margin-top: 16px;
+    border:1px solid #fff;
+    line-height: 36px;
+    text-align: center;
+    color:#fff;
+  }
+ .top{
+    height:340px;
+    width:100%;
+    background-color: #0182de;
+    background-image: url("../assets/pic_1.png");
+    background-repeat: no-repeat;
+    background-position:center;
+  }
+  .product_title{
+    font-size:24px;
+    color:white;
+    text-align:center;
+    background-color:#a371c5;
+    padding:10px;
+  }
+.product-box{
+    width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+    overflow: hidden;
+  }
+  .product-list{
+    width: 1200px;
+  }
+    .title{
+    display: block;
+    background-color:#ebecec;
+    color:#333;
+    font-size:20px;
+    padding:10px;
+  }
+    .content{
+    font-size:14px;
+    color:#666;
+    height: 76px;
+    line-height:2;
+    padding:20px 15px 0 15px;
+    margin-bottom: 20px;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+    .product{
+    box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    border:1px solid #c8c8c8;
+    width:390px;
+    margin-left:15px;
+    margin-top: 15px;
+    float:left;
+    text-align:center;
   }
   
-  .el-carousel__item:nth-child(n) {
-    background-color: #99a9bf;
-
+  .product_list li:nth-child(3n+1){margin-left:0;}
+  .passBuyBtn{
+    width:120px;
+    outline: none;
+    border: 1px solid #ff8200;
+    line-height: 36px;
+    color:#fff;
+    background:#ff8200 ;
+    text-align: center;
+    border-radius: 4px;
+    text-indent: 20px;
+    font-size: 14px;
+    display:inline-block;
+    margin-bottom:20px;
+    position:relative;
+    margin-right: 17px;
   }
-  /*
-  .el-carousel__item:nth-child(2n+1) {
-    background-color: #d3dce6;
-  }*/
+  .passBuyBtn:hover{
+    cursor:pointer;
+  }
+  .passBuyBtn img{
+    position: absolute;
+    top:9px;
+    left:10px;
+    width:19px;
+    height:18px;
+  }
+  .color{
+    color: white;
+    text-decoration:none;
+  }
 </style>
