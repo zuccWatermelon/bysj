@@ -37,7 +37,56 @@
         </div>
       </div>
     </el-menu>
-    
+    <div class="customer_name">
+    <h4 align="left">杭州XXX有限公司的购物车</h4>
+    <hr />
+    </div>
+    <div class="table">
+    <el-table
+    :data="tableData4"
+    style="width: 100%"
+    max-height="250">
+    <el-table-column
+      fixed
+      prop="name"
+      label="商品名称"
+      width="150">
+    </el-table-column>
+    <el-table-column
+      prop="discount"
+      label="商品折扣"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      prop="price"
+      label="单价"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      prop="amount"
+      label="总计"
+      width="300">
+    </el-table-column>
+    <el-table-column
+      prop="state"
+      label="状态"
+      width="120">
+    </el-table-column>
+    <el-table-column
+      fixed="do"
+      label="操作"
+      width="120">
+      <template slot-scope="scope">
+        <el-button
+          @click.native.prevent="deleteRow(scope.$index, tableData4)"
+          type="text"
+          size="small">
+          移除
+        </el-button>
+      </template>
+    </el-table-column>
+  </el-table>
+</div>
   </div>
 </template>
 
@@ -51,7 +100,22 @@ export default {
           name: '',
           pwd: ''
         },
-        formLabelWidth: '40px'
+        formLabelWidth: '40px',
+        tableData4: [{
+          name:'云产品',
+          discount:'0.8',
+          price:'100',
+          amount:'80',
+          state:'待提交',
+          do:'删除',
+        }, {
+          name:'云产品',
+          discount:'0.8',
+          price:'100',
+          amount:'80',
+          state:'待提交',
+          do:'删除',
+        }]
       };
     },
     methods: {
@@ -63,7 +127,11 @@ export default {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
         });
+      },
+      deleteRow(index, rows) {
+        rows.splice(index, 1);
       }
+      
     }
 }
 </script>
@@ -80,5 +148,12 @@ export default {
 }
 .menu-item{
   margin-left: 100px; 
+}
+.customer_name{
+  margin-left: 100px;
+  margin-right: 100px; 
+}
+.table{
+  margin-left: 100px;
 }
 </style>
