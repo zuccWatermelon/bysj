@@ -19,7 +19,7 @@
         <div class="regist-login">
 <!--           <el-menu-item index="5"> <el-button type="text" @click="regist = true" >注册 </el-button> </el-menu-item> -->
           <el-menu-item index="6"><el-button type="text" @click="login = true" class="color" > 您好！ </el-button> </el-menu-item>
-          <el-menu-item index="7"><el-button type="text" @click="research" class="color" > XXX </el-button> </el-menu-item>
+          <el-menu-item index="7"> <router-link to="ShoppingCar" class="color">XXX的购物车 </router-link> </el-menu-item>
         <el-dialog title="请输入登录账号" :visible.sync="login" width="30%">
           <el-form :model="form">
             <el-form-item label="账号" :label-width="formLabelWidth">
