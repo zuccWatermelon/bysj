@@ -10,16 +10,16 @@
       active-text-color="#ffd04b">
       <div class="menu-item">
           <el-menu-item index="1"><router-link to="/">首页</router-link></el-menu-item>
-          <el-menu-item index="2"><a href="https://www.ele.me" target="_blank"> 合作伙伴 </a></el-menu-item>
+          <el-menu-item index="2"><a href="https://www.ele.me" target="_blank" class="color"> 合作伙伴 </a></el-menu-item>
           <el-submenu index="3">
-          <template slot="title"> 管理平台 </template>
-              <el-menu-item index="3-1"><router-link to="/">个人管理平台</router-link></el-menu-item>
+          <template slot="title" class="color"> 管理平台 </template>
+              <el-menu-item index="3-1"><router-link to="/" class="color">个人管理平台</router-link></el-menu-item>
           </el-submenu>
-          <el-menu-item index="4"> <router-link to="Log_in">帮助中心</router-link> </el-menu-item>
+          <el-menu-item index="4"> <router-link to="Log_in" class="color">帮助中心</router-link> </el-menu-item>
         <div class="regist-login">
-          <el-menu-item index="5"> <el-button type="text" @click="regist = true" >注册 </el-button> </el-menu-item>
-          <el-menu-item index="6"><el-button type="text" @click="login = true" > 登录 </el-button> </el-menu-item>
-          <el-menu-item index="7"><el-button type="text" @click="research" > 查询客户 </el-button> </el-menu-item>
+          <el-menu-item index="5"> <el-button type="text" @click="regist = true"  class="color" >注册 </el-button> </el-menu-item>
+          <el-menu-item index="6"><el-button type="text" @click="login = true"  class="color" > 登录 </el-button> </el-menu-item>
+          <el-menu-item index="7"><router-link to="/"  class="color"> 查询客户 </router-link></el-menu-item>
         <el-dialog title="请输入登录账号" :visible.sync="login" width="30%">
           <el-form :model="form">
             <el-form-item label="账号" :label-width="formLabelWidth">
@@ -31,7 +31,7 @@
           </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="login = false">取 消</el-button>
-          <el-button type="primary" @click="login = false">确 定</el-button>
+          <el-button type="primary" @click="login = false"><router-link to="Log_in"  class="color">确 定</router-link></el-button>
           </div>
         </el-dialog>
         </div>
@@ -62,7 +62,7 @@
     <h3><img src='../assets/cjt-icon.png'></h3>畅捷通</div></el-col>
   <el-col :span="6"><div class="grid-content ">
     <h3><img src='../assets/cloudBroad_icon.png'></h3>云专线</div></el-col>
-  <el-col :span="6"><router-link  to="HelloWorld"><div class="grid-content ">
+  <el-col :span="6"><router-link  to="HelloWorld" class="color1"><div class="grid-content ">
     <h3><img src='../assets/cloudNet_icon.png'></h3>云主机</div></router-link></el-col>
   <el-col :span="6"><div class="grid-content ">
     <h3><img src='../assets/cloudProduct-icon.png'></h3>云网通</div></el-col>
@@ -89,13 +89,6 @@ export default {
       handleSelect(key, keyPath) {
         return 0;
       },
-      research(){
-         this.$prompt('请输入客户姓名/证件号码/业务号码/服务号码', '查询客户', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          
-        });
-      }
     }
 }
 </script>
@@ -154,5 +147,13 @@ export default {
   .row-bg {
     padding: 10px 0;
     background-color: #f9fafc;
+  }
+  .color{
+    color: white;
+    text-decoration:none;
+  }
+  .color1{
+    color: black;
+    text-decoration:none;
   }
 </style>
