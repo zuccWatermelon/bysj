@@ -75,6 +75,14 @@
 <script>
 export default {
     data() {
+          this.$http.get('http://127.0.0.1:3000/api/test')
+          .then(function (response) {
+            alert(response.data)
+            console.log(response);
+          })
+          .catch(function (response) {
+            console.log(response);
+          });
       return {
         activeIndex: '1',
         login: false,
