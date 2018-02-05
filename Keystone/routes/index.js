@@ -28,7 +28,6 @@ keystone.pre('render', middleware.flashMessages);
 
 // Import Route Controllers
 var routes = {
-	views: importRoutes('./views'),
 	api: importRoutes('./api'),
 };
 
@@ -44,12 +43,6 @@ exports = module.exports = function (app) {
 	    res.header("Content-Type", "application/json;charset=utf-8");
 	    next();
 	});
-
-	app.get('/', routes.views.index);
-	app.get('/blog/:category?', routes.views.blog);
-	app.get('/blog/post/:post', routes.views.post);
-	app.get('/gallery', routes.views.gallery);
-	app.all('/contact', routes.views.contact);
 
 	app.all('/api/test',routes.api.test)
 

@@ -12,9 +12,9 @@ var keystone = require('keystone');
 keystone.init({
 	'name': 'Keystone',
 	'brand': 'Keystone',
-
 	'less': 'public',
 	'static': 'public',
+	'mongo': process.env.MONGO_URI || process.env.MONGOLAB_URI || 'mongodb://localhost/bysj',
 	'favicon': 'public/favicon.ico',
 	'views': 'templates/views',
 	'view engine': 'pug',
@@ -44,9 +44,7 @@ keystone.set('routes', require('./routes'));
 
 // Configure the navigation bar in Keystone's Admin UI
 keystone.set('nav', {
-	posts: ['posts', 'post-categories'],
-	galleries: 'galleries',
-	enquiries: 'enquiries',
+	cpus: 'cpus',
 	users: 'users',
 });
 
