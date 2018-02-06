@@ -1,4 +1,5 @@
 var keystone = require('keystone');
+var Types = keystone.Field.Types;
 
 /**
  * Cpu Model
@@ -17,8 +18,8 @@ var Cpu = new keystone.List('Cpu', {
 
 
 Cpu.add('Cpu', {
-	cpu_id: { type: String, label: 'CPU 标识', required: true, initial: true, index: true},
-	cpu_num:{ type: String, label: 'CPU 数量'}
+	name:{ type: String, label: 'CPU 数量'},
+	memory: { type: Types.Relationship, ref: 'Memory', many: true, label: '对应内存选项'}
 });
 
 

@@ -1,4 +1,5 @@
 var keystone = require('keystone');
+var Types = keystone.Field.Types;
 
 /**
  * Customer Model
@@ -17,9 +18,9 @@ var Customer = new keystone.List('Customer', {
 
 
 Customer.add('Customer', {
-	CUST_ID: { type: String, label: '客户标识', required: true, initial: true, index: true},
-	CUST_NAME:{ type: String, label: '客户名称'},
-	CUST_TELEPHONE:{type: String, label: '客户电话'},
+	name:{ type: String, label: '客户名称'},
+	telephone:{type: String, label: '客户电话'},
+	orderItem: { type: Types.Relationship, ref: 'OrderItem', many: true, label: '对应订单'}
 });
 
 
