@@ -1,37 +1,38 @@
+
+
 <template>
   <div id="first">
     <el-menu
       :default-active="activeIndex"
       class="el-menu-demo"
+      @submit.prevent="submit"
       mode="horizontal"
-      @select="handleSelect"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b">
       <div class="menu-item">
-          <el-menu-item index="1"><router-link to="/">首页</router-link></el-menu-item>
+          <el-menu-item index="1"><router-link to="/" class="color">首页</router-link></el-menu-item>
           <el-menu-item index="2"><a href="https://www.ele.me" target="_blank" class="color"> 合作伙伴 </a></el-menu-item>
           <el-submenu index="3">
           <template slot="title" class="color"> 管理平台 </template>
               <el-menu-item index="3-1"><router-link to="/" class="color">个人管理平台</router-link></el-menu-item>
           </el-submenu>
-          <el-menu-item index="4"> <router-link to="Log_in" class="color">帮助中心</router-link> </el-menu-item>
+          <el-menu-item index="4"> <router-link to="/" class="color">帮助中心</router-link> </el-menu-item>
         <div class="regist-login">
           <el-menu-item index="5"> <el-button type="text" @click="regist = true"  class="color" >注册 </el-button> </el-menu-item>
           <el-menu-item index="6"><el-button type="text" @click="login = true"  class="color" > 登录 </el-button> </el-menu-item>
-          <el-menu-item index="7"><router-link to="/"  class="color"> 查询客户 </router-link></el-menu-item>
         <el-dialog title="请输入登录账号" :visible.sync="login" width="30%">
           <el-form :model="form">
-            <el-form-item label="账号" :label-width="formLabelWidth">
-              <el-input v-model="form.name" auto-complete="off" clearable></el-input>
+            <el-form-item class="telephone" label="账号" :label-width="formLabelWidth">
+              <el-input v-model="form.telephone" auto-complete="off" clearable></el-input>
             </el-form-item>
-            <el-form-item label="密码" :label-width="formLabelWidth">
-              <el-input v-model="form.pwd" auto-complete="off" type="password" clearable></el-input>
+            <el-form-item class="password" label="密码" :label-width="formLabelWidth">
+              <el-input v-model="form.password" auto-complete="off" type="password" clearable  @keyup.13="keyFun($event)"></el-input>
             </el-form-item>
           </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="login = false">取 消</el-button>
-          <el-button type="primary" @click="login = false"><router-link to="Log_in"  class="color">确 定</router-link></el-button>
+          <el-button type="primary" @click="submit"class="color">确 定</el-button>
           </div>
         </el-dialog>
         </div>
@@ -62,8 +63,8 @@
     <h3><img src='../assets/cjt-icon.png'></h3>畅捷通</div></el-col>
   <el-col :span="6"><div class="grid-content ">
     <h3><img src='../assets/cloudBroad_icon.png'></h3>云专线</div></el-col>
-  <el-col :span="6"><router-link  to="HelloWorld" class="color1"><div class="grid-content ">
-    <h3><img src='../assets/cloudNet_icon.png'></h3>云主机</div></router-link></el-col>
+  <el-col :span="6"><div class="grid-content ">
+    <h3><img src='../assets/cloudNet_icon.png'></h3>云主机</div></el-col>
   <el-col :span="6"><div class="grid-content ">
     <h3><img src='../assets/cloudProduct-icon.png'></h3>云网通</div></el-col>
   <el-col :span="6"><div class="grid-content ">
@@ -74,28 +75,108 @@
 
 <script>
 export default {
+  // 父组件通过 props 向下传递数据给子组件，子组件通过 events 给父组件发送消息。
     data() {
-          this.$http.get('http://127.0.0.1:3000/api/test')
-          .then(function (response) {
-            alert(response.data)
-            console.log(response);
-          })
-          .catch(function (response) {
-            console.log(response);
-          });
+          // this.$http.get('http://127.0.0.1:3000/api/test')
+          // .then(function (response) {
+          //   alert(response.data)
+          //   console.log(response);
+          // })
+          // .catch(function (response) {
+          //   console.log(response);
+          // });
       return {
         activeIndex: '1',
         login: false,
         form: {
-          name: '',
-          pwd: ''
+          telephone: '',
+          password: '',
+          code: ''
         },
         formLabelWidth: '40px'
       };
     },
+    created(){
+      var accountInfo = this.getCookie('accountInfo');
+    },
     methods: {
-      handleSelect(key, keyPath) {
-        return 0;
+      keyFun(ev){
+        if(ev.keyCode == 13){
+          this.submit();
+        }
+      },
+      submit(){
+          var self = this;
+          if(self.form.telephone==''||self.form.telephone==null){
+            this.$alert('账号/手机号不能为空', '提示', {
+              confirmButtonText: '确定'
+            });
+          } else if(self.form.password==''||self.form.password==null){
+            this.$alert('密码不能为空', '提示', {
+              confirmButtonText: '确定'
+            });
+          } else {
+            var formData = new FormData();
+            formData.append('telephone', self.form.telephone);
+            formData.append('password', self.form.password);
+            axios({
+              method:"post",
+              url:"http://127.0.0.1:3000/api/login",
+              data: formData
+            }).then(
+                res=>{
+                  console.log(res.data)
+                  if(res.data.code=='1' || res.data.code==1){
+                    // self.$alert('登录成功')
+                    //如果登录成功，将用户名、id存在sessionstorage
+                    // window.sessionStorage.setItem('login',true);
+                    // window.sessionStorage.setItem('user',JSON.stringify(res.data.data));
+                    // window.sessionStorage.setItem('userResources',JSON.stringify(res.data.msg.data));
+                     this.$router.push({path:'Log_in'})
+
+                  } else {
+                    var errorInfo = res.data.msg;
+                    self.$alert('用户名或密码错误，请重新输入', '提示', {
+                      confirmButtonText: '确定',
+                      callback:action=>{
+                      }
+                    });
+                  }
+                }
+            ).catch(
+                error=>{
+                    console.log(error);
+                }
+            );
+          }
+      },
+      setCookie: function(c_name,value,day){
+        var exdate = new Date();
+        exdate.setTime(exdate.getTime() + day*24*60*60*1000);
+        document.cookie= c_name + "=" + escape(value)+((day==null) ? "" : ";expires="+exdate.toGMTString());
+      },
+      getCookie: function(c_name){
+        if (document.cookie.length>0)
+        {
+          var c_start=document.cookie.indexOf(c_name + "=");
+          if (c_start!=-1)
+          {
+            c_start=c_start + c_name.length+1;
+            var c_end=document.cookie.indexOf(";",c_start);
+            if (c_end==-1)
+              c_end = document.cookie.length
+            return unescape(document.cookie.substring(c_start, c_end))
+          }
+        }
+        return ""
+      },
+      delCookie: function(c_name){
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cval = this.getCookie(c_name);
+        if(cval!=null){
+          document.cookie = c_name + "=" + cval + ";expires=" + exp.toGMTString();
+        }
       },
     }
 }

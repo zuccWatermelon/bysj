@@ -9,18 +9,21 @@ exports = module.exports = function (req, res) {
 
     var returnMessag = {}; 
 
+    console.log(telephone)
+    console.log(password)
+
     if (telephone && password) {
         async.parallel({//并行异步
-            password: function (done) {
-                password.model.findOne()
-                    .where('password', password)
+            customer: function (done) {
+                Customer.model.findOne()
                     .where('telephone',telephone)
+                    .where('password', password)                
                     .exec(function (err, result) {
                         done(err, result);
                     });
                 },
         }, function (err, result) {
-            if (!result.telephone || !result.password) {
+            if (result.customer==null) {
                 returnMessag.code = 0;
                 returnMessag.message = "对不起，您输入账号或密码有误";
             } else {
