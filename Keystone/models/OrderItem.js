@@ -17,6 +17,7 @@ var OrderItem = new keystone.List('OrderItem', {
 
 
 OrderItem.add('OrderItem', {
+  // name: {type: String, label: '订单编号'},
   cPU: { type: Types.Relationship, ref: 'Cpu', label: 'CPU数量'},
   memory: { type: Types.Relationship, ref: 'Memory', label: '内存大小'},
   operateSystemType: { type: Types.Relationship, ref: 'OperateSystemType', label: '系统类型'},

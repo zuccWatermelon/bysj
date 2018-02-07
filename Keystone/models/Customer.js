@@ -18,8 +18,9 @@ var Customer = new keystone.List('Customer', {
 
 
 Customer.add('Customer', {
-	name:{ type: String, label: '客户名称'},
-	telephone:{type: String, label: '客户电话'},
+	name: { type: String, label: '客户名称'},
+	telephone: { type: String, label: '客户电话'},
+  password: { type: String, label: '密码'},
 	orderItem: { type: Types.Relationship, ref: 'OrderItem', many: true, label: '对应订单'}
 });
 

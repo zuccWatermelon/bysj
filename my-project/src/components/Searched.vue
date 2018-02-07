@@ -1,4 +1,4 @@
-<template>
+template>
   <div id="searched">
     <el-menu
       :default-active="activeIndex"
@@ -163,3 +163,4 @@ export default {
     text-decoration:none;
   }
 </style>
+<!-- 这个页面不要了，只有用户登录，没有客户经理查询客户。 -->

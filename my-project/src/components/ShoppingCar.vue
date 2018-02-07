@@ -17,10 +17,10 @@
           </el-submenu>
           <el-menu-item index="4"> <router-link to="/" class="color" >帮助中心</router-link> </el-menu-item>
         <div class="regist-login">
-<!--           <el-menu-item index="5"> <el-button type="text" @click="regist = true" >注册 </el-button> </el-menu-item> -->
-          <el-menu-item index="6"><el-button type="text" @click="login = true" class="color"  > 您好！ </el-button> </el-menu-item>
-          <el-menu-item index="7"> <router-link to="ShoppingCar" class="color">XXX的购物车 </router-link> </el-menu-item>
-        <el-dialog title="请输入登录账号" :visible.sync="login" width="30%">
+<!--           <el-menu-item index="5"> <el-button type="text" @click="regist = true" class="color" >注册 </el-button> </el-menu-item> 登录之后就不要注册啦-->
+          <el-menu-item index="6"><el-button type="text" @click="login = true" class="color"  > 您好！XXX </el-button> </el-menu-item>
+          <el-menu-item index="7"> <router-link to="ShoppingCar" class="color">我的购物车 </router-link> </el-menu-item>
+ <!--   <el-dialog title="请输入登录账号" :visible.sync="login" width="30%">
           <el-form :model="form">
             <el-form-item label="账号" :label-width="formLabelWidth">
               <el-input v-model="form.name" auto-complete="off" clearable></el-input>
@@ -30,10 +30,11 @@
             </el-form-item>
           </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="login = false"  >取 消</el-button>
-          <el-button type="primary" @click="login = false" class="color" >确 定</el-button>
+          <el-button @click="login = false" >取 消</el-button>
+          <el-button type="primary" @click="login = false" class="color">确 定</el-button>
           </div>
-        </el-dialog>
+        </el-dialog> -->
+       <!--  这个dialog改成可以退出的框，鼠标放上去就显示出来。 -->
         </div>
       </div>
     </el-menu>
