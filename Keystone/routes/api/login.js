@@ -9,14 +9,14 @@ exports = module.exports = function (req, res) {
 
     var returnMessag = {}; 
 
-    console.log(telephone)
-    console.log(password)
+    console.log(telephone);
+    console.log(password);
 
     if (telephone && password) {
         async.parallel({//并行异步
-            customer: function (done) {
+            customer: function (done) {//customer是别名
                 Customer.model.findOne()
-                    .where('telephone',telephone)
+                    .where('telephone',telephone)//通过telephone和password两个条件定位出一个客户
                     .where('password', password)                
                     .exec(function (err, result) {
                         done(err, result);
@@ -29,9 +29,12 @@ exports = module.exports = function (req, res) {
             } else {
                 returnMessag.code = 1;
                 returnMessag.message = "登录成功";
-                returnMessag.customerID = result._id;
-
+                returnMessag.customerID = result.customer._id;//默认的哈希值
+                returnMessag.name = result.customer.name;//通过查出来的customer可以获取他的id和name
+                returnMessag.telephone = result.customer.telephone;
+                returnMessag.password = result.customer.password;
             }
+            console.log(returnMessag);
             res.send(JSON.stringify(returnMessag));
             // var json = JSON.stringify({a: 'Hello', b: 'World'});
              //结果是 '{"a": "Hello", "b": "World"}'

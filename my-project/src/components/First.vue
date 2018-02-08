@@ -1,5 +1,3 @@
-
-
 <template>
   <div id="first">
     <el-menu
@@ -77,14 +75,6 @@
 export default {
   // 父组件通过 props 向下传递数据给子组件，子组件通过 events 给父组件发送消息。
     data() {
-          // this.$http.get('http://127.0.0.1:3000/api/test')
-          // .then(function (response) {
-          //   alert(response.data)
-          //   console.log(response);
-          // })
-          // .catch(function (response) {
-          //   console.log(response);
-          // });
       return {
         activeIndex: '1',
         login: false,
@@ -95,9 +85,6 @@ export default {
         },
         formLabelWidth: '40px'
       };
-    },
-    created(){
-      var accountInfo = this.getCookie('accountInfo');
     },
     methods: {
       keyFun(ev){
@@ -125,15 +112,12 @@ export default {
               data: formData
             }).then(
                 res=>{
-                  console.log(res.data)
+                  console.log(res.data);
                   if(res.data.code=='1' || res.data.code==1){
-                    // self.$alert('登录成功')
-                    //如果登录成功，将用户名、id存在sessionstorage
-                    // window.sessionStorage.setItem('login',true);
-                    // window.sessionStorage.setItem('user',JSON.stringify(res.data.data));
-                    // window.sessionStorage.setItem('userResources',JSON.stringify(res.data.msg.data));
-                     this.$router.push({path:'Log_in'})
-
+                    self.$alert('登录成功')
+                    // 如果登录成功，将用户名、id存在sessionstorage
+                    window.sessionStorage.setItem('username',res.data.name);
+                    this.$router.push({path:'Log_in'})
                   } else {
                     var errorInfo = res.data.msg;
                     self.$alert('用户名或密码错误，请重新输入', '提示', {
@@ -150,34 +134,7 @@ export default {
             );
           }
       },
-      setCookie: function(c_name,value,day){
-        var exdate = new Date();
-        exdate.setTime(exdate.getTime() + day*24*60*60*1000);
-        document.cookie= c_name + "=" + escape(value)+((day==null) ? "" : ";expires="+exdate.toGMTString());
-      },
-      getCookie: function(c_name){
-        if (document.cookie.length>0)
-        {
-          var c_start=document.cookie.indexOf(c_name + "=");
-          if (c_start!=-1)
-          {
-            c_start=c_start + c_name.length+1;
-            var c_end=document.cookie.indexOf(";",c_start);
-            if (c_end==-1)
-              c_end = document.cookie.length
-            return unescape(document.cookie.substring(c_start, c_end))
-          }
-        }
-        return ""
-      },
-      delCookie: function(c_name){
-        var exp = new Date();
-        exp.setTime(exp.getTime() - 1);
-        var cval = this.getCookie(c_name);
-        if(cval!=null){
-          document.cookie = c_name + "=" + cval + ";expires=" + exp.toGMTString();
-        }
-      },
+
     }
 }
 </script>
