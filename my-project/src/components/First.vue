@@ -117,6 +117,7 @@ export default {
                     self.$alert('登录成功')
                     // 如果登录成功，将用户名、id存在sessionstorage
                     window.sessionStorage.setItem('username',res.data.name);
+                    window.sessionStorage.setItem('userID',res.data.customerID);
                     this.$router.push({path:'Log_in'})
                   } else {
                     var errorInfo = res.data.msg;

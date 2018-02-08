@@ -19,7 +19,7 @@
         <div class="regist-login">
 <!--           <el-menu-item index="5"> <el-button type="text" @click="regist = true" class="color" >注册 </el-button> </el-menu-item> 登录之后就不要注册啦-->
           <el-menu-item index="6" class = "name"><el-button type="text" @click="login = true"  class="color" > 您好！{{username}} </el-button> </el-menu-item>
-          <el-menu-item index="7"> <router-link to="ShoppingCar" class="color">我的购物车 </router-link> </el-menu-item>
+          <el-menu-item index="7" class = "customerID"> <router-link to="ShoppingCar" class="color">我的购物车 </router-link> </el-menu-item>
       <!--   <el-dialog title="请输入登录账号" :visible.sync="login" width="30%">
           <el-form :model="form">
             <el-form-item label="账号" :label-width="formLabelWidth">
@@ -79,7 +79,8 @@ export default {
           code: 1
         },
         formLabelWidth: '40px',
-        username:window.sessionStorage.getItem('username')
+        username:window.sessionStorage.getItem('username'),
+        userID:window.sessionStorage.getItem('userID')
       };
     },
     created(){
