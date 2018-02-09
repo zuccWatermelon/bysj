@@ -19,23 +19,12 @@
           <el-menu-item index="4"> <router-link to="/" class="color">帮助中心</router-link> </el-menu-item>
         <div class="regist-login">
 <!--           <el-menu-item index="5"> <el-button type="text" @click="regist = true" class="color" >注册 </el-button> </el-menu-item> 登录之后就不要注册啦-->
-          <el-menu-item index="6"><el-button type="text" @click="login = true" class="color" > 您好！XXX </el-button> </el-menu-item>
+          <el-submenu index="6">
+          <template slot="title" class="color"> 您好！{{username}} </template>
+              <el-menu-item index="6-1"><el-button type="text" @click="login = true" class="color" > 资产  </el-button> </el-menu-item>
+              <el-menu-item index="6-2"><el-button type="text" @click="logout" class="color" > 退出  </el-button> </el-menu-item>
+        </el-submenu>
           <el-menu-item index="7"> <router-link to="ShoppingCar" class="color">我的购物车 </router-link> </el-menu-item>
-      <!--   <el-dialog title="请输入登录账号" :visible.sync="login" width="30%">
-          <el-form :model="form">
-            <el-form-item label="账号" :label-width="formLabelWidth">
-              <el-input v-model="form.name" auto-complete="off" clearable></el-input>
-            </el-form-item>
-            <el-form-item label="密码" :label-width="formLabelWidth">
-              <el-input v-model="form.pwd" auto-complete="off" type="password" clearable></el-input>
-            </el-form-item>
-          </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="login = false" >取 消</el-button>
-          <el-button type="primary" @click="login = false" class="color">确 定</el-button>
-          </div>
-        </el-dialog> -->
-       <!--  这个dialog改成可以退出的框，鼠标放上去就显示出来。 -->
         </div>
       </div>
     </el-menu> 
@@ -70,18 +59,25 @@ export default {
           name: '',
           pwd: ''
         },
-        formLabelWidth: '40px'
+        formLabelWidth: '40px',
+        username:window.sessionStorage.getItem('username'),
+        userID:window.sessionStorage.getItem('userID')
       };
+    },
+    created(){
+      var userID = window.sessionStorage.getItem('userID');
+      if(!userID){
+        this.$router.push({path: '/'});
+      }
     },
     methods: {
       handleSelect(key, keyPath) {
         return 0;
       },
-      research(){
-         this.$prompt('请输入客户姓名/证件号码/业务号码/服务号码', '查询客户', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-        });
+      logout(){
+          window.sessionStorage.removeItem('username');
+          window.sessionStorage.removeItem('userID');
+          location.reload();
       },
             /**添加购物车**/
 

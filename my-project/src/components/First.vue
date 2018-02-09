@@ -16,6 +16,8 @@
               <el-menu-item index="3-1"><router-link to="/" class="color">个人管理平台</router-link></el-menu-item>
           </el-submenu>
           <el-menu-item index="4"> <router-link to="/" class="color">帮助中心</router-link> </el-menu-item>
+
+       <div v-if="userID === null">
         <div class="regist-login">
           <el-menu-item index="5"> <el-button type="text" @click="regist = true"  class="color" >注册 </el-button> </el-menu-item>
           <el-menu-item index="6"><el-button type="text" @click="login = true"  class="color" > 登录 </el-button> </el-menu-item>
@@ -32,8 +34,22 @@
           <el-button @click="login = false">取 消</el-button>
           <el-button type="primary" @click="submit"class="color">确 定</el-button>
           </div>
-        </el-dialog>
+         </el-dialog>
+       </div>
+      </div>
+      <div v-else>
+        <div class="regist-login">
+<!--           <el-menu-item index="5"> <el-button type="text" @click="regist = true" class="color" >注册 </el-button> </el-menu-item> 登录之后就不要注册啦-->
+        <el-submenu index="6">
+          <template slot="title" class="color"> 您好！{{username}} </template>
+              <el-menu-item index="6-1"><el-button type="text" @click="login = true" class="color" > 资产  </el-button> </el-menu-item>
+              <el-menu-item index="6-2"><el-button type="text" @click="logout" class="color" > 退出  </el-button> </el-menu-item>
+        </el-submenu>
+
+          <el-menu-item index="7"> <router-link to="ShoppingCar" class="color">我的购物车 </router-link> </el-menu-item>
+      
         </div>
+    </div>
       </div>
     </el-menu>
     <el-carousel indicator-position="outside">
@@ -61,8 +77,10 @@
     <h3><img src='../assets/cjt-icon.png'></h3>畅捷通</div></el-col>
   <el-col :span="6"><div class="grid-content ">
     <h3><img src='../assets/cloudBroad_icon.png'></h3>云专线</div></el-col>
-  <el-col :span="6"><div class="grid-content ">
-    <h3><img src='../assets/cloudNet_icon.png'></h3>云主机</div></el-col>
+    <el-col :span="6" v-if="userID === null"><div class="grid-content ">
+     <h3><img src='../assets/cloudNet_icon.png'></h3>云主机</div></el-col>
+    <el-col :span="6" v-else><router-link to = "CloudProduct" class="color1"><div class="grid-content ">
+    <h3><img src='../assets/cloudNet_icon.png'></h3>云主机</div></router-link></el-col>
   <el-col :span="6"><div class="grid-content ">
     <h3><img src='../assets/cloudProduct-icon.png'></h3>云网通</div></el-col>
   <el-col :span="6"><div class="grid-content ">
@@ -83,7 +101,9 @@ export default {
           password: '',
           code: ''
         },
-        formLabelWidth: '40px'
+        formLabelWidth: '40px',
+        username:window.sessionStorage.getItem('username'),
+        userID:window.sessionStorage.getItem('userID')
       };
     },
     methods: {
@@ -91,6 +111,11 @@ export default {
         if(ev.keyCode == 13){
           this.submit();
         }
+      },
+      logout(){
+          window.sessionStorage.removeItem('username');
+          window.sessionStorage.removeItem('userID');
+          location.reload();
       },
       submit(){
           var self = this;
@@ -114,11 +139,17 @@ export default {
                 res=>{
                   console.log(res.data);
                   if(res.data.code=='1' || res.data.code==1){
-                    self.$alert('登录成功')
+                    self.$alert('登录成功', '提示', {
+                      confirmButtonText: '确定',
+                      callback:action=>{
+                        location.reload();
+                      }
+                    });
                     // 如果登录成功，将用户名、id存在sessionstorage
                     window.sessionStorage.setItem('username',res.data.name);
                     window.sessionStorage.setItem('userID',res.data.customerID);
-                    this.$router.push({path:'Log_in'})
+                    // location.reload();
+                    // this.$router.push({path:'/'})
                   } else {
                     var errorInfo = res.data.msg;
                     self.$alert('用户名或密码错误，请重新输入', '提示', {
