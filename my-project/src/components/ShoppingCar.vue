@@ -40,33 +40,32 @@
     tooltip-effect="dark"
     style="width: 100%"
     @selection-change="handleSelectionChange">
+    <!-- 以下是展开的内容 -->
     <el-table-column type="expand">
  <template slot-scope="props">
         <el-form label-position="left" inline class="demo-table-expand">
-          <el-form-item label="商品名称">
-            <span>{{ props.row.name }}</span>
+          <el-form-item label="CPU数">
+            <template>
+              <div>
+                <el-radio-group v-model="radio">
+                  <el-radio-button label="上海"></el-radio-button>
+                  <el-radio-button label="北京"></el-radio-button>
+                  <el-radio-button label="广州"></el-radio-button>
+                  <el-radio-button label="深圳"></el-radio-button>
+                </el-radio-group>
+              </div>
+            </template>
           </el-form-item>
           <el-form-item label="单价">
             <span>{{ props.row.price }}</span>
-          </el-form-item>
-          <el-form-item label="折扣">
-            <span>{{ props.row.discount }}</span>
-          </el-form-item>
-          <el-form-item label="总价">
-            <span>{{ props.row.amount }}</span>
-          </el-form-item>
-          <el-form-item label="状态">
-            <span>{{ props.row.state }}</span>
-          </el-form-item>
-          <el-form-item label="CPU数">
-            <span>{{ props.row.cupnum }}</span>
-          </el-form-item>
+          </el-form-item>         
           <el-form-item label="宽带">
-            <span>{{ props.row.net }}</span>
+            <span>{{ props.row.bandWidth }}</span>
           </el-form-item>
         </el-form>
       </template>
       </el-table-column>
+      <!-- 以下是标题 -->
     <el-table-column
       type="selection"
       width="55">
@@ -98,9 +97,9 @@
       </el-table-column>
     <el-table-column label="操作">
       <template slot-scope="scope">
-        <el-button
+        <!-- <el-button
           size="mini"
-          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          @click="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
         <el-button
           size="mini"
           type="danger"
@@ -127,6 +126,7 @@ export default {
       return {
         activeIndex: '1',
         login: false,
+        radio: '上海',
         form: {
           name: '',
           pwd: ''
@@ -140,7 +140,7 @@ export default {
             amount:'80',
             state:'待提交',
             cupnum:'2',
-            net:'2m'
+            bandWidth:'2m'
            
           },{
             name: '云主机',
@@ -149,7 +149,7 @@ export default {
             amount:'80',
             state:'待提交',
             cupnum:'2',
-            net:'2m'
+            bandWidth:'2m'
           }],
         multipleSelection: [],   
         username:window.sessionStorage.getItem('username'),
