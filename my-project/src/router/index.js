@@ -27,7 +27,7 @@ export default new Router({
       path: '/ShoppingCar',
       name: '/ShoppingCar',
       component: ShoppingCar
-    }
+    },
   ]
 })
 	

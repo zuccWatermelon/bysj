@@ -28,7 +28,7 @@
       </div>
     </el-menu>
     <div class="customer_name">
-    <h4 align="left">杭州XXX有限公司的购物车</h4>
+    <h4 align="left">{{username}}的购物车</h4>
     <hr />
     </div>
 <!-- 当el-table元素中注入data对象数组后，在el-table-column中用prop属性来对应对象中的键名即可填入数据，用label属性来定义表格的列名。可以使用width属性来定义列宽。 -->
@@ -42,29 +42,129 @@
     @selection-change="handleSelectionChange">
     <!-- 以下是展开的内容 -->
     <el-table-column type="expand">
- <template slot-scope="props">
+      <template slot-scope="props">
         <el-form label-position="left" inline class="demo-table-expand">
-          <el-form-item label="CPU数">
-            <template>
-              <div>
-                <el-radio-group v-model="radio">
-                  <el-radio-button label="上海"></el-radio-button>
-                  <el-radio-button label="北京"></el-radio-button>
-                  <el-radio-button label="广州"></el-radio-button>
-                  <el-radio-button label="深圳"></el-radio-button>
-                </el-radio-group>
-              </div>
-            </template>
+          <el-form-item label="开通时间">
+            <el-input-number style="margin-left:10px" 
+              v-model="time" 
+              @change="handleTime" 
+              :min="1" 
+              :max="10">
+            </el-input-number>
+            <span>月</span>
           </el-form-item>
-          <el-form-item label="单价">
-            <span>{{ props.row.price }}</span>
-          </el-form-item>         
-          <el-form-item label="宽带">
-            <span>{{ props.row.bandWidth }}</span>
+          <el-form-item label="CPU">
+            <el-radio-group style="margin-left:35px" v-model="cpu">
+              <el-radio-button label="1"></el-radio-button>
+              <el-radio-button label="2"></el-radio-button>
+              <el-radio-button label="4"></el-radio-button>
+              <el-radio-button label="8"></el-radio-button>
+              <el-radio-button label="16"></el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="内存">
+            <el-radio-group style="margin-left:37px"  v-model="memory">
+              <div v-if="cpu === '1'">
+                <el-radio-button label="1"></el-radio-button>
+                <el-radio-button label="2"></el-radio-button>
+                <el-radio-button label="4"></el-radio-button>
+                <el-radio-button label="8"></el-radio-button>
+              </div>
+              <div v-if="cpu === '2'">
+                <el-radio-button label="2"></el-radio-button>
+                <el-radio-button label="4"></el-radio-button>
+                <el-radio-button label="8"></el-radio-button>
+                <el-radio-button label="16"></el-radio-button>
+              </div>
+              <div v-if="cpu === '4'">
+                <el-radio-button label="4"></el-radio-button>
+                <el-radio-button label="8"></el-radio-button>
+                <el-radio-button label="16"></el-radio-button>
+                <el-radio-button label="32"></el-radio-button>
+              </div>
+              <div v-if="cpu === '8'">
+                <el-radio-button label="8"></el-radio-button>
+                <el-radio-button label="16"></el-radio-button>
+                <el-radio-button label="32"></el-radio-button>
+                <el-radio-button label="64"></el-radio-button>
+              </div>
+              <div v-if="cpu === '16'">
+                <el-radio-button label="16"></el-radio-button>
+                <el-radio-button label="32"></el-radio-button>
+                <el-radio-button label="64"></el-radio-button>
+                <el-radio-button label="128"></el-radio-button>
+              </div>
+            </el-radio-group>
+          </el-form-item> 
+          <el-form-item label="系统">
+            <div style="margin-left:37px;width:400px;">
+              <el-select size="small" style="width: 150px"
+                         v-model="selectType"
+                         placeholder="请选择操作系统类型"
+                         v-on:change="getType($event)">
+                <el-option
+                        v-for="item in type"
+                        :label="item.label"
+                        :value="item.value">
+                </el-option>
+              </el-select>
+              <el-select size="small" style="width: 150px"
+                         v-if="selectType!=''"
+                         v-model="selectSystem"
+                         placeholder="请选择操作系统"
+                         v-on:change="getSystem($event)">
+                <el-option
+                        v-for="item in Systems"
+                        :label="item.label"
+                        :value="item.value">
+                </el-option>
+              </el-select>
+            </div>
+          </el-form-item>
+          <el-form-item label="系统盘">
+            <el-select style="width: 150px ;margin-left:24px"
+            v-model="selectDisk1" placeholder="请选择系统盘类型">
+              <el-option 
+                v-for="item in disk" 
+                :label="item.label" 
+                :value="item.value">
+              </el-option>
+            </el-select>
+            <span style="margin-left:10px">40G</span>
+          </el-form-item>
+          <el-form-item label="数据盘">
+            <el-select style="width: 150px;margin-left:24px"
+            v-model="selectDisk2" placeholder="请选择数据盘类型">
+              <el-option 
+                v-for="item in disk" 
+                :label="item.label" 
+                :value="item.value">
+              </el-option>
+            </el-select>
+            <el-input style='width:100px'
+            placeholder="请输入内容"
+            v-model="inputDisk"
+            clearable>
+            </el-input>
+            <span>G</span>
+          </el-form-item>
+          <el-form-item label="带宽">
+            <div class="block" style='width:400px ; margin-left:38px' >
+              <el-slider v-model="bandWidth" show-input> </el-slider>
+            </div>
+          </el-form-item>
+          <el-form-item label="订购数量">
+            <el-input-number style="margin-left:10px" 
+              v-model="num" 
+              @change="handleNum" 
+              :min="1" 
+              :max="10">
+            </el-input-number>
+            <span>台</span>
           </el-form-item>
         </el-form>
       </template>
-      </el-table-column>
+    </el-table-column>
       <!-- 以下是标题 -->
     <el-table-column
       type="selection"
@@ -84,6 +184,13 @@
         prop="discount"
         label="折扣"
         width="180">
+        <template slot-scope="scope">
+          <el-input style="width:50px"
+            placeholder="请输入折扣"
+            v-model="inputDiscount"
+            clearable>
+          </el-input>
+        </template>
       </el-table-column>
       <el-table-column
         prop="amount"
@@ -97,17 +204,15 @@
       </el-table-column>
     <el-table-column label="操作">
       <template slot-scope="scope">
-        <!-- <el-button
-          size="mini"
-          @click="handleEdit(scope.$index, scope.row)">编辑</el-button> -->
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
-</div>
+          @click="handleDelete(scope.$index, scope.row)">删除
+        </el-button>
+       </template>
+     </el-table-column>
+    </el-table>
+  </div>
       <div class="bottom">
       <div class="bottom-center">
         <div class="submit" @click="submitOrder()">提交</div>
@@ -125,31 +230,51 @@ export default {
     data() {
       return {
         activeIndex: '1',
+         inputDisk: '40',
+         inputDiscount: '0.8',
+        type:[{
+          label:"Linux",
+          value:"Linux"
+        },{
+          label:"Windows",
+          value:"Windows"
+        }],
+        Systems: [],
+        selectType: 'Windows',
+        selectSystem: 'Windows7',
         login: false,
-        radio: '上海',
+        cpu: '1',
+        memory: '1',
+        bandWidth: 1,
+        time: 1,
+        num: 1,
+        selectDisk1: 'SATA',
+        selectDisk2: 'SATA',
+        disk: [{
+          value: 'SATA',
+          label: 'SATA'
+        }, {
+          value: 'SSD',
+          label: 'SSD'
+        }],
         form: {
           name: '',
           pwd: ''
         },
         formLabelWidth: '40px',
-
         tableData3: [{
             name: '云主机',
             price:'100',
-            discount:'0.8',
             amount:'80',
             state:'待提交',
             cupnum:'2',
-            bandWidth:'2m'
            
           },{
             name: '云主机',
             price:'100',
-            discount:'0.8',
             amount:'80',
             state:'待提交',
             cupnum:'2',
-            bandWidth:'2m'
           }],
         multipleSelection: [],   
         username:window.sessionStorage.getItem('username'),
@@ -165,6 +290,12 @@ export default {
     methods: {
       handleSelect(key, keyPath) {
         return 0;
+      },
+       handleTime(value) {
+        console.log(value);
+      },
+      handleNum(value) {
+        console.log(value);
       },
       logout(){
           window.sessionStorage.removeItem('username');
@@ -189,6 +320,35 @@ export default {
       handleDelete(index, row) {
         console.log(index, row);
       },
+      getType: function (Type) {
+                let tempSystem=[];              
+                this.Systems=[];
+                this.selectSystem='';               
+                let allSystem=[{
+                    Type: "Linux",
+                    label: "CentOS 6"
+                }, {
+                    Type: "Linux",
+                    label: "Ubuntu 16.04"
+                }, {
+                    Type: "Windows",
+                    label: "Windows10"
+                }, {
+                    Type: "Windows",
+                    label: "Windows7"
+                }];
+                for (var val of allSystem){
+                    if (Type == val.Type){
+                        console.log(val);
+                        tempSystem.push({label: val.label, value: val.label})
+                    }
+                }
+                this.Systems = tempSystem;
+            },
+            getSystem: function (System) {
+                console.log(System);
+                console.log(this.selectSystem)
+            },
       submitOrder:function (){
 
       }
@@ -334,16 +494,16 @@ export default {
     font-size: 0;
   }
   .demo-table-expand label {
-    width: 90px;
+   /* width: 45px;*/
     color: #99a9bf;
   }
   .demo-table-expand .el-form-item {
     margin-right: 0;
     margin-bottom: 0;
-    width: 50%;
+    width: 100%;
   }
    .bottom{
-    width:100%;
+    width:99%;
     margin-top:50px;
     position: fixed;
     bottom: 0px;
@@ -358,7 +518,6 @@ export default {
 .final-price{
       width:650px;
       height:50px;
-      margin-top: 20px;
       margin-right:10px;
       float:right;
       text-align: right;
