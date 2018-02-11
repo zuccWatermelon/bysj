@@ -36,7 +36,7 @@
 <div class="selectedTable">
     <el-table
     ref="multipleTable"
-    :data="tableData3"
+    :data="tableData"
     tooltip-effect="dark"
     style="width: 100%"
     @selection-change="handleSelectionChange">
@@ -153,7 +153,7 @@
               <el-slider v-model="bandWidth" show-input> </el-slider>
             </div>
           </el-form-item>
-          <el-form-item label="订购数量">
+          <!-- <el-form-item label="订购数量">
             <el-input-number style="margin-left:10px" 
               v-model="num" 
               @change="handleNum" 
@@ -161,7 +161,7 @@
               :max="10">
             </el-input-number>
             <span>台</span>
-          </el-form-item>
+          </el-form-item> -->
         </el-form>
       </template>
     </el-table-column>
@@ -171,37 +171,35 @@
       width="55">
     </el-table-column>
     <el-table-column
+        prop="orderId"
+        label="订单编号"
+        width="180">
+    </el-table-column>
+    <el-table-column
         prop="name"
         label="商品名称"
         width="180">
-      </el-table-column>
+    </el-table-column>
     <el-table-column
         prop="price"
         label="单价"
         width="180">
-      </el-table-column>
-       <el-table-column
-        prop="discount"
-        label="折扣"
+    </el-table-column>
+<!--        <el-table-column
+        prop="num"
+        label="数量"
         width="180">
-        <template slot-scope="scope">
-          <el-input style="width:50px"
-            placeholder="请输入折扣"
-            v-model="inputDiscount"
-            clearable>
-          </el-input>
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="amount"
-        label="总价"
+      </el-table-column> -->
+    <el-table-column
+        prop="systemType"
+        label="系统类型"
         width="180">
-      </el-table-column>
-      <el-table-column
+    </el-table-column>
+    <el-table-column
         prop="state"
-        label="状态"
+        label="订单状态"
         width="180">
-      </el-table-column>
+    </el-table-column>
     <el-table-column label="操作">
       <template slot-scope="scope">
         <el-button
@@ -233,13 +231,19 @@ export default {
          inputDisk: '40',
          inputDiscount: '0.8',
         type:[{
-          label:"Linux",
-          value:"Linux"
-        },{
           label:"Windows",
           value:"Windows"
+        },{
+          label:"Linux",
+          value:"Linux"
         }],
-        Systems: [],
+        Systems: [{
+          label:"Windows7",
+          value:"Windows7"
+        },{
+          label:"Windows10",
+          value:"Windows10"
+        }],
         selectType: 'Windows',
         selectSystem: 'Windows7',
         login: false,
@@ -262,19 +266,22 @@ export default {
           pwd: ''
         },
         formLabelWidth: '40px',
-        tableData3: [{
+        tableData: [{
             name: '云主机',
             price:'100',
-            amount:'80',
+            amount:'100',
             state:'待提交',
-            cupnum:'2',
-           
+            num: '1',
+            orderId: '1',
+            systemType: 'Windows',
           },{
             name: '云主机',
             price:'100',
-            amount:'80',
+            amount:'100',
             state:'待提交',
-            cupnum:'2',
+            num: '1',
+            orderId: '2',
+            systemType: 'Windows',
           }],
         multipleSelection: [],   
         username:window.sessionStorage.getItem('username'),
@@ -324,18 +331,19 @@ export default {
                 let tempSystem=[];              
                 this.Systems=[];
                 this.selectSystem='';               
-                let allSystem=[{
+                let allSystem=[{                    
+                    Type: "Windows",
+                    label: "Windows7"
+                }, {
+                    Type: "Windows",
+                    label: "Windows10"
+                    
+                }, {
                     Type: "Linux",
                     label: "CentOS 6"
                 }, {
                     Type: "Linux",
                     label: "Ubuntu 16.04"
-                }, {
-                    Type: "Windows",
-                    label: "Windows10"
-                }, {
-                    Type: "Windows",
-                    label: "Windows7"
                 }];
                 for (var val of allSystem){
                     if (Type == val.Type){

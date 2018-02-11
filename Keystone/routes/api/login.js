@@ -1,5 +1,5 @@
 var keystone = require('keystone');
-var Customer = keystone.list('Customer');
+var customer = keystone.list('Customer');
 
 var async = require('async');//异步的
 

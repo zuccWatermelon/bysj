@@ -1,5 +1,12 @@
 var keystone = require('keystone');
-var Customer = keystone.list('OrderItem');
+
+var order = keystone.list('OrderItem');
+var cpu =  keystone.list('Cpu');
+var memory = keystone.list('Memory');
+var operatesystemtype = keystone.list('OperateSystemType');
+var operatesystem = keystone.list('OperateSystem');
+var hardDiskType = keystone.list('HardDiskType');
+var customer = keystone.list('Customer');
 
 var async = require('async');//异步的
 
