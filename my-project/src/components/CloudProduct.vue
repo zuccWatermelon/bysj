@@ -38,13 +38,13 @@
         <div class="product">
             <span class="title">云产品</span>
           <div class="content">云主机是云计算在基础设施应用上的重要组成部分，位于产业链金字塔底层，产品源自云计算平台</div>
-          <div class="passBuyBtn">
+          <div class="passBuyBtn"  @click="submit">
             <img src="../assets/icon_jiarugouwuche.png"/>
             <router-link class="color" to="/shoppingCar">
             加入购物车
-          </router-link>
+            </router-link>
           </div>
-    </div>
+        </div>
     </div>
   </div>
 </template>
@@ -79,115 +79,20 @@ export default {
           window.sessionStorage.removeItem('userID');
           location.reload();
       },
-            /**添加购物车**/
-
-      // addToShoppingCart(prodId, prodFuncType,statusCd){
-      //   var _this = this;
-      //   var user = window.sessionStorage.getItem('user');
-      //   var cust = window.sessionStorage.getItem('cust');
-      //   if(cust == null || cust == ""){
-      //     this.$alert('您未选择客户，请选择', '提示', {
-      //       confirmButtonText: '确定',
-      //       callback: action => {
-      //         return false;
-      //       }
-      //     });
-      //   };
-
-      //   var userType = JSON.parse(user).staffType;
-      //   var sysUserName = JSON.parse(user).sysUserName;
-      //   var loginUserId = JSON.parse(user).staffId;
-      //   var userId = JSON.parse(user).staffId;
-      //   var certId = JSON.parse(cust).CUST_ID;
-
-      //   if (loginUserId == "" || loginUserId == null) {
-      //     this.$alert('您未登录，请登录', '提示', {
-      //       confirmButtonText: '确定',
-      //       callback: action => {
-      //         return false;
-      //       }
-      //     });
-      //   };
-
-      //   if (certId == "" || certId == null || userType == null || userType == "") {
-      //     this.$alert('您未选择客户，请选择', '提示', {
-      //       confirmButtonText: '确定',
-      //       callback: action => {
-      //         return false;
-      //       }
-      //     });
-      //   }
-      //   if(prodId == '301'){
-      //     axios({
-      //       url: '/netCloudOrder/shoppingCartService/addShoppingCart',
-      //       method: 'post',
-      //       data: {
-      //         code:prodId,
-      //         itemCd:'1',     //1新装 2 试用
-      //         statusCd:statusCd,
-      //         actionCode:'添加',
-      //         loginUserId: loginUserId,
-      //         shoppingCart: {
-      //           userId: certId,
-      //           userType: userType
-      //         },
-      //         shoppingCartItem: {
-      //           applyObjId: prodId,
-      //           applyObjSpec: 1,
-      //         },
-      //         cartItemAttr: {
-      //           attrId: 0,
-      //           attrValue: 1,
-      //         },
-      //         offerId: prodId,
-      //       }
-      //     }).then(response => {
-      //       if (response.data.code == "0") {
-      //         this.$router.push({path: '/shoppingCartFrame'});
-      //       } else {
-      //         this.$alert(response.data.msg, '提示', {
-      //           confirmButtonText: '确定',
-      //           callback: action => {
-      //             return false;
-      //           }
-      //         });
-      //       }
-      //     }).catch(err => {
-      //     })
-      //   }else {
-      //     axios({
-      //       url: '/netCloudOrder/shoppingCartService/addToShoppingCart2',
-      //       method: 'post',
-      //       data: {
-      //         loginUserId: loginUserId,
-      //         shoppingCart: {
-      //           userId: certId,
-      //           userType: userType
-      //         },
-      //         shoppingCartItem: {
-      //           applyObjId: prodId,
-      //           applyObjSpec: 1,
-      //         },
-      //         cartItemAttr: {
-      //           attrId: 0,
-      //           attrValue: 1,
-      //         }
-      //       }
-      //     }).then(response => {
-      //       if (response.data.code == "0") {
-      //         this.$router.push({path: '/shoppingCartFrame'});
-      //       } else {
-      //         this.$alert('添加购物车出错!', '提示', {
-      //           confirmButtonText: '确定',
-      //           callback: action => {
-      //             return false;
-      //           }
-      //         });
-      //       }
-      //     }).catch(err => {
-      //     })
-      //   }
-      // },
+      submit(){
+        axios({
+          method:"post",
+          url:"http://127.0.0.1:3000/api/addOrder",
+        }).then(
+            res=>{
+              console.log(res.data);
+            }
+        ).catch(
+            error=>{
+              console.log(error);
+            }
+          ); 
+        },
     }
 }
 </script>
