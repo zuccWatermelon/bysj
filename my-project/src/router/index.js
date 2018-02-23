@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 import First from '@/components/First'
 import CloudProduct from '@/components/CloudProduct'
 import ShoppingCar from '@/components/ShoppingCar'
@@ -12,11 +11,6 @@ export default new Router({
       path: '/',
       name: 'First',
       component: First
-    },
-	{
-      path: '/HelloWorld',
-      name: 'HelloWorld',
-      component: HelloWorld
     },
     {
       path: '/CloudProduct',

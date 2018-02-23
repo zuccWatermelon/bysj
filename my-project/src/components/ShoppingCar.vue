@@ -198,7 +198,7 @@
      </el-table-column>
     </el-table>
   </div>
-      <div class="bottom">
+    <div class="bottom">
       <div class="bottom-center">
         <div class="submit" @click="submitOrder()">提交</div>
         <div class="final-price">
@@ -306,7 +306,24 @@ export default {
       
       handleDelete(index, row) {
         console.log(index, row);
-        
+        console.log(index);
+        console.log(row.orderId);
+
+        axios({
+              method:"post",
+              url:"http://127.0.0.1:3000/api/deleteOrder",
+              ID:"row.orderId",
+        }).then(
+          res=>{
+            self.tableData = res.data.message
+          }
+        ).catch(
+          error=>{
+              console.log(error);
+          }
+        )
+
+
       },
       getType: function (Type) {
                 let tempSystem=[];              
@@ -476,6 +493,7 @@ export default {
 .selectedTable{
   margin-left: 100px;
   margin-right: 100px;
+  margin-bottom: 75px;
   text-align: left;
 }
 
@@ -503,7 +521,7 @@ export default {
   .bottom-center{
     width:1200px;
     margin:0 auto;
-}
+  }
 .final-price{
       width:650px;
       height:50px;

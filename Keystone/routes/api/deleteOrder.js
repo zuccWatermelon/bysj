@@ -15,7 +15,7 @@ exports = module.exports = function (req, res) {
     }, function (err, result) {
     });
 
-    order.model.findById('item')//订单的哈希值
+    order.model.findById('5a8fcf2a0bd70ae794a65752')//订单的哈希值
         .remove(function(err) {
         // post已删除
         });
