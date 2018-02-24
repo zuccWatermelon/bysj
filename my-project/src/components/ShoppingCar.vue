@@ -214,7 +214,7 @@
 export default {
     data() {
       return {
-        activeIndex: '1',
+        activeIndex: '7',
          inputDisk: '40',
          inputDiscount: '0.8',
         type:[{
@@ -246,7 +246,7 @@ export default {
         }],
         form: {
           name: '',
-          pwd: ''
+          pwd: '',
         },
         formLabelWidth: '40px',
         tableData: [],
@@ -287,9 +287,24 @@ export default {
         console.log(value);
       },
       logout(){
+        this.$confirm('是否退出?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '退出成功!'
+          });
           window.sessionStorage.removeItem('username');
           window.sessionStorage.removeItem('userID');
           location.reload();
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });          
+        }); 
       },
         toggleSelection(rows) {
         if (rows) {
@@ -305,24 +320,43 @@ export default {
       },
       
       handleDelete(index, row) {
-        console.log(index, row);
-        console.log(index);
-        console.log(row.orderId);
-
-        axios({
-              method:"post",
-              url:"http://127.0.0.1:3000/api/deleteOrder",
-              ID:"row.orderId",
-        }).then(
-          res=>{
-            self.tableData = res.data.message
-          }
-        ).catch(
-          error=>{
-              console.log(error);
-          }
-        )
-
+          this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          cancelButtonText: '取消',
+          confirmButtonText: '确定',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          var orderId = row.orderId;
+          console.log(orderId);
+          axios({
+            method:"post",
+            url:"http://127.0.0.1:3000/api/deleteOrder",
+            data:{
+              "orderID":orderId
+            },
+            responseType: 'json',
+            headers:{
+              'Content-Type':'application/x-www-form-urlencoded'
+            },
+          }).then(
+              res=>{
+                self.tableData = res.data.message
+              }
+            ).catch(
+              error=>{
+                console.log(error);
+            }
+          )
+            location.reload();
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
+        });
 
       },
       getType: function (Type) {
@@ -402,14 +436,6 @@ export default {
       //     if($(node).find(".main-top").find("input[type='checkbox']").prop("checked")) {
       //       var cartId = $(node).find(".inputCartId").val();
       //       var orderItemId = $(node).find(".inputCartItemId").val();
-      //       var applyObjId = $(node).find(".inputOfferId").val();
-      //       var catalogId = $(node).find(".inputCatalogId").val();
-      //       var applyObjSpec = "1";
-      //       var discount = $(node).find(".discount").val();
-      //       var billType = $(node).find(".billType").val();
-      //       var offerId = $(node).find(".inputOfferId").val();
-      //       var itemCdName = $(node).find(".inputItemCdName").val();
-      //       var itemCd = $(node).find(".inputItemCd").val();
       //       var statusCd = $(node).find(".inputStatusCd").val();
 
       //       var amount = $.trim($(node).find(".totalPrice").text());
@@ -426,16 +452,6 @@ export default {
       //         successMsg = "订单已成功提交!"
           
       //       param.inputItemCdName = itemCdName;
-      //       param.code = offerId;
-      //       param.cartId = cartId;
-      //       param.itemId = orderItemId;
-      //       param.applyObjId = applyObjId;
-      //       param.applyObjSpec = applyObjSpec;
-      //       param.discount = discount;
-      //       param.billType = billType;
-      //       param.catalogId = catalogId;
-      //       param.statusCd = statusCd;
-      //       param.itemCd = itemCd;
       //       param.amount = amount;
       //       param.offerId = offerId;
       //       param.discountOne = discountOne;

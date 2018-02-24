@@ -28,7 +28,7 @@
         </div>
       </div>
     </el-menu> 
-    <div class="box">
+    <div class="box" >
     <p align="left" class="box-header">云产品</p>
     <p align="left" class="box-nav">
       依托发达的基础网络，通过“2+31+X”和数据中心互联网（DCI）等资源布局，实现云网融合和统一调度，已形成平台+应用的云计算和大数据产品体系，为用户提供云产品服务。
@@ -75,9 +75,24 @@ export default {
         return 0;
       },
       logout(){
+        this.$confirm('是否退出?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '退出成功!'
+          });
           window.sessionStorage.removeItem('username');
           window.sessionStorage.removeItem('userID');
           location.reload();
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });          
+        }); 
       },
       submit(){
         axios({
@@ -137,8 +152,7 @@ export default {
     color:#fff;
   }
  .top{
-    height:340px;
-    width:100%;
+    background-size:100%;
     background-color: #0182de;
     background-image: url("../assets/pic_1.png");
     background-repeat: no-repeat;

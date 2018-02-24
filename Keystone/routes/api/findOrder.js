@@ -23,7 +23,7 @@ exports = module.exports = function (req, res) {
             result.orderItems.forEach(function(element){
                 var orderItem = {};
 
-                console.log(element);
+                // console.log(element);
 
                 orderItem.orderId = element._id;//默认的哈希值
                 orderItem.name = '云主机';
@@ -41,7 +41,7 @@ exports = module.exports = function (req, res) {
                 returnMessag.message.push(orderItem)
             });
     	}
-    	console.log(returnMessag);
+    	// console.log(returnMessag);
     	res.send(JSON.stringify(returnMessag));
     });
 };

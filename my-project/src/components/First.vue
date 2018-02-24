@@ -113,9 +113,24 @@ export default {
         }
       },
       logout(){
+        this.$confirm('是否退出?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '退出成功!'
+          });
           window.sessionStorage.removeItem('username');
           window.sessionStorage.removeItem('userID');
           location.reload();
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });          
+        }); 
       },
       submit(){
           var self = this;

@@ -1,27 +1,24 @@
 var keystone = require('keystone');
 var order = keystone.list('OrderItem');
-
 var async = require('async');//异步的
+var dataAnalyse = function(obj){
+    var data = Object.keys(obj)[0];
+    data = JSON.parse(data);
+    return data;
+}
 exports = module.exports = function (req, res) {
+    var item = null;
     var returnMessag = {}; 
-
-    async.parallel({//并行异步
-        order: function (done) {//order是别名
-            order.model.findOne()
-            .exec(function (err, result) {
-                done(err, result);
-            });
-        },
-    }, function (err, result) {
+    var data = req.body ? dataAnalyse(req.body) : null;
+    item = data ? data.orderID : null;
+    if(!item){
+        return;
+    }
+    //订单的哈希值
+    order.model.findById(item).remove(function(err,result) {
+        returnMessag.message = "删除订单成功";
+        res.send(returnMessag);
     });
-
-    order.model.findById('5a8fcf2a0bd70ae794a65752')//订单的哈希值
-        .remove(function(err) {
-        // post已删除
-        });
-
-    returnMessag.message = "删除订单成功";
-    res.send(JSON.stringify(returnMessag));
 };
 
 
