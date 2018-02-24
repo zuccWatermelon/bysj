@@ -23,7 +23,7 @@
               <el-menu-item index="6-1"><el-button type="text" @click="login = true" class="color" > 资产  </el-button> </el-menu-item>
               <el-menu-item index="6-2"><el-button type="text" @click="logout" class="color" > 退出  </el-button> </el-menu-item>
         </el-submenu>
-          <el-menu-item index="7"> <router-link to="ShoppingCar" class="color">我的购物车 </router-link> </el-menu-item>
+          <el-menu-item index="7"> <router-link to="shoppingcaringCar" class="color">我的购物车 </router-link> </el-menu-item>
         </div>
       </div>
     </el-menu>
@@ -178,8 +178,8 @@
         width="180">
     </el-table-column>
     <el-table-column
-        prop="systemType"
-        label="系统类型"
+        prop="createdAt"
+        label="订单创建时间"
         width="180">
     </el-table-column>
     <el-table-column

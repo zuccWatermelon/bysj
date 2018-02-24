@@ -7,7 +7,6 @@ var operatesystemtype = keystone.list('OperateSystemType');
 var operatesystem = keystone.list('OperateSystem');
 var hardDiskType = keystone.list('HardDiskType');
 var customer = keystone.list('Customer');
-
 var async = require('async');//异步的
 
 exports = module.exports = function (req, res) {
@@ -20,7 +19,6 @@ exports = module.exports = function (req, res) {
     var dataHardDiskSize = req.body.dataHardDiskSize;
     var bandWidth = req.body.bandWidth;
     var status = req.body.status;
-
     var returnMessag = {}; 
     var newOrder = new order.model({
             Cpu: '5a7970d6bc9a5b0370dae3a8',

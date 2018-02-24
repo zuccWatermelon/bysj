@@ -23,8 +23,7 @@ exports = module.exports = function (req, res) {
             result.orderItems.forEach(function(element){
                 var orderItem = {};
 
-                // console.log(element);
-
+                console.log(element);
                 orderItem.orderId = element._id;//默认的哈希值
                 orderItem.name = '云主机';
                 orderItem.price = new Date().getTime();
@@ -38,10 +37,12 @@ exports = module.exports = function (req, res) {
                 orderItem.dataHardDiskSize = element.dataHardDiskSize;
                 orderItem.bandWidth = element.bandWidth;
                 orderItem.status = element.status;
+                orderItem.createdAt = element._.createdAt .format('YYYY-MM-DD HH:MM:SS')
+
                 returnMessag.message.push(orderItem)
             });
     	}
     	// console.log(returnMessag);
     	res.send(JSON.stringify(returnMessag));
     });
-};
+};  
