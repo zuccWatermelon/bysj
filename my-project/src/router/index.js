@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import First from '@/components/First'
 import CloudProduct from '@/components/CloudProduct'
 import ShoppingCar from '@/components/ShoppingCar'
+import Assets from '@/components/Assets'
 Vue.use(Router)
 
 export default new Router({
@@ -21,6 +22,11 @@ export default new Router({
       path: '/ShoppingCar',
       name: '/ShoppingCar',
       component: ShoppingCar
+    },
+    {
+      path: '/Assets',
+      name: '/Assets',
+      component: Assets
     },
   ]
 })

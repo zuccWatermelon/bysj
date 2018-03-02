@@ -21,7 +21,7 @@
 <!--           <el-menu-item index="5"> <el-button type="text" @click="regist = true" class="color" >注册 </el-button> </el-menu-item> 登录之后就不要注册啦-->
           <el-submenu index="6">
           <template slot="title" class="color"> 您好！{{username}} </template>
-              <el-menu-item index="6-1"><el-button type="text" @click="login = true" class="color" > 资产  </el-button> </el-menu-item>
+              <el-menu-item index="6-1"><router-link to="Assets" class="color">资产</router-link> </el-menu-item>
               <el-menu-item index="6-2"><el-button type="text" @click="logout" class="color" > 退出  </el-button> </el-menu-item>
         </el-submenu>
           <el-menu-item index="7"> <router-link to="ShoppingCar" class="color">我的购物车 </router-link> </el-menu-item>
@@ -90,7 +90,7 @@ export default {
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消'
+            message: '已取消退出'
           });          
         }); 
       },
