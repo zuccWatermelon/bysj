@@ -228,7 +228,46 @@ export default {
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
-      
+      handleUnsubscribe(index, row) {
+        var self = this;
+        this.$confirm('是否退订该订单?<br>产品名称：'+row.name+'&emsp;CPU：'+row.Cpu+'核&emsp;内存：'+row.memory+' G<br>操作系统：'+row.systemType+'|'+row.operateSystem+'&emsp;带宽：'+row.bandWidth+'<br>系统盘：'+row.systemHardDiskType+'&emsp;数据盘：'+row.dataHardDiskType+'|'+row.dataHardDiskSize+'', '提示', {
+        dangerouslyUseHTMLString: true,
+        cancelButtonText: '取消',
+        confirmButtonText: '确定',
+        type: 'warning'
+      }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '退订成功!'
+        });
+          var orderId = row.orderId;
+          console.log(orderId);
+          axios({
+            method:"post",
+            url:"http://127.0.0.1:3000/api/deleteOrder",
+            data:{
+              "orderID":orderId
+            },
+            responseType: 'json',
+            headers:{
+              'Content-Type':'application/x-www-form-urlencoded'
+            },
+          }).then(
+              res=>{
+              }
+            ).catch(
+              error=>{
+                console.log(error);
+            }
+          )
+            location.reload();
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消退订'
+          });          
+        });
+      },
       getType: function (Type) {
                 let tempSystem=[];              
                 this.Systems=[];

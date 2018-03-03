@@ -342,7 +342,6 @@ export default {
             },
           }).then(
               res=>{
-                self.tableData = res.data.message
               }
             ).catch(
               error=>{
