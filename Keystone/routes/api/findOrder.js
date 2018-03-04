@@ -26,7 +26,7 @@ exports = module.exports = function (req, res) {
                 console.log(element);
                 orderItem.orderId = element._id;//默认的哈希值
                 orderItem.name = '云主机';
-                orderItem.price = new Date().getTime();
+                // orderItem.price = new Date().getTime();
                 orderItem.num = 1;
                 orderItem.Cpu = element.Cpu.name;
                 orderItem.memory = element.memory.name;
@@ -37,8 +37,8 @@ exports = module.exports = function (req, res) {
                 orderItem.dataHardDiskSize = element.dataHardDiskSize;
                 orderItem.bandWidth = element.bandWidth;
                 orderItem.status = element.status;
-                orderItem.createdAt = element._.createdAt .format('YYYY-MM-DD HH:MM:SS')
-
+                orderItem.createdAt = element._.createdAt .format('YYYY-MM-DD')
+                orderItem.price = 2 * orderItem.Cpu * orderItem.memory * orderItem.dataHardDiskSize * orderItem.bandWidth;
                 returnMessag.message.push(orderItem)
             });
     	}

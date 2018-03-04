@@ -230,7 +230,7 @@ export default {
       },
       handleUnsubscribe(index, row) {
         var self = this;
-        this.$confirm('是否退订该订单?<br>产品名称：'+row.name+'&emsp;CPU：'+row.Cpu+'核&emsp;内存：'+row.memory+' G<br>操作系统：'+row.systemType+'|'+row.operateSystem+'&emsp;带宽：'+row.bandWidth+'<br>系统盘：'+row.systemHardDiskType+'&emsp;数据盘：'+row.dataHardDiskType+'|'+row.dataHardDiskSize+'', '提示', {
+        this.$confirm('是否退订该订单?<br>产品名称：'+row.name+'&emsp;CPU：'+row.Cpu+'核&emsp;内存：'+row.memory+' G<br>操作系统：'+row.systemType+'|'+row.operateSystem+'&emsp;带宽：'+row.bandWidth+' MB<br>系统盘：'+row.systemHardDiskType+'&emsp;数据盘：'+row.dataHardDiskType+'|'+row.dataHardDiskSize+' G', '提示', {
         dangerouslyUseHTMLString: true,
         cancelButtonText: '取消',
         confirmButtonText: '确定',

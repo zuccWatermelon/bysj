@@ -27,8 +27,8 @@ exports = module.exports = function (req, res) {
             operateSystemType:'5a79717cbc9a5b0370dae3b7',
             systemHardDiskType:'5a7971b5bc9a5b0370dae3bc',
             dataHardDiskType:'5a7971b5bc9a5b0370dae3bc',
-            dataHardDiskSize:'40G',
-            bandWidth:'1m',
+            dataHardDiskSize:'40',
+            bandWidth:'1',
             status:'待提交'
     })
 // if (shouldBePublished) {
