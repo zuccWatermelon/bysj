@@ -19,6 +19,7 @@ exports = module.exports = function (req, res) {
     var dataHardDiskSize = req.body.dataHardDiskSize;
     var bandWidth = req.body.bandWidth;
     var status = req.body.status;
+    var period = req.body.period;
     var returnMessag = {}; 
     var newOrder = new order.model({
             Cpu: '5a7970d6bc9a5b0370dae3a8',
@@ -28,6 +29,7 @@ exports = module.exports = function (req, res) {
             systemHardDiskType:'5a7971b5bc9a5b0370dae3bc',
             dataHardDiskType:'5a7971b5bc9a5b0370dae3bc',
             dataHardDiskSize:'40',
+            period:'1',
             bandWidth:'1',
             status:'待提交'
     })

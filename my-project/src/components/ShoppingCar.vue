@@ -45,8 +45,8 @@
         <el-form label-position="left" inline class="demo-table-expand">
           <el-form-item label="开通时间">
             <el-input-number style="margin-left:10px" 
-              v-model="time" 
-              @change="handleTime" 
+              v-model="period" 
+              @change="handlePeriod" 
               :min="1" 
               :max="10">
             </el-input-number>
@@ -234,7 +234,7 @@ export default {
         cpu: '1',
         memory: '1',
         bandWidth: 1,
-        time: 1,
+        period: 1,
         num: 1,
         disk: [{
           value: 'SATA',
@@ -279,7 +279,7 @@ export default {
       handleSelect(key, keyPath) {
         return 0;
       },
-       handleTime(value) {
+       handlePeriod(value) {
         console.log(value);
       },
       handleNum(value) {
@@ -319,6 +319,7 @@ export default {
       },
       
       handleDelete(index, row) {
+          console.log(row);
           this.$confirm('此操作将永久删除该订单, 是否继续?', '提示', {
           cancelButtonText: '取消',
           confirmButtonText: '确定',
