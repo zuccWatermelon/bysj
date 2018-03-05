@@ -45,7 +45,7 @@
         <el-form label-position="left" inline class="demo-table-expand">
           <el-form-item label="开通时间">
             <el-input-number style="margin-left:10px" 
-              v-model="period" 
+              v-model="props.row.period" 
               @change="handlePeriod" 
               :min="1" 
               :max="10">
@@ -149,7 +149,10 @@
           </el-form-item>
           <el-form-item label="带宽">
             <div class="block" style='width:400px ; margin-left:38px' >
-              <el-slider v-model="bandWidth" show-input> </el-slider>
+              <el-slider v-model="bandWidth" 
+              :min="1" 
+              :max="100"
+              show-input> </el-slider>
             </div>
           </el-form-item>
         </el-form>
