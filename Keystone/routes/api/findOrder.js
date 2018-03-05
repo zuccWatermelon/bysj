@@ -39,6 +39,7 @@ exports = module.exports = function (req, res) {
                 orderItem.dataHardDiskSize = element.dataHardDiskSize;
                 orderItem.bandWidth = element.bandWidth;
                 orderItem.status = element.status;
+                orderItem.createdAt = element._.createdAt.format("YYYY-MM-DD");
                 orderItem.endAt = element.createdAt;
                 orderItem.endAt.setMonth(Number(orderItem.endAt.getMonth())+Number(orderItem.period));
                 orderItem.endAt = moment(orderItem.endAt).format("YYYY-MM-DD");
