@@ -142,7 +142,7 @@
             </el-select>
             <el-input style='width:100px'
             placeholder="请输入内容"
-            v-model="inputDisk"
+            v-model="props.row.dataHardDiskSize"
             clearable>
             </el-input>
             <span>G</span>
@@ -217,7 +217,7 @@ export default {
     data() {
       return {
         activeIndex: '7',
-         inputDisk: '40',
+         dataHardDiskSize: '40',
          inputDiscount: '0.8',
         type:[{
           label:"Windows",
