@@ -149,7 +149,7 @@
           </el-form-item>
           <el-form-item label="带宽">
             <div class="block" style='width:400px ; margin-left:38px' >
-              <el-slider v-model="bandWidth" 
+              <el-slider v-model="props.row.bandWidth" 
               :min="1" 
               :max="100"
               show-input> </el-slider>
@@ -271,6 +271,9 @@ export default {
       }).then(
           res=>{
             self.tableData = res.data.message
+            self.tableData.forEach(function(element){
+              element.bandWidth = Number(element.bandWidth)
+            })
           }
       ).catch(
           error=>{
@@ -288,6 +291,9 @@ export default {
       handleNum(value) {
         console.log(value);
       },
+      // handlebandwidth(value) {
+      //   console.log(value);
+      // },
       logout(){
         this.$confirm('是否退出?', '提示', {
           confirmButtonText: '确定',
