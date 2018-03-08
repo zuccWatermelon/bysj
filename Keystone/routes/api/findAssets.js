@@ -12,6 +12,7 @@ exports = module.exports = function (req, res) {
             OrderItem.model.find()
                 .populate('Cpu memory operateSystemType operateSystem systemHardDiskType dataHardDiskType')
                 .where('status', '已完成')
+                .where('userID', req.body.userID)
                 .exec(function (err, result) {
                     done(err, result);
                 });

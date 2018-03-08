@@ -12,6 +12,7 @@ exports = module.exports = function (req, res) {
             OrderItem.model.find()
                 .populate('Cpu memory operateSystemType operateSystem systemHardDiskType dataHardDiskType')
                 .where('status', '待提交')
+                .where('userID', req.body.userID)
                 .exec(function (err, result) {
                     done(err, result);
                 });
@@ -25,7 +26,6 @@ exports = module.exports = function (req, res) {
             result.orderItems.forEach(function(element){
                 var orderItem = {};
 
-                console.log(element);
                 orderItem.orderId = element._id;//默认的哈希值
                 orderItem.name = '云主机';
                 // orderItem.price = new Date().getTime();

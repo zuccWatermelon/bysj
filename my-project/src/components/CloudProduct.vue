@@ -95,9 +95,12 @@ export default {
         }); 
       },
       submit(){
+        var formData = new FormData();
+        formData.append('userID', this.userID);
         axios({
           method:"post",
           url:"http://127.0.0.1:3000/api/addOrder",
+          data: formData
         }).then(
             res=>{
               console.log(res.data);

@@ -21,6 +21,10 @@ exports = module.exports = function (req, res) {
     var status = req.body.status;
     var period = req.body.period;
     var returnMessag = {}; 
+    var userID = req.body.userID;
+
+    console.log(userID)
+
     var newOrder = new order.model({
             Cpu: '5a7970d6bc9a5b0370dae3a8',
             memory: '5a7970f5bc9a5b0370dae3ae',
@@ -31,12 +35,14 @@ exports = module.exports = function (req, res) {
             dataHardDiskSize:'40',
             period:'1',
             bandWidth:'1',
-            status:'待提交'
+            status:'待提交',
+            userID:userID
     })
 // if (shouldBePublished) {
 //     newOrder.state = 'published';
 // }
     newOrder.save(function(err) {
+        console.log(err)
         // post已保存  
     });
     returnMessag.message = "添加订单成功";

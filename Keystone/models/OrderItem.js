@@ -26,7 +26,8 @@ OrderItem.add('OrderItem', {
   dataHardDiskType:{ type: Types.Relationship, ref: 'HardDiskType', label: '数据盘类型'},
   dataHardDiskSize:{ type: String, label: '数据盘大小'},
   bandWidth:{ type: String, label: '带宽大小'},
-  status: { type: String, label: '订单项状态'}
+  status: { type: String, label: '订单项状态'},
+  userID: { type: Types.Relationship, ref: 'Customer', label: '用户'}
 });
 
 

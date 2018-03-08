@@ -172,10 +172,12 @@ export default {
       if(!userID){
         this.$router.push({path: '/'});
       }
-
+      var formData = new FormData();
+      formData.append('userID', userID);
       axios({
               method:"post",
               url:"http://127.0.0.1:3000/api/findAssets",
+              data: formData
       }).then(
           res=>{
             self.tableData = res.data.message
