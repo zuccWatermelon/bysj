@@ -267,7 +267,7 @@ export default {
 
       axios({
               method:"post",
-              url:"http://127.0.0.1:3000/api/findOrder",
+              url:"http://127.0.0.1:3000/api/findShoppingcar",
       }).then(
           res=>{
             self.tableData = res.data.message
