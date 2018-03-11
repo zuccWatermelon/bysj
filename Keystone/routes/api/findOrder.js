@@ -24,7 +24,7 @@ exports = module.exports = function (req, res) {
             result.orderItems.forEach(function(element){
                 var orderItem = {};
 
-                console.log(element);
+                // console.log(element);
                 orderItem.orderId = element._id;//默认的哈希值
                 orderItem.name = '云主机';
                 // orderItem.price = new Date().getTime();

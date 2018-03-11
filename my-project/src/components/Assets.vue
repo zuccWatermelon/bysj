@@ -103,10 +103,11 @@
           size="mini"
           @click="handleContinue(scope.$index, scope.row)">续订
         </el-button>
-        <el-button
+        <el-button 
           size="mini"
           type="primary"
-          @click="handleChange(scope.$index, scope.row)">变更
+          @click="handleChange(scope.$index, scope.row)">
+          变更
         </el-button>
         <el-button
           size="mini"
@@ -229,6 +230,44 @@ export default {
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
+      },
+      handleChange(index,row){
+          console.log(row);
+          this.$confirm('此操作将跳转到购物车进行修改订单, 是否继续?', '提示', {
+          cancelButtonText: '取消',
+          confirmButtonText: '确定',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '请到购物车中修改订单'
+          });
+          var orderId = row.orderId;
+          var formData = new FormData();
+          formData.append('orderID', orderId);
+          axios({
+            method:"post",
+            url:"http://127.0.0.1:3000/api/orderChange",
+            data:formData,
+            responseType: 'json',
+            headers:{
+              'Content-Type':'application/x-www-form-urlencoded'
+            },
+          }).then(
+              res=>{
+                this.$router.push("/ShoppingCar");
+              }
+            ).catch(
+              error=>{
+                console.log(error);
+            }
+          )
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消修改'
+          });          
+        });
       },
       handleUnsubscribe(index, row) {
         var self = this;
