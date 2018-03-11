@@ -316,18 +316,17 @@ export default {
           });          
         }); 
       },
-        toggleSelection(rows) {
+      toggleSelection(rows) {
         if (rows) {
           rows.forEach(row => {
             this.$refs.multipleTable.toggleRowSelection(row);
+            console.log(rows);
           });
         } else {
           this.$refs.multipleTable.clearSelection();
         }
       },
-      handleSelectionChange(val) {
-        this.multipleSelection = val;
-      },
+      
       
       handleDelete(index, row) {
           console.log(row);
@@ -399,102 +398,78 @@ export default {
                 console.log(System);
                 console.log(this.selectSystem)
             },
-      submitOrder:function (){
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+        if(val[0]){
+          console.log(val[0].orderId);
+        }
+        console.log(val);
 
-      }
-      //       /**提交订单**/
-      // submitOrder:function () {
-      //   var _this = this;
-      //   var param = {};
-      //   var orderItemList = [];
-      //   var num = 0;
+      },
 
-      //   /**遍历所有的购物车行,一次只允许提交一个**/
-      //   $(".item-li").each(function () {
-      //     var node = $(this).find("input[type='checkbox']");
-      //     if($(node).prop("checked")) {
-      //       num++;
-      //     }
-      //   });
+      submitOrder(){
+          this.$confirm('是否提交订单?', '提示', {
+          cancelButtonText: '取消',
+          confirmButtonText: '确定',
+          type: 'warning'
+        }).then(() => {
+          console.log(this.multipleSelection);
+          this.multipleSelection.forEach(function(element){
+            var orderId = element.orderId;
+            var cpu = element.Cpu;
+            var bandWidth = element.bandWidth;
+            var createdAt = element.createdAt;
+            var dataHardDiskSize = element.dataHardDiskSize;
+            var dataHardDiskType = element.dataHardDiskType;
+            var memory = element.memory;
+            var operateSystem = element.operateSystem;
+            var period = element.period;
+            var status = element.status;
+            var systemHardDiskType = element.systemHardDiskType;
+            var systemType = element.systemType;
 
-      //   if(num != 1){
-      //     this.$alert('不支持一次性提交多项!','提示',{
-      //       confirmButtonText: '确定',
-      //       callback: action => {
-      //         return false;
-      //       }
-      //     })
-      //   }
-
-      //   if(num == 0){
-      //     this.$alert('请先选中再提交!','提示',{
-      //       confirmButtonText: '确定',
-      //       callback: action => {
-      //         return false;
-      //       }
-      //     })
-      //   }
-
-      //   /**提交成功后返回信息**/
-      //   var successMsg = "";
-      //   /**提交失败信息**/
-      //   var errorMsg = "";
-      //   /**组装提交的数据**/
-      //   $("li.item-li").each(function () {
-      //     var node = this;
-      //     /**如果该checkbox被选中**/
-      //     if($(node).find(".main-top").find("input[type='checkbox']").prop("checked")) {
-      //       var cartId = $(node).find(".inputCartId").val();
-      //       var orderItemId = $(node).find(".inputCartItemId").val();
-      //       var statusCd = $(node).find(".inputStatusCd").val();
-
-      //       var amount = $.trim($(node).find(".totalPrice").text());
-
-      //       /**IPRAN产品需要增加一次性费用原价以及一次性费用折扣**/
-      //       var discountOne = "";   //一次性费用折扣
-      //       var amountOne = "";     //一次性费用金额
-      //       if(offerId == '261' || offerId == '321' || offerId == '322' || offerId == '323'){
-      //         discountOne = $(node).find(".onceChargeDiscount").val();
-      //         let txt = $(node).find(".onceChargePriceAfterDiscount").text();
-      //         amountOne = txt.substring(1,txt.length);
-      //       }
-
-      //         successMsg = "订单已成功提交!"
-          
-      //       param.inputItemCdName = itemCdName;
-      //       param.amount = amount;
-      //       param.offerId = offerId;
-      //       param.discountOne = discountOne;
-      //       param.amountOne = amountOne;
-      //       if(_this.parentOrderTransInstance.duration != null && _this.parentOrderTransInstance.duration != ''){
-      //         param.duration = _this.parentOrderTransInstance.duration;
-      //       }
-
-      //       if(_this.parentOrderTransInstance.payType != null && _this.parentOrderTransInstance.payType != ''){
-      //         param.payType = _this.parentOrderTransInstance.payType;
-      //       }
-      //     }
-      //   });
-      //   /**报错信息**/
-      //   var msg = "";
-      //   /**判断购物车能否提交**/
-      //     axios({
-      //       method:'post',
-      //       url:'/netCloudOrder/shoppingCartService/checkShoppingCart',
-      //       data:{
-      //         cartItemId:param.itemId,
-      //         catalogId:param.catalogId,
-      //       },
-      //     }).then(res=>{
-      //       /**如果可以提交**/
-      //         msg = res.data.msg;
-      //         _this.$alert(msg,'提示',{
-      //           confirmButtonText: '确定',
-      //           callback: action => {
-      //           }
-      //         })
-      //     })
-      // },
+            var formData = new FormData();
+            formData.append('orderID', orderId);
+            formData.append('cpu', cpu);
+            formData.append('createdAt', createdAt);
+            formData.append('dataHardDiskSize', dataHardDiskSize);
+            formData.append('dataHardDiskType', dataHardDiskType);
+            formData.append('memory', memory);
+            formData.append('operateSystem', operateSystem);
+            formData.append('period', period);
+            formData.append('status', status);
+            formData.append('systemHardDiskType', systemHardDiskType);
+            formData.append('operateSystemType', systemType);
+            formData.append('bandWidth', bandWidth);
+            axios({
+              method:"post",
+              url:"http://127.0.0.1:3000/api/saveOrder",
+              data:formData,
+              responseType: 'json',
+              headers:{
+                'Content-Type':'application/x-www-form-urlencoded'
+              },
+            }).then(
+                res=>{
+                }
+              ).catch(
+                error=>{
+                  console.log(error);
+              }
+            )
+          })
+          this.$message({
+            type: 'success',
+            message: '订单提交成功'
+          });
+            location.reload();
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '取消提交'
+          });          
+        });
+      },
     }
 }
 </script>
