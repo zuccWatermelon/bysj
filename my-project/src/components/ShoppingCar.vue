@@ -320,7 +320,6 @@ export default {
         if (rows) {
           rows.forEach(row => {
             this.$refs.multipleTable.toggleRowSelection(row);
-            console.log(rows);
           });
         } else {
           this.$refs.multipleTable.clearSelection();
@@ -404,7 +403,6 @@ export default {
           console.log(val[0].orderId);
         }
         console.log(val);
-
       },
 
       submitOrder(){
@@ -415,32 +413,34 @@ export default {
         }).then(() => {
           console.log(this.multipleSelection);
           this.multipleSelection.forEach(function(element){
-            var orderId = element.orderId;
-            var cpu = element.Cpu;
+            var orderID = element.orderId;
+            var CPU = element.Cpu;
             var bandWidth = element.bandWidth;
             var createdAt = element.createdAt;
             var dataHardDiskSize = element.dataHardDiskSize;
             var dataHardDiskType = element.dataHardDiskType;
             var memory = element.memory;
             var operateSystem = element.operateSystem;
+            var operateSystemType = element.systemType;
             var period = element.period;
             var status = element.status;
             var systemHardDiskType = element.systemHardDiskType;
-            var systemType = element.systemType;
+            
 
             var formData = new FormData();
-            formData.append('orderID', orderId);
-            formData.append('cpu', cpu);
+            formData.append('orderID', orderID);
+            formData.append('CPU', CPU);
             formData.append('createdAt', createdAt);
             formData.append('dataHardDiskSize', dataHardDiskSize);
             formData.append('dataHardDiskType', dataHardDiskType);
             formData.append('memory', memory);
-            formData.append('operateSystem', operateSystem);
+            formData.append('operateSystemType', operateSystemType);
             formData.append('period', period);
             formData.append('status', status);
             formData.append('systemHardDiskType', systemHardDiskType);
-            formData.append('operateSystemType', systemType);
+             formData.append('operateSystem', operateSystem);
             formData.append('bandWidth', bandWidth);
+
             axios({
               method:"post",
               url:"http://127.0.0.1:3000/api/saveOrder",
@@ -466,7 +466,7 @@ export default {
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '取消提交'
+            message: '提交错误，取消提交' 
           });          
         });
       },

@@ -4,7 +4,7 @@ var order = keystone.list('OrderItem');
 var async = require('async');//异步的
 
 exports = module.exports = function (req, res) {
-    var cpu = req.body.cpu;
+    var CPU = req.body.CPU;
     var memory = req.body.memory;
     var operateSystemType = req.body.operateSystemType;
     var operateSystem = req.body.operateSystem;
@@ -16,22 +16,22 @@ exports = module.exports = function (req, res) {
     var period = req.body.period;
     var orderID = req.body.orderID;
     var returnMessag = {}; 
-    var userID = req.body.userID;
 
     console.log(orderID);
 
     order.model.update(
         { _id : orderID }, 
-        { status : "已完成" },
-        { cpu : cpu },
-        { memory : memory },
-        { operateSystemType : operateSystemType },
-        { operateSystem : operateSystem },
-        { systemHardDiskType : systemHardDiskType },
-        { dataHardDiskType : dataHardDiskType },
-        { dataHardDiskSize : dataHardDiskSize },
-        { bandWidth : bandWidth },
-        { period : period },
+        { status : "已完成" ,
+        CPU : CPU ,
+         memory : memory ,
+         operateSystemType : operateSystemType ,
+         operateSystem : operateSystem ,
+         systemHardDiskType : systemHardDiskType ,
+         dataHardDiskType : dataHardDiskType ,
+         dataHardDiskSize : dataHardDiskSize ,
+         bandWidth : bandWidth ,
+         period : period
+        },
 
         function(err,element){
         if(err){
