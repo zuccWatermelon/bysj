@@ -118,6 +118,7 @@
       </el-table-column>
      </el-table>
     </div>
+      <p class="foot">版权所有 ©2017 中国电信浙江公司 [ 增值电信业务经营许可证 A2.B1.B2-XXXXXXXX ] ICP 证号:浙 ICP 备 XXXXXXXX号</p>
   </div>
 </template>
 
@@ -383,4 +384,14 @@ export default {
     color: white;
     text-decoration:none;
   }
+   .foot{
+    width:100%;
+    text-align: center;
+    font-size: 18px;
+    color: #999;
+    line-height: 30px;
+    padding-bottom: 26px;
+    margin: 0;
+  }
+
 </style>
