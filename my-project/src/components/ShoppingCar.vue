@@ -414,6 +414,55 @@ export default {
         }).then(() => {
           console.log(this.multipleSelection);
           this.multipleSelection.forEach(function(element){
+
+            if(element.Cpu == 1){
+              element.Cpu = '5a7970d6bc9a5b0370dae3a8';
+            }else if (element.Cpu == 2) {
+              element.Cpu = '5a7970dfbc9a5b0370dae3a9';
+            }else if (element.Cpu == 4) {
+              element.Cpu = '5a7970e2bc9a5b0370dae3aa';
+            }else if (element.Cpu == 8) {
+              element.Cpu = '5a7970e4bc9a5b0370dae3ab';
+            }else if (element.Cpu == 16) {
+              element.Cpu = '5a7970e5bc9a5b0370dae3ac';
+            }else if (element.Cpu == 32) {
+              element.Cpu = '5a7970e7bc9a5b0370dae3ad';
+            }
+
+            if (element.memory == 1) {
+              element.memory = '5a7970f5bc9a5b0370dae3ae';
+            }else if (element.memory == 2) {
+              element.memory = '5a7970f6bc9a5b0370dae3af';
+            }else if (element.memory == 4) {
+              element.memory = '5a7970f8bc9a5b0370dae3b0';
+            }else if (element.memory == 8) {
+              element.memory = '5a7970fabc9a5b0370dae3b1';
+            }else if (element.memory == 16) {
+              element.memory = '5a7970ffbc9a5b0370dae3b2';
+            }else if (element.memory == 32) {
+              element.memory = '5a797101bc9a5b0370dae3b3';
+            }else if (element.memory == 64) {
+              element.memory = '5a797102bc9a5b0370dae3b4';
+            }else if (element.memory == 128) {
+              element.memory = '5a797104bc9a5b0370dae3b5';
+            }
+
+            if (element.operateSystemType == "Windows") {
+              element.operateSystemType = '5a79717cbc9a5b0370dae3b7';
+            }else{
+              element.operateSystemType = '5a797175bc9a5b0370dae3b6';
+            }
+
+            if(element.operateSystem == "Windows7"){
+              element.operateSystem = '5a79718dbc9a5b0370dae3b9';
+            }else if (operateSystem == "Windows10") {
+              element.operateSystem = '5a797187bc9a5b0370dae3b8';
+            }else if (element.operateSystem == 'CentOS 6') {
+              element.operateSystem = '5a797199bc9a5b0370dae3bb';
+            }else{
+              element.operateSystem = '5a797193bc9a5b0370dae3ba';
+            }
+
             var orderID = element.orderId;
             var CPU = element.Cpu;
             var bandWidth = element.bandWidth;
