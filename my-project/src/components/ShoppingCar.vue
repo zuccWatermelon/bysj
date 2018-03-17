@@ -400,10 +400,6 @@ export default {
             },
       handleSelectionChange(val) {
         this.multipleSelection = val;
-        if(val[0]){
-          console.log(val[0].orderId);
-        }
-        console.log(val);
       },
 
       submitOrder(){
@@ -412,9 +408,7 @@ export default {
           confirmButtonText: '确定',
           type: 'warning'
         }).then(() => {
-          console.log(this.multipleSelection);
           this.multipleSelection.forEach(function(element){
-
             if(element.Cpu == 1){
               element.Cpu = '5a7970d6bc9a5b0370dae3a8';
             }else if (element.Cpu == 2) {
@@ -428,6 +422,8 @@ export default {
             }else if (element.Cpu == 32) {
               element.Cpu = '5a7970e7bc9a5b0370dae3ad';
             }
+
+            alert(element.Cpu);
 
             if (element.memory == 1) {
               element.memory = '5a7970f5bc9a5b0370dae3ae';
@@ -463,6 +459,21 @@ export default {
               element.operateSystem = '5a797193bc9a5b0370dae3ba';
             }
 
+            if (element.systemHardDiskType == 'SATA') {
+              element.systemHardDiskType = '5a7971b5bc9a5b0370dae3bc';
+            }else {
+              element.systemHardDiskType = '5a7971c8bc9a5b0370dae3bd';
+            }
+
+            if (element.dataHardDiskType == 'SATA' ) {
+              element.dataHardDiskType = '5a7971b5bc9a5b0370dae3bc';
+            }else {
+              element.dataHardDiskType = '5a7971c8bc9a5b0370dae3bd';
+            }
+
+            console.log(element.operateSystemType);
+            // alert('Test');
+
             var orderID = element.orderId;
             var CPU = element.Cpu;
             var bandWidth = element.bandWidth;
@@ -471,7 +482,7 @@ export default {
             var dataHardDiskType = element.dataHardDiskType;
             var memory = element.memory;
             var operateSystem = element.operateSystem;
-            var operateSystemType = element.systemType;
+            var operateSystemType = element.operateSystemType;
             var period = element.period;
             var status = element.status;
             var systemHardDiskType = element.systemHardDiskType;
@@ -613,7 +624,9 @@ export default {
     font-size: 18px;
     color: #999;
     line-height: 30px;
-    padding-bottom: 26px;
+    /*padding-bottom: 26px;*/
+    position: fixed;
+    bottom: 26px;
     margin: 0;
   }
 

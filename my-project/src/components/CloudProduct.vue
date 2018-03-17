@@ -247,7 +247,9 @@ export default {
     font-size: 18px;
     color: #999;
     line-height: 30px;
-    padding-bottom: 26px;
+    /*padding-bottom: 26px;*/
+    position: fixed;
+    bottom: 26px;
     margin: 0;
   }
 

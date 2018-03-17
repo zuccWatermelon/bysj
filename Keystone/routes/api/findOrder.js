@@ -33,7 +33,7 @@ exports = module.exports = function (req, res) {
                 orderItem.Cpu = element.Cpu.name;
                 orderItem.memory = element.memory.name;
                 orderItem.operateSystem = element.operateSystem.name;
-                orderItem.systemType = element.operateSystemType.name;
+                orderItem.operateSystemType = element.operateSystemType.name;
                 orderItem.systemHardDiskType = element.systemHardDiskType.name;
                 orderItem.dataHardDiskType = element.dataHardDiskType.name;
                 orderItem.dataHardDiskSize = element.dataHardDiskSize;

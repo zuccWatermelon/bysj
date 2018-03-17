@@ -17,12 +17,12 @@ exports = module.exports = function (req, res) {
     var orderID = req.body.orderID;
     var returnMessag = {}; 
 
-    console.log(orderID);
+    console.log(CPU);
 
     order.model.update(
         { _id : orderID }, 
         { status : "已完成" ,
-        CPU : CPU ,
+         Cpu : CPU ,
          memory : memory ,
          operateSystemType : operateSystemType ,
          operateSystem : operateSystem ,

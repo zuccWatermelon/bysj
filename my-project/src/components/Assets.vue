@@ -60,11 +60,11 @@
           </el-form-item>
           <el-form-item label="数据盘">
             <span>{{ props.row.dataHardDiskType }}</span>
-            <span>{{ inputDisk }}</span>
+            <span>{{ props.row.dataHardDiskSize }}</span>
             <span>G</span>
           </el-form-item>
           <el-form-item label="带宽">
-            <span>{{ bandWidth }}MB</span>
+            <span>{{ props.row.bandWidth }}MB</span>
           </el-form-item>
         </el-form>
       </template>
@@ -127,7 +127,7 @@ export default {
     data() {
       return {
         activeIndex: '6',
-         inputDisk: '40',
+         dataHardDiskSize: '40',
          inputDiscount: '0.8',
         type:[{
           label:"Windows",
@@ -390,7 +390,9 @@ export default {
     font-size: 18px;
     color: #999;
     line-height: 30px;
-    padding-bottom: 26px;
+    /*padding-bottom: 26px;*/
+    position: fixed;
+    bottom: 26px;
     margin: 0;
   }
 
