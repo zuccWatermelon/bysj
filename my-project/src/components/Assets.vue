@@ -127,8 +127,8 @@ export default {
     data() {
       return {
         activeIndex: '6',
-         dataHardDiskSize: '40',
-         inputDiscount: '0.8',
+        dataHardDiskSize: '40',
+        inputDiscount: '0.8',
         type:[{
           label:"Windows",
           value:"Windows"
@@ -232,6 +232,46 @@ export default {
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
+      handleContinue(index, row){
+        console.log(row);
+        this.$confirm('请选择续订时长<br>', '提示', {
+        dangerouslyUseHTMLString: true,
+        cancelButtonText: '取消',
+        confirmButtonText: '确定',
+        type: 'warning'
+      }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '续订成功，请刷新后查看'
+          });
+          var period = row.period;
+          var orderId = row.orderId;
+          var formData = new FormData();
+          formData.append('orderID', orderId);
+          formData.append('period', period);
+          axios({
+            method:"post",
+            url:"http://127.0.0.1:3000/api/orderContinue",
+            data:formData,
+            responseType: 'json',
+            headers:{
+              'Content-Type':'application/x-www-form-urlencoded'
+            },
+          }).then(
+              res=>{
+              }
+            ).catch(
+              error=>{
+                console.log(error);
+            }
+          )
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消续订'
+          });          
+        });
+      },
       handleChange(index,row){
           console.log(row);
           this.$confirm('此操作将跳转到购物车进行修改订单, 是否继续?', '提示', {
@@ -241,7 +281,7 @@ export default {
         }).then(() => {
           this.$message({
             type: 'success',
-            message: '请到购物车中修改订单'
+            message: '请在购物车中修改订单'
           });
           var orderId = row.orderId;
           var formData = new FormData();

@@ -204,7 +204,7 @@
       <div class="bottom-center">
         <div class="submit" @click="submitOrder()">提交</div>
         <div class="final-price">
-          <p class="word">总价：<span class="orange sumPrice"><small>￥80</small></span></p>
+          <p class="word">总价：<span class="orange sumPrice"><small>{{price}}</small></span></p>
         </div>
       </div>
     </div>
@@ -239,6 +239,7 @@ export default {
         memory: '1',
         bandWidth: 1,
         period: 1,
+
         num: 1,
         disk: [{
           value: 'SATA',
@@ -251,6 +252,7 @@ export default {
           name: '',
           pwd: '',
         },
+        price:80,
         formLabelWidth: '40px',
         tableData: [],
         multipleSelection: [],   
@@ -422,8 +424,6 @@ export default {
             }else if (element.Cpu == 32) {
               element.Cpu = '5a7970e7bc9a5b0370dae3ad';
             }
-
-            alert(element.Cpu);
 
             if (element.memory == 1) {
               element.memory = '5a7970f5bc9a5b0370dae3ae';
