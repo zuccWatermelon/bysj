@@ -35,6 +35,28 @@
           <el-button type="primary" @click="submit"class="color">确 定</el-button>
           </div>
          </el-dialog>
+
+         <el-dialog title="请输入手机号" :visible.sync="regist" width="30%">
+          <el-form :model="form">
+            <el-form-item class="telephone" label="姓名" :label-width="formLabelWidth">
+              <el-input v-model="form.username" auto-complete="off" clearable></el-input>
+            </el-form-item>
+            <el-form-item class="telephone" label="账号" :label-width="formLabelWidth">
+              <el-input v-model="form.telephone" auto-complete="off" clearable></el-input>
+            </el-form-item>
+            <el-form-item class="password" label="密码" :label-width="formLabelWidth">
+              <el-input v-model="form.password" auto-complete="off" type="password" clearable  @keyup.13="keyFun($event)"></el-input>
+            </el-form-item>
+            <el-form-item class="password" label="确认" :label-width="formLabelWidth">
+              <el-input v-model="form.password2" auto-complete="off" type="password" clearable  @keyup.13="keyFun($event)"></el-input>
+            </el-form-item>
+          </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="regist = false">取 消</el-button>
+          <el-button type="primary" @click="addUser"class="color">确 定</el-button>
+          </div>
+         </el-dialog>
+
        </div>
       </div>
       <div v-else>
@@ -97,9 +119,11 @@ export default {
       return {
         activeIndex: '1',
         login: false,
+        regist:false,
         form: {
           telephone: '',
           password: '',
+          username:'',
           code: ''
         },
         formLabelWidth: '40px',
@@ -174,6 +198,61 @@ export default {
                       }
                     });
                   }
+                }
+            ).catch(
+                error=>{
+                    console.log(error);
+                }
+            );
+          }
+      },
+      addUser(){
+          var self = this;
+          if(self.form.telephone==''||self.form.telephone==null){
+            this.$alert('账号/手机号不能为空', '提示', {
+              confirmButtonText: '确定'
+            });
+          } else if(self.form.username==''||self.form.username==null){
+            this.$alert('姓名不能为空', '提示', {
+              confirmButtonText: '确定'
+            });
+          }else if(self.form.password==''||self.form.password==null){
+            this.$alert('密码不能为空', '提示', {
+              confirmButtonText: '确定'
+            });
+          }else if(self.form.password2==''||self.form.password2==null){
+            this.$alert('确认密码不能为空', '提示', {
+              confirmButtonText: '确定'
+            });
+          }else if(self.form.password!= self.form.password2){
+            this.$alert('密码与确认密码不同，请确认后输入', '提示', {
+              confirmButtonText: '确定'
+            });
+          } else {
+            var formData = new FormData();
+            formData.append('username',self.formData.username);
+            formData.append('telephone', self.form.telephone);
+            formData.append('password', self.form.password);
+            axios({
+              method:"post",
+              url:"http://127.0.0.1:3000/api/regist",
+              data: formData
+            }).then(
+                res=>{
+                  console.log(res.data);
+                  if(res.data.code=='1' || res.data.code==1){
+                    self.$alert('注册成功', '提示', {
+                      confirmButtonText: '确定',
+                      callback:action=>{
+                        location.reload();
+                      }
+                    });
+                    // 如果登录成功，将用户名、id存在sessionstorage
+                    window.sessionStorage.setItem('username',res.data.name);
+                    window.sessionStorage.setItem('userID',res.data.customerID);
+                    // location.reload();
+                    // this.$router.push({path:'/'})
+                  } 
                 }
             ).catch(
                 error=>{
