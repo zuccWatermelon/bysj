@@ -17,7 +17,7 @@ exports = module.exports = function (req, res) {
     var orderID = req.body.orderID;
     var returnMessag = {}; 
 
-    console.log(CPU);
+    // console.log(CPU);
 
     order.model.update(
         { _id : orderID }, 

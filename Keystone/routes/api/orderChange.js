@@ -8,7 +8,7 @@ exports = module.exports = function (req, res) {
     var returnMessag = {}; 
     var orderID = req.body.orderID;
 
-    console.log(orderID);
+    // console.log(orderID);
 
     order.model.update({_id: orderID}, { status: "待提交" },function(err){
         if(err){

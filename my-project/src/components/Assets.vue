@@ -233,18 +233,18 @@ export default {
         this.multipleSelection = val;
       },
       handleContinue(index, row){
-        console.log(row);
-        this.$confirm('请选择续订时长<br>', '提示', {
-        dangerouslyUseHTMLString: true,
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
-        type: 'warning'
-      }).then(() => {
+         this.$prompt('请输入续订时长，以月为单位', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputPattern : /^[1-9]\d*$/,
+          inputErrorMessage: '格式不正确，请输入正整数'
+        }).then(({ value }) => {
           this.$message({
             type: 'success',
-            message: '续订成功，请刷新后查看'
+            message: '你续订的时长为: ' + value + '个月,请稍后刷新查看'
           });
-          var period = row.period;
+          var period = Number(row.period)+Number(value) ;
+          console.log(period);
           var orderId = row.orderId;
           var formData = new FormData();
           formData.append('orderID', orderId);
@@ -268,8 +268,8 @@ export default {
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消续订'
-          });          
+            message: '取消输入'
+          });       
         });
       },
       handleChange(index,row){
