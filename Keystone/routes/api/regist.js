@@ -6,11 +6,12 @@ var async = require('async');//异步的
 exports = module.exports = function (req, res) {
     var telephone = req.body.telephone;
     var password = req.body.password;
-    var name = req.body.name;
+    var name = req.body.username;
     var returnMessag = {}; 
 
     console.log(telephone);
     console.log(password);
+    console.log(name);
 
     if (telephone) {
         async.parallel({//并行异步
@@ -23,25 +24,26 @@ exports = module.exports = function (req, res) {
                 },
         }, function (err, result) {
             if (result.customer==null) {
-                returnMessag.code = 0;
-                returnMessag.message = "注册成功";
-                returnMessag.customerID = result.customer._id;//默认的哈希值
-                returnMessag.name = result.customer.name;//通过查出来的customer可以获取他的id和name
-                returnMessag.telephone = result.customer.telephone;
-                returnMessag.password = result.customer.password;
-
                 var newCustomer = new Customer.model({
                     name:name,
                     telephone:telephone,
                     password:password,
                 })
+                returnMessag.code = 1;
+                returnMessag.message = "注册成功";
+                // returnMessag.customerID = result.customer._id;//默认的哈希值
+                // returnMessag.name = result.customer.name;//通过查出来的customer可以获取他的id和name
+                returnMessag.telephone = telephone;
+                returnMessag.password = password;
+                returnMessag.name = name;
+                
                 newCustomer.save(function(err) {
                     console.log(err)
                     // post已保存  
                 });
 
             } else {
-                returnMessag.code = 1;
+                returnMessag.code = 0;
                 returnMessag.message = "注册失败，该用户已存在";
             }
             console.log(returnMessag);

@@ -38,7 +38,7 @@
 
          <el-dialog title="请输入手机号" :visible.sync="regist" width="30%">
           <el-form :model="form">
-            <el-form-item class="telephone" label="姓名" :label-width="formLabelWidth">
+            <el-form-item class="username" label="姓名" :label-width="formLabelWidth">
               <el-input v-model="form.username" auto-complete="off" clearable></el-input>
             </el-form-item>
             <el-form-item class="telephone" label="账号" :label-width="formLabelWidth">
@@ -208,15 +208,15 @@ export default {
       },
       addUser(){
           var self = this;
-          if(self.form.telephone==''||self.form.telephone==null){
-            this.$alert('账号/手机号不能为空', '提示', {
-              confirmButtonText: '确定'
-            });
-          } else if(self.form.username==''||self.form.username==null){
+          if(self.form.username==''||self.form.username==null){
             this.$alert('姓名不能为空', '提示', {
               confirmButtonText: '确定'
             });
-          }else if(self.form.password==''||self.form.password==null){
+          } else if(self.form.telephone==''||self.form.telephone==null){
+            this.$alert('账号/手机号不能为空', '提示', {
+              confirmButtonText: '确定'
+            });
+          } else if(self.form.password==''||self.form.password==null){
             this.$alert('密码不能为空', '提示', {
               confirmButtonText: '确定'
             });
@@ -230,7 +230,7 @@ export default {
             });
           } else {
             var formData = new FormData();
-            formData.append('username',self.formData.username);
+            formData.append('username',self.form.username);
             formData.append('telephone', self.form.telephone);
             formData.append('password', self.form.password);
             axios({
