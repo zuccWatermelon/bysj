@@ -13,7 +13,12 @@
           <el-menu-item index="2"><a href="https://www.ele.me" target="_blank" class="color" > 合作伙伴 </a></el-menu-item>
           <el-submenu index="3">
           <template slot="title" class="color" > 管理平台 </template>
-              <el-menu-item index="3-1"><router-link to="/" class="color" >个人管理平台</router-link></el-menu-item>
+            <div v-if="userID === null">
+              <el-menu-item index="3-1"><router-link to="/" class="color">个人管理平台</router-link></el-menu-item>
+            </div>
+            <div v-else>
+              <el-menu-item index="3-1"><router-link to="SelfManagement" class="color">个人管理平台</router-link></el-menu-item>
+            </div>
           </el-submenu>
           <el-menu-item index="4"> <router-link to="/" class="color" >帮助中心</router-link> </el-menu-item>
         <div class="regist-login">

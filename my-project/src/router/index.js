@@ -4,6 +4,7 @@ import First from '@/components/First'
 import CloudProduct from '@/components/CloudProduct'
 import ShoppingCar from '@/components/ShoppingCar'
 import Assets from '@/components/Assets'
+import SelfManagement from '@/components/SelfManagement'
 Vue.use(Router)
 
 export default new Router({
@@ -28,6 +29,11 @@ export default new Router({
       name: '/Assets',
       component: Assets
     },
+    {
+      path: '/SelfManagement',
+      name: '/SelfManagement',
+      component: SelfManagement
+    },    
   ]
 })
 	

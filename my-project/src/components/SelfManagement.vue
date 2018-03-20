@@ -1,5 +1,5 @@
 <template>
-  <div id="shoppingcar">
+  <div id="management">
     <el-menu
       :default-active="activeIndex"
       class="el-menu-demo"
@@ -31,98 +31,52 @@
         </div>
       </div>
     </el-menu>
-    <div class="customer_name">
-    <h4 align="left">{{username}}的资产</h4>
-    <hr />
-    </div>
-<!-- 当el-table元素中注入data对象数组后，在el-table-column中用prop属性来对应对象中的键名即可填入数据，用label属性来定义表格的列名。可以使用width属性来定义列宽。 -->
-<div class="selectedTable">
-    <el-table
-    ref="multipleTable"
-    :data="tableData"
-    tooltip-effect="dark"
-    style="width: 100%"
-    @selection-change="handleSelectionChange">
 
-    <!-- 以下是展开的内容 -->
-    <el-table-column type="expand">
-      <template slot-scope="props">
-        <el-form label-position="left" inline class="demo-table-expand">
-          
-          <el-form-item label="CPU">
-            <span>{{ props.row.Cpu }}核</span>
-          </el-form-item>
-          <el-form-item label="内存">
-            <span>{{ props.row.memory }}G</span>
-          </el-form-item> 
-          <el-form-item label="系统">
-            <span>{{ props.row.systemType }}</span>
-            <span>{{ props.row.operateSystem }}</span>
-          </el-form-item>
-          <el-form-item label="系统盘">
-            <span>{{ props.row.systemHardDiskType }}</span>
-            <span style="margin-left:10px">40G</span>
-          </el-form-item>
-          <el-form-item label="数据盘">
-            <span>{{ props.row.dataHardDiskType }}</span>
-            <span>{{ props.row.dataHardDiskSize }}</span>
-            <span>G</span>
-          </el-form-item>
-          <el-form-item label="带宽">
-            <span>{{ props.row.bandWidth }}MB</span>
-          </el-form-item>
-        </el-form>
-      </template>
-    </el-table-column>
+      <el-row class="tac">
+  <el-col :span="12">
+    <el-menu
+      default-active="2"
+      class="el-menu-vertical-demo"
+      @open="handleOpen"
+      @close="handleClose"
+      background-color="#545c64"
+      text-color="#fff"
+      active-text-color="#ffd04b">
+      <el-submenu index="1">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>导航一</span>
+        </template>
+        <el-menu-item-group>
+          <template slot="title">分组一</template>
+          <el-menu-item index="1-1">选项1</el-menu-item>
+          <el-menu-item index="1-2">选项2</el-menu-item>
+        </el-menu-item-group>
+        <el-menu-item-group title="分组2">
+          <el-menu-item index="1-3">选项3</el-menu-item>
+        </el-menu-item-group>
+        <el-submenu index="1-4">
+          <template slot="title">选项4</template>
+          <el-menu-item index="1-4-1">选项1</el-menu-item>
+        </el-submenu>
+      </el-submenu>
+      <el-menu-item index="2">
+        <i class="el-icon-menu"></i>
+        <span slot="title">导航二</span>
+      </el-menu-item>
+      <el-menu-item index="3" >
+        <i class="el-icon-document"></i>
+        <span slot="title">导航三</span>
+      </el-menu-item>
+      <el-menu-item index="4">
+        <i class="el-icon-setting"></i>
+        <span slot="title">导航四</span>
+      </el-menu-item>
+    </el-menu>
+  </el-col>
+</el-row>
+ 
 
-    <!-- 以下是标题 -->
-    
-    <el-table-column
-        prop="orderId"
-        label="订单编号"
-        width="180">
-    </el-table-column>
-    <el-table-column
-        prop="name"
-        label="商品名称"
-        width="180">
-    </el-table-column>
-    <el-table-column
-        prop="price"
-        label="单价"
-        width="180">
-    </el-table-column>
-    <el-table-column
-        prop="endAt"
-        label="订单截止时间"
-        width="180">
-    </el-table-column>
-    <el-table-column
-        prop="status"
-        label="订单状态"
-        width="180">
-    </el-table-column>
-    <el-table-column label="操作">
-      <template slot-scope="scope">
-        <el-button
-          size="mini"
-          @click="handleContinue(scope.$index, scope.row)">续订
-        </el-button>
-        <el-button 
-          size="mini"
-          type="primary"
-          @click="handleChange(scope.$index, scope.row)">
-          变更
-        </el-button>
-        <el-button
-          size="mini"
-          type="danger"
-          @click="handleUnsubscribe(scope.$index, scope.row)">退订
-        </el-button>
-      </template>
-      </el-table-column>
-     </el-table>
-    </div>
       <p class="foot">版权所有 ©2017 中国电信浙江公司 [ 增值电信业务经营许可证 A2.B1.B2-XXXXXXXX ] ICP 证号:浙 ICP 备 XXXXXXXX号</p>
   </div>
 </template>
@@ -131,43 +85,14 @@
 export default {
     data() {
       return {
-        activeIndex: '6',
+        activeIndex: '3',
         dataHardDiskSize: '40',
         inputDiscount: '0.8',
-        type:[{
-          label:"Windows",
-          value:"Windows"
-        },{
-          label:"Linux",
-          value:"Linux"
-        }],
-        Systems: [{
-          label:"Windows7",
-          value:"Windows7"
-        },{
-          label:"Windows10",
-          value:"Windows10"
-        }],
         login: false,
-        cpu: '1',
-        memory: '1',
-        bandWidth: 1,
-        period: 1,
-        num: 1,
-        disk: [{
-          value: 'SATA',
-          label: 'SATA'
-        }, {
-          value: 'SSD',
-          label: 'SSD'
-        }],
         form: {
           name: '',
           pwd: '',
         },
-        formLabelWidth: '40px',
-        tableData: [],
-        multipleSelection: [],   
         username:window.sessionStorage.getItem('username'),
         userID:window.sessionStorage.getItem('userID')  
       };
@@ -183,7 +108,7 @@ export default {
       formData.append('userID', userID);
       axios({
               method:"post",
-              url:"http://127.0.0.1:3000/api/findAssets",
+              url:"http://127.0.0.1:3000/api/test",
               data: formData
       }).then(
           res=>{
@@ -204,6 +129,12 @@ export default {
       },
       handleNum(value) {
         console.log(value);
+      },
+      handleOpen(key, keyPath) {
+        console.log(key, keyPath);
+      },
+      handleClose(key, keyPath) {
+        console.log(key, keyPath);
       },
       logout(){
         this.$confirm('是否退出?', '提示', {
@@ -356,41 +287,41 @@ export default {
         });
       },
       getType: function (Type) {
-                let tempSystem=[];              
-                this.Systems=[];
-                this.selectSystem='';               
-                let allSystem=[{                    
+                let tempSystem=[];              
+                this.Systems=[];
+                this.selectSystem='';               
+                let allSystem=[{                    
                     Type: "Windows",
-                    label: "Windows7"
-                }, {
+                    label: "Windows7"
+                }, {
                     Type: "Windows",
-                    label: "Windows10"
-                    
-                }, {
-                    Type: "Linux",
-                    label: "CentOS 6"
-                }, {
-                    Type: "Linux",
-                    label: "Ubuntu 16.04"
-                }];
-                for (var val of allSystem){
-                    if (Type == val.Type){
-                        console.log(val);
-                        tempSystem.push({label: val.label, value: val.label})
-                    }
-                }
-                this.Systems = tempSystem;
-            },
-            getSystem: function (System) {
-                console.log(System);
-                console.log(this.selectSystem)
-            },
+                    label: "Windows10"
+                    
+                }, {
+                    Type: "Linux",
+                    label: "CentOS 6"
+                }, {
+                    Type: "Linux",
+                    label: "Ubuntu 16.04"
+                }];
+                for (var val of allSystem){
+                    if (Type == val.Type){
+                        console.log(val);
+                        tempSystem.push({label: val.label, value: val.label})
+                    }
+                }
+                this.Systems = tempSystem;
+            },
+            getSystem: function (System) {
+                console.log(System);
+                console.log(this.selectSystem)
+            },
     }
 }
 </script>
 
 <style>
-#shoppingcar {
+#management {
   font-family: Helvetica, sans-serif;
   text-align: center;
 }
@@ -441,4 +372,10 @@ export default {
     margin: 0;
   }
 
+  .el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 400px;
+  }
+
 </style>
+ 
