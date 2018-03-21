@@ -5,6 +5,7 @@ import CloudProduct from '@/components/CloudProduct'
 import ShoppingCar from '@/components/ShoppingCar'
 import Assets from '@/components/Assets'
 import SelfManagement from '@/components/SelfManagement'
+import ToDoList from '@/components/ToDoList'
 Vue.use(Router)
 
 export default new Router({
@@ -34,6 +35,12 @@ export default new Router({
       name: '/SelfManagement',
       component: SelfManagement
     },    
+    {
+      path: '/ToDoList',
+      name: '/ToDoList',
+      component: ToDoList
+    }, 
+    
   ]
 })
 	
