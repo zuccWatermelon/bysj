@@ -6,6 +6,7 @@ import ShoppingCar from '@/components/ShoppingCar'
 import Assets from '@/components/Assets'
 import SelfManagement from '@/components/SelfManagement'
 import ToDoList from '@/components/ToDoList'
+import resetPsw from '@/components/resetPsw'
 Vue.use(Router)
 
 export default new Router({
@@ -39,7 +40,11 @@ export default new Router({
       path: '/ToDoList',
       name: '/ToDoList',
       component: ToDoList
-    }, 
+    }, {
+      path: '/resetPsw',
+      name: '/resetPsw',
+      component: resetPsw
+    },
     
   ]
 })

@@ -85,10 +85,13 @@
 
         </el-col>
         <div class="right-con">
-          <h2>修改密码</h2>
+          <h2>重置密码</h2>
           <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="原密码" prop="psw">
-              <el-input type="password" v-model="ruleForm2.psw" auto-complete="off"></el-input>
+            <el-form-item label="用户账号" prop="acc">
+              <el-input type="password" v-model="ruleForm2.acc" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="确认用户账号" prop="checkAcc">
+              <el-input type="password" v-model="ruleForm2.checkAcc" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="新密码" prop="pass">
               <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>
@@ -116,9 +119,21 @@
 <script>
 export default {
     data() {
-      var validatePsw = (rule,value,callback) => {
+      var validateAcc = (rule,value,callback) => {
         if (value === '') {
-          callback(new Error('请输入原密码'));
+          callback(new Error('请输入用户账号'));
+        } else {
+          if (this.ruleForm2.checkAcc !== '') {
+            this.$refs.ruleForm2.validateField('checkAcc');
+          }
+          callback();
+        }
+      };
+      var validateCheckAcc = (rule, value, callback) => {
+        if (value === '') {
+          callback(new Error('请再次输入用户账号'));
+        } else if (value !== this.ruleForm2.acc) {
+          callback(new Error('两次输入账号不一致!'));
         } else {
           callback();
         }
@@ -154,13 +169,17 @@ export default {
         username:window.sessionStorage.getItem('username'),
         userID:window.sessionStorage.getItem('userID'),
         ruleForm2: {
-          psw: '',
+          acc: '',
+          checkAcc: '',
           pass: '',
           checkPass: '',
         },
         rules2: {
-          psw: [
-            { validator: validatePsw, trigger: 'blur' }
+          acc: [
+            { validator: validateAcc, trigger: 'blur' }
+          ],
+          checkAcc: [
+            { validator: validateCheckAcc, trigger: 'blur' }
           ],
           pass: [
             { validator: validatePass, trigger: 'blur' }
@@ -226,26 +245,26 @@ export default {
       },
       submitForm(ruleForm2) {
         console.log(ruleForm2);
-        console.log(ruleForm2.psw);
+        console.log(ruleForm2.acc);
         console.log(ruleForm2.pass);
         
         var userID = window.sessionStorage.getItem('userID');
-        var psw = ruleForm2.psw;
+        var acc = ruleForm2.acc;
         var pass = ruleForm2.pass;
         var formData = new FormData();
         formData.append('userID', userID);
-        formData.append('psw',psw);
+        formData.append('acc',acc);
         formData.append('pass',pass);
 
         axios({
               method:"post",
-              url:"http://127.0.0.1:3000/api/pswChange",
+              url:"http://127.0.0.1:3000/api/resetPsw",
               data: formData
       }).then(
           res=>{
             alert(res.data.message);
-            window.sessionStorage.removeItem('username');
-            window.sessionStorage.removeItem('userID');
+            // window.sessionStorage.removeItem('username');
+            // window.sessionStorage.removeItem('userID');
             location.reload();
           }
       ).catch(
