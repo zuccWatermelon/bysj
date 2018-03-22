@@ -111,8 +111,7 @@
         <el-button 
           size="mini"
           type="primary"
-          @click="handleChange(scope.$index, scope.row)">
-          变更
+          @click="handleChange(scope.$index, scope.row)">变更
         </el-button>
         <el-button
           size="mini"

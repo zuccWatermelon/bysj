@@ -35,7 +35,7 @@
       <el-row class="tac">
         <el-col :span="12">
           <el-menu
-            default-active="1"
+            default-active="2"
             class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
@@ -225,9 +225,9 @@ export default {
         }); 
       },
       submitForm(ruleForm2) {
-        // console.log(ruleForm2);
-        // console.log(ruleForm2.psw);
-        // console.log(ruleForm2.pass);
+        console.log(ruleForm2);
+        console.log(ruleForm2.psw);
+        console.log(ruleForm2.pass);
         
         var userID = window.sessionStorage.getItem('userID');
         var psw = ruleForm2.psw;
