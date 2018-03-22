@@ -14,8 +14,13 @@ exports = module.exports = function (req, res) {
             console.log(err);
         }
         console.log(element)
-        console.log('密码修改成功');
-        returnMessag.message = "密码修改成功"
+        if(element.nModified == 0){
+            console.log('该用户不存在，请输入正确的用户账号');
+            returnMessag.message = "该用户不存在，请输入正确的用户账号";
+        }else{
+            console.log('密码修改成功');
+            returnMessag.message = "密码修改成功"
+        }
         res.send(JSON.stringify(returnMessag));
     });
 };

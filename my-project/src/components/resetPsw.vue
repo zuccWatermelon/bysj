@@ -88,10 +88,10 @@
           <h2>重置密码</h2>
           <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
             <el-form-item label="用户账号" prop="acc">
-              <el-input type="password" v-model="ruleForm2.acc" auto-complete="off"></el-input>
+              <el-input  v-model="ruleForm2.acc" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="确认用户账号" prop="checkAcc">
-              <el-input type="password" v-model="ruleForm2.checkAcc" auto-complete="off"></el-input>
+              <el-input  v-model="ruleForm2.checkAcc" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item label="新密码" prop="pass">
               <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>
