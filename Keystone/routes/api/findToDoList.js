@@ -11,15 +11,14 @@ exports = module.exports = function (req, res) {
         orderItems: function (done) {//customer是别名
             OrderItem.model.find()
                 .populate('Cpu memory operateSystemType operateSystem systemHardDiskType dataHardDiskType')
-                .where('status').in(['已完成',['待审批']])
-                .where('userID', req.body.userID)
+                .where('status', '待审批')
                 .exec(function (err, result) {
                     done(err, result);
                 });
             },
     }, function (err, result) {
         if (result.orderItems==null) {
-            returnMessag.message = "购物车为空";
+            returnMessag.message = "待审批列表为空";
         } else {
             returnMessag.message = [];
 

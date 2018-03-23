@@ -207,7 +207,7 @@
   </div>
     <div class="bottom">
       <div class="bottom-center">
-        <div class="submit" @click="submitOrder()">提交</div>
+        <div class="submit" @click="submitOrder()">提交审批</div>
         <div class="final-price">
           <p class="word">总价：<span class="orange sumPrice"><small>{{price}}</small></span></p>
         </div>
@@ -410,7 +410,7 @@ export default {
       },
 
       submitOrder(){
-          this.$confirm('是否提交订单?', '提示', {
+          this.$confirm('提交审批后请等待管理员审批，是否提交订单?', '提示', {
           cancelButtonText: '取消',
           confirmButtonText: '确定',
           type: 'warning'

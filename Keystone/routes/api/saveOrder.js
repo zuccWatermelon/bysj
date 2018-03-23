@@ -21,7 +21,7 @@ exports = module.exports = function (req, res) {
 
     order.model.update(
         { _id : orderID }, 
-        { status : "已完成" ,
+        { status : "待审批" ,
          Cpu : CPU ,
          memory : memory ,
          operateSystemType : operateSystemType ,
