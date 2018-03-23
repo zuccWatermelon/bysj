@@ -64,10 +64,18 @@
               <i class="el-icon-menu"></i>
               <span slot="title"><router-link to="SelfManagement" class="color" >密码修改</router-link></span>
             </el-menu-item>
-            <el-menu-item index="2">
-              <i class="el-icon-menu"></i>
-              <span slot="title"><router-link to="resetPsw" class="color" >重置密码</router-link></span>
-            </el-menu-item>
+            <div v-if="userID === '5ab0a8f447ed655ae06704ce'">
+              <el-menu-item index="2">
+                <i class="el-icon-menu"></i>
+                <span slot="title"><router-link to="resetPsw" class="color" >重置密码</router-link></span>
+              </el-menu-item>
+            </div>
+            <div v-else-if="userID === '5ab0a94fadddd51fa8d35924'">
+              <el-menu-item index="2">
+                <i class="el-icon-menu"></i>
+                <span slot="title"><router-link to="resetPsw" class="color" >重置密码</router-link></span>
+              </el-menu-item>
+            </div>
             <el-menu-item index="3">
               <i class="el-icon-menu"></i>
               <span slot="title"><router-link to="ToDoList" class="color" >待办事项</router-link></span>
