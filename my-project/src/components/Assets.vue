@@ -32,11 +32,32 @@
       </div>
     </el-menu>
     <div class="customer_name">
-    <h4 align="left">{{username}}的资产</h4>
+    <h4 align="left">{{username}}的资产 
+      <el-select
+        class = "select"
+        v-model="value9"
+        multiple
+        filterable
+        remote
+        reserve-keyword
+        placeholder="请输入关键词"
+        :remote-method="remoteMethod"
+        :loading="loading">
+        <el-option
+          v-for="item in options4"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
+    </h4>
+
     <hr />
     </div>
 <!-- 当el-table元素中注入data对象数组后，在el-table-column中用prop属性来对应对象中的键名即可填入数据，用label属性来定义表格的列名。可以使用width属性来定义列宽。 -->
-<div class="selectedTable">
+   
+
+  <div class="selectedTable">
     <el-table
     ref="multipleTable"
     :data="tableData"
@@ -164,6 +185,27 @@ export default {
           name: '',
           pwd: '',
         },
+        options4: [],
+        value9: [],
+        list: [],
+        loading: false,
+        states: ["Alabama", "Alaska", "Arizona",
+        "Arkansas", "California", "Colorado",
+        "Connecticut", "Delaware", "Florida",
+        "Georgia", "Hawaii", "Idaho", "Illinois",
+        "Indiana", "Iowa", "Kansas", "Kentucky",
+        "Louisiana", "Maine", "Maryland",
+        "Massachusetts", "Michigan", "Minnesota",
+        "Mississippi", "Missouri", "Montana",
+        "Nebraska", "Nevada", "New Hampshire",
+        "New Jersey", "New Mexico", "New York",
+        "North Carolina", "North Dakota", "Ohio",
+        "Oklahoma", "Oregon", "Pennsylvania",
+        "Rhode Island", "South Carolina",
+        "South Dakota", "Tennessee", "Texas",
+        "Utah", "Vermont", "Virginia",
+        "Washington", "West Virginia", "Wisconsin",
+        "Wyoming"],
         formLabelWidth: '40px',
         tableData: [],
         multipleSelection: [],   
@@ -194,7 +236,26 @@ export default {
           }
       );
     },
+    mounted() {
+      this.list = this.states.map(item => {
+        return { value: item, label: item };
+      });
+    },
     methods: {
+       remoteMethod(query) {
+        if (query !== '') {
+          this.loading = true;
+          setTimeout(() => {
+            this.loading = false;
+            this.options4 = this.list.filter(item => {
+              return item.label.toLowerCase()
+                .indexOf(query.toLowerCase()) > -1;
+            });
+          }, 200);
+        } else {
+          this.options4 = [];
+        }
+      },
       handleSelect(key, keyPath) {
         return 0;
       },
@@ -439,5 +500,7 @@ export default {
     bottom: 26px;
     margin: 0;
   }
-
+  .select{
+    float: right;
+  }
 </style>
