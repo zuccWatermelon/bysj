@@ -32,31 +32,67 @@
       </div>
     </el-menu>
     <div class="customer_name">
-    <h4 align="left">{{username}}的资产 
-      <el-select
-        class = "select"
-        v-model="value9"
-        multiple
-        filterable
-        remote
-        reserve-keyword
-        placeholder="请输入关键词"
-        :remote-method="remoteMethod"
-        :loading="loading">
-        <el-option
-          v-for="item in options4"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-    </h4>
-
-    <hr />
+      <h4 align="left">{{username}}的资产</h4>
+      <hr />
     </div>
 <!-- 当el-table元素中注入data对象数组后，在el-table-column中用prop属性来对应对象中的键名即可填入数据，用label属性来定义表格的列名。可以使用width属性来定义列宽。 -->
    
+    <div class="select">
+      <p>
+        CPU核数：
+        <el-select
+          v-model="value9"
+          multiple
+          filterable
+          remote
+          reserve-keyword
+          placeholder="请输入CPU核数"
+          :remote-method="remoteMethod"
+          :loading="loading">
+          <el-option
+            v-for="item in options4"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+        订单状态：
+        <el-select
+          v-model="value9"
+          multiple
+          filterable
+          remote
+          reserve-keyword
+          placeholder="请输入订单状态"
+          :remote-method="remoteMethod"
+          :loading="loading">
+          <el-option
+            v-for="item in options4"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+          系统类型：
+        <el-select
+          v-model="value9"
+          multiple
+          filterable
+          remote
+          reserve-keyword
+          placeholder="请输入系统类型"
+          :remote-method="remoteMethod"
+          :loading="loading">
+          <el-option
+            v-for="item in options4"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </p>
 
+    </div>
   <div class="selectedTable">
     <el-table
     ref="multipleTable"
@@ -142,6 +178,12 @@
       </template>
       </el-table-column>
      </el-table>
+    </div>
+    <div class="block">
+      <el-pagination
+        layout="prev, pager, next"
+        :total="50">
+      </el-pagination>
     </div>
       <p class="foot">版权所有 ©2017 中国电信浙江公司 [ 增值电信业务经营许可证 A2.B1.B2-XXXXXXXX ] ICP 证号:浙 ICP 备 XXXXXXXX号</p>
   </div>
@@ -500,7 +542,5 @@ export default {
     bottom: 26px;
     margin: 0;
   }
-  .select{
-    float: right;
-  }
+  
 </style>
