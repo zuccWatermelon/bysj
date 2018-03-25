@@ -35,7 +35,7 @@
       <el-row class="tac">
         <el-col :span="12">
           <el-menu
-            default-active="2"
+            default-active="4"
             class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
@@ -63,28 +63,7 @@
           </el-menu>
 
         </el-col>
-        <div class="right-con">
-          <h2>重置密码</h2>
-          <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="用户账号" prop="acc">
-              <el-input  v-model="ruleForm2.acc" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="确认用户账号" prop="checkAcc">
-              <el-input  v-model="ruleForm2.checkAcc" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="新密码" prop="pass">
-              <el-input type="password" v-model="ruleForm2.pass" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="确认密码" prop="checkPass">
-              <el-input type="password" v-model="ruleForm2.checkPass" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="submitForm(ruleForm2)">提交</el-button>
-              <el-button @click="resetForm('ruleForm2')">重置</el-button>
 
-            </el-form-item>
-          </el-form>
-        </div>
       
 
       </el-row>

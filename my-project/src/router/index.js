@@ -7,6 +7,7 @@ import Assets from '@/components/Assets'
 import SelfManagement from '@/components/SelfManagement'
 import ToDoList from '@/components/ToDoList'
 import resetPsw from '@/components/resetPsw'
+import UserManagement from '@/components/UserManagement'
 Vue.use(Router)
 
 export default new Router({
@@ -40,11 +41,17 @@ export default new Router({
       path: '/ToDoList',
       name: '/ToDoList',
       component: ToDoList
-    }, {
+    }, 
+    {
       path: '/resetPsw',
       name: '/resetPsw',
       component: resetPsw
     },
+    {
+      path: '/UserManagement',
+      name: '/UserManagement',
+      component: UserManagement
+    }
     
   ]
 })
