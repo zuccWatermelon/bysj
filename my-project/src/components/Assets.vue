@@ -37,59 +37,54 @@
     </div>
 <!-- 当el-table元素中注入data对象数组后，在el-table-column中用prop属性来对应对象中的键名即可填入数据，用label属性来定义表格的列名。可以使用width属性来定义列宽。 -->
    
-    <div class="select">
+    <div class="assetSelect">
       <p>
-        CPU核数：
-        <el-select
-          v-model="value9"
-          multiple
-          filterable
-          remote
-          reserve-keyword
-          placeholder="请输入CPU核数"
-          :remote-method="remoteMethod"
-          :loading="loading">
-          <el-option
-            v-for="item in options4"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+        CPU：
+          <el-input
+            style="width: 8%"
+            placeholder="请输入CPU核数"
+            v-model="inputCPU"
+            clearable>
+          </el-input>
+          内存：
+        <el-input
+            style="width: 8%"
+            placeholder="输入内存大小"
+            v-model="inputMemory"
+            clearable>
+          </el-input>
         订单状态：
-        <el-select
-          v-model="value9"
-          multiple
-          filterable
-          remote
-          reserve-keyword
-          placeholder="请输入订单状态"
-          :remote-method="remoteMethod"
-          :loading="loading">
-          <el-option
-            v-for="item in options4"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+          <el-input
+            style="width: 8%"
+            placeholder="输入订单状态"
+            v-model="inputState"
+            clearable>
+          </el-input>
           系统类型：
-        <el-select
-          v-model="value9"
-          multiple
-          filterable
-          remote
-          reserve-keyword
-          placeholder="请输入系统类型"
-          :remote-method="remoteMethod"
-          :loading="loading">
-          <el-option
-            v-for="item in options4"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
-          </el-option>
-        </el-select>
+          <el-input
+            style="width: 8%"
+            placeholder="输入系统类型"
+            v-model="inputOperateSystem"
+            clearable>
+          </el-input>
+          数据盘类型：
+          <el-input
+            style="width: 8%"
+            placeholder="输入数据盘类型"
+            v-model="inputdataHardDiskType"
+            clearable>
+          </el-input>
+          系统盘类型:
+          <el-input
+            style="width: 8%"
+            placeholder="输入系统盘类型"
+            v-model="inputsystemHardDiskType"
+            clearable>
+          </el-input>
+          
+        
+        <button
+          @click="assetSelect(scope.$index, scope.row)">查询</button>
       </p>
 
     </div>
