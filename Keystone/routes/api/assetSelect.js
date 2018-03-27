@@ -5,28 +5,44 @@ var moment = require('moment');
 var async = require('async');//异步的
 
 exports = module.exports = function (req, res) {
-
+    console.log(req.body);
+    var cpu = req.body.cpu;
+    var memory = req.body.memory;
+    var operateSystemType = req.body.systemType;
+    var operateSystem = req.body.operateSystem;
+    var systemHardDiskType = req.body.systemHardDiskType;
+    var dataHardDiskType = req.body.dataHardDiskType;
+    var dataHardDiskSize = req.body.dataHardDiskSize;
+    var bandWidth = req.body.bandWidth;
+    var status = req.body.status;
+    var period = req.body.period;
+    var userID = req.body.userID;
     var returnMessag = {}; 
     async.parallel({//并行异步
         orderItems: function (done) {//customer是别名
             var order = OrderItem.model.find();
                 order.populate('Cpu memory operateSystemType operateSystem systemHardDiskType dataHardDiskType')
-                if (Cpu != null && Cpu != 'unlimited') {
-                    order.where('Cpu',Cpu);
+                if (cpu != null && cpu !=   `` ) {
+                    order.where('Cpu',cpu);//左边是数据库里的属性名，右边是变量名
                 }
-                if (operateSystem != null && operateSystem != 'unlimited') {
-                    order.where('operateSystem',operateSystem);
+                if (period != null && period != ``) {
+                    order.where('period',period);
                 }
-                if (status != null && status != 'unlimited') {
+                if (operateSystemType != null && operateSystemType != ``) {
+                    order.where('operateSystemType',operateSystemType);
+                }
+                if (status != null && status != ``) {
                     order.where('status',status);
+                }else {
+                    order.where('status').in(['已完成',['待审批']])
                 }
-                if (memory != null && memory != 'unlimited') {
+                if (memory != null && memory != ``) {
                     order.where('memory',memory);
                 }
-                if (systemHardDiskType != null && systemHardDiskType != 'unlimited') {
+                if (systemHardDiskType != null && systemHardDiskType != ``) {
                     order.where('systemHardDiskType',systemHardDiskType);
                 }
-                if (dataHardDiskType != null && dataHardDiskType != 'unlimited') {
+                if (dataHardDiskType != null && dataHardDiskType != ``) {
                     order.where('dataHardDiskType',dataHardDiskType);
                 }
                 order.where('userID', req.body.userID)
@@ -36,7 +52,7 @@ exports = module.exports = function (req, res) {
             },
     }, function (err, result) {
         if (result.orderItems==null) {
-            returnMessag.message = "购物车为空";
+            returnMessag.message = "资产为空";
         } else {
             returnMessag.message = [];
 

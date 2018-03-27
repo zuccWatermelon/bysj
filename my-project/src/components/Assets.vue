@@ -38,55 +38,26 @@
 <!-- 当el-table元素中注入data对象数组后，在el-table-column中用prop属性来对应对象中的键名即可填入数据，用label属性来定义表格的列名。可以使用width属性来定义列宽。 -->
    
     <div class="assetSelect">
-      <p>
-        CPU：
-          <el-input
-            style="width: 8%"
-            placeholder="请输入CPU核数"
-            v-model="inputCPU"
-            clearable>
-          </el-input>
-          内存：
-        <el-input
-            style="width: 8%"
-            placeholder="输入内存大小"
-            v-model="inputMemory"
-            clearable>
-          </el-input>
-        订单状态：
-          <el-input
-            style="width: 8%"
-            placeholder="输入订单状态"
-            v-model="inputState"
-            clearable>
-          </el-input>
-          系统类型：
-          <el-input
-            style="width: 8%"
-            placeholder="输入系统类型"
-            v-model="inputOperateSystem"
-            clearable>
-          </el-input>
-          数据盘类型：
-          <el-input
-            style="width: 8%"
-            placeholder="输入数据盘类型"
-            v-model="inputdataHardDiskType"
-            clearable>
-          </el-input>
-          系统盘类型:
-          <el-input
-            style="width: 8%"
-            placeholder="输入系统盘类型"
-            v-model="inputsystemHardDiskType"
-            clearable>
-          </el-input>
-          
-        
-        <button
-          @click="assetSelect(scope.$index, scope.row)">查询</button>
-      </p>
-
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="订单状态">
+          <el-select v-model="formInline.status" placeholder="订单状态">
+            <el-option label="待审批" value="待审批"></el-option>
+            <el-option label="已完成" value="已完成"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="订购时长">
+          <el-input v-model="formInline.period" placeholder="订购时长"></el-input>
+        </el-form-item>
+        <el-form-item label="系统类型">
+          <el-select v-model="formInline.systemType" placeholder="系统类型">
+            <el-option label="Windows" value="5a79717cbc9a5b0370dae3b7"></el-option>
+            <el-option label="Linux" value="5a797175bc9a5b0370dae3b6"></el-option>
+          </el-select>  
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit(formInline)">查询</el-button>
+        </el-form-item>
+      </el-form>
     </div>
   <div class="selectedTable">
     <el-table
@@ -206,6 +177,11 @@ export default {
           value:"Windows10"
         }],
         login: false,
+        formInline: {
+          systemType: '',
+          status: '',
+          period: ''
+        },
         cpu: '1',
         memory: '1',
         bandWidth: 1,
@@ -296,6 +272,32 @@ export default {
       handleSelect(key, keyPath) {
         return 0;
       },
+      onSubmit(formInline) {
+        var userID = window.sessionStorage.getItem('userID');
+        console.log(formInline);
+        console.log(formInline.systemType);
+        console.log(formInline.status);
+        console.log(formInline.period);
+        var formData = new FormData();
+        formData.append('userID', userID);
+        formData.append('status',formInline.status);//左边是后台接收的变量的名称，右边是前台实际变量的名称
+        formData.append('systemType',formInline.systemType);
+        formData.append('period',formInline.period);
+        axios({
+                method:"post",
+                url:"http://127.0.0.1:3000/api/assetSelect",
+                data: formData
+        }).then(
+            res=>{
+              this.tableData = res.data.message;
+              console.log(res.data.message);
+            }
+        ).catch(
+            error=>{
+                console.log(error);
+            }
+        );
+      },
        handleTime(value) {
         console.log(value);
       },
@@ -322,7 +324,7 @@ export default {
           });          
         }); 
       },
-        toggleSelection(rows) {
+      toggleSelection(rows) {
         if (rows) {
           rows.forEach(row => {
             this.$refs.multipleTable.toggleRowSelection(row);

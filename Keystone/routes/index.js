@@ -59,6 +59,8 @@ exports = module.exports = function (app) {
 	app.all("/api/resetPsw",routes.api.resetPsw);
 	app.all("/api/findToDoList",routes.api.findToDoList);
 	app.all("/api/orderPass",routes.api.orderPass);
+	app.all("/api/assetSelect",routes.api.assetSelect);
+
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);
 
