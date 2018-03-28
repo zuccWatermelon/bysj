@@ -5,7 +5,8 @@ var moment = require('moment');
 var async = require('async');//异步的
 
 exports = module.exports = function (req, res) {
-
+    var pageSize = req.body.pageSize;
+    var pageSelected = req.body.pageSelected;
     var returnMessag = {}; 
     async.parallel({//并行异步
         orderItems: function (done) {//customer是别名
@@ -13,6 +14,8 @@ exports = module.exports = function (req, res) {
                 .populate('Cpu memory operateSystemType operateSystem systemHardDiskType dataHardDiskType')
                 .where('status').in(['已完成',['待审批']])
                 .where('userID', req.body.userID)
+                .limit(pageSize)
+                .skip((pageSelected - 1) * pageSize)
                 .exec(function (err, result) {
                     done(err, result);
                 });

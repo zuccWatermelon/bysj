@@ -12,6 +12,8 @@ exports = module.exports = function (req, res) {
             OrderItem.model.find()
                 .populate('Cpu memory operateSystemType operateSystem systemHardDiskType dataHardDiskType')
                 .where('status', '待审批')
+                // .limit(pageSize)
+                // .skip((pageSelected - 1) * pageSize)
                 .exec(function (err, result) {
                     done(err, result);
                 });

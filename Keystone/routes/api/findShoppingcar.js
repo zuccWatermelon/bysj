@@ -13,6 +13,8 @@ exports = module.exports = function (req, res) {
                 .populate('Cpu memory operateSystemType operateSystem systemHardDiskType dataHardDiskType')
                 .where('status', '待提交')
                 .where('userID', req.body.userID)
+                // .limit(pageSize)
+                // .skip((pageSelected - 1) * pageSize)
                 .exec(function (err, result) {
                     done(err, result);
                 });

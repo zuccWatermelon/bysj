@@ -11,7 +11,9 @@ exports = module.exports = function (req, res) {
     	orderItems: function (done) {//customer是别名
         	OrderItem.model.find()
                 .populate('Cpu memory operateSystemType operateSystem systemHardDiskType dataHardDiskType')
-            	.exec(function (err, result) {
+            	// .limit(pageSize)
+             //    .skip((pageSelected - 1) * pageSize)
+                .exec(function (err, result) {
                		done(err, result);
             	});
         	},

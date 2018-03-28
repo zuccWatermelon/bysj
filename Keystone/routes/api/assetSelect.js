@@ -17,8 +17,44 @@ exports = module.exports = function (req, res) {
     var status = req.body.status;
     var period = req.body.period;
     var userID = req.body.userID;
-    var returnMessag = {}; 
+    var currentPage = req.body.currentPage;
+
+    if(currentPage == null || currentPage ==''){
+        currentPage = 1;
+    }
+
+    var returnMessag = {};
     async.parallel({//并行异步
+        entityNumber:function(done){
+            var number = OrderItem.model.count();
+                if (cpu != null && cpu !=   `` ) {
+                    number.where('Cpu',cpu);//左边是数据库里的属性名，右边是变量名
+                }
+                if (period != null && period != ``) {
+                    number.where('period',period);
+                }
+                if (operateSystemType != null && operateSystemType != ``) {
+                    number.where('operateSystemType',operateSystemType);
+                }
+                if (status != null && status != ``) {
+                    number.where('status',status);
+                }else {
+                    number.where('status').in(['已完成',['待审批']])
+                }
+                if (memory != null && memory != ``) {
+                    number.where('memory',memory);
+                }
+                if (systemHardDiskType != null && systemHardDiskType != ``) {
+                    number.where('systemHardDiskType',systemHardDiskType);
+                }
+                if (dataHardDiskType != null && dataHardDiskType != ``) {
+                    number.where('dataHardDiskType',dataHardDiskType);
+                }
+                number.where('userID', req.body.userID)
+                number.exec(function (err, result) {
+                    done(err, result);
+                });
+        },
         orderItems: function (done) {//customer是别名
             var order = OrderItem.model.find();
                 order.populate('Cpu memory operateSystemType operateSystem systemHardDiskType dataHardDiskType')
@@ -45,6 +81,8 @@ exports = module.exports = function (req, res) {
                 if (dataHardDiskType != null && dataHardDiskType != ``) {
                     order.where('dataHardDiskType',dataHardDiskType);
                 }
+                order.limit(5)
+                order.skip((currentPage - 1) * 5)
                 order.where('userID', req.body.userID)
                 order.exec(function (err, result) {
                     done(err, result);
@@ -83,6 +121,7 @@ exports = module.exports = function (req, res) {
             });
         }
         // console.log(returnMessag);
+        returnMessag.totalCnt = result.entityNumber;
         res.send(JSON.stringify(returnMessag));
     });
 };  

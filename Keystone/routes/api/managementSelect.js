@@ -45,6 +45,10 @@ exports = module.exports = function (req, res) {
                 if (dataHardDiskType != null && dataHardDiskType != ``) {
                     order.where('dataHardDiskType',dataHardDiskType);
                 }
+                
+                // order.limit(pageSize)
+                // order.skip((pageSelected - 1) * pageSize)
+
                 order.exec(function (err, result) {
                     done(err, result);
                 });
