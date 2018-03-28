@@ -26,13 +26,17 @@ exports = module.exports = function (req, res) {
     var returnMessag = {}; 
     async.parallel({//并行异步
         entityNumber:function(done){
-            var number = OrderItem.model.count()
-            .where('status', '待提交');
+            var number = OrderItem.model.count();
                 if (cpu != null && cpu !=   `` ) {
                     number.where('Cpu',cpu);//左边是数据库里的属性名，右边是变量名
                 }
                 if (period != null && period != ``) {
                     number.where('period',period);
+                }
+                if (status != null && status != ``) {
+                    number.where('status',status);
+                }else {
+                    number.where('status', '待提交')
                 }
                 if (operateSystemType != null && operateSystemType != ``) {
                     number.where('operateSystemType',operateSystemType);
@@ -52,14 +56,18 @@ exports = module.exports = function (req, res) {
                 });
             },
         orderItems: function (done) {//customer是别名
-            var order = OrderItem.model.find()
-            .where('status', '待提交');
+            var order = OrderItem.model.find();
                 order.populate('Cpu memory operateSystemType operateSystem systemHardDiskType dataHardDiskType')
                 if (cpu != null && cpu !=   `` ) {
                     order.where('Cpu',cpu);//左边是数据库里的属性名，右边是变量名
                 }
                 if (period != null && period != ``) {
                     order.where('period',period);
+                }
+                if (status != null && status != ``) {
+                    order.where('status',status);
+                }else {
+                    order.where('status', '待提交')
                 }
                 if (operateSystemType != null && operateSystemType != ``) {
                     order.where('operateSystemType',operateSystemType);

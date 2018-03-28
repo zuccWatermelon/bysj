@@ -16,25 +16,30 @@ exports = module.exports = function (req, res) {
     var bandWidth = req.body.bandWidth;
     var status = req.body.status;
     var period = req.body.period;
-    var userID = req.body.userID;
+    var currentPage = req.body.currentPage;
+
+    console.log(req.body);
+
+    if(currentPage == null || currentPage ==''){
+        currentPage = 1;
+    }
     var returnMessag = {}; 
     async.parallel({//并行异步
-        orderItems: function (done) {//customer是别名
-            var order = OrderItem.model.find();
-                order.populate('Cpu memory operateSystemType operateSystem systemHardDiskType dataHardDiskType')
+        entityNumber:function(done){
+            var number = OrderItem.model.count();
                 if (cpu != null && cpu !=   `` ) {
                     order.where('Cpu',cpu);//左边是数据库里的属性名，右边是变量名
                 }
                 if (period != null && period != ``) {
                     order.where('period',period);
                 }
+                if (status != null && status != ``) {
+                    number.where('status',status);
+                }else {
+                    number.where('status', '待审批')
+                }
                 if (operateSystemType != null && operateSystemType != ``) {
                     order.where('operateSystemType',operateSystemType);
-                }
-                if (status != null && status != ``) {
-                    order.where('status',status);
-                }else {
-                    order.where('status', '待审批')
                 }
                 if (memory != null && memory != ``) {
                     order.where('memory',memory);
@@ -45,17 +50,45 @@ exports = module.exports = function (req, res) {
                 if (dataHardDiskType != null && dataHardDiskType != ``) {
                     order.where('dataHardDiskType',dataHardDiskType);
                 }
-                
-                // order.limit(pageSize)
-                // order.skip((pageSelected - 1) * pageSize)
-
+                number.exec(function (err, result) {
+                    done(err, result);
+                });
+            },
+        orderItems: function (done) {//customer是别名
+            var order = OrderItem.model.find();
+                order.populate('Cpu memory operateSystemType operateSystem systemHardDiskType dataHardDiskType')
+                if (cpu != null && cpu !=   `` ) {
+                    order.where('Cpu',cpu);//左边是数据库里的属性名，右边是变量名
+                }
+                if (period != null && period != ``) {
+                    order.where('period',period);
+                }
+                if (status != null && status != ``) {
+                    order.where('status',status);
+                }else {
+                    order.where('status', '待审批')
+                }
+                if (operateSystemType != null && operateSystemType != ``) {
+                    order.where('operateSystemType',operateSystemType);
+                }
+                if (memory != null && memory != ``) {
+                    order.where('memory',memory);
+                }
+                if (systemHardDiskType != null && systemHardDiskType != ``) {
+                    order.where('systemHardDiskType',systemHardDiskType);
+                }
+                if (dataHardDiskType != null && dataHardDiskType != ``) {
+                    order.where('dataHardDiskType',dataHardDiskType);
+                }
+                order.limit(5)
+                order.skip((currentPage - 1) * 5)
                 order.exec(function (err, result) {
                     done(err, result);
                 });
             },
     }, function (err, result) {
         if (result.orderItems==null) {
-            returnMessag.message = "资产为空";
+            returnMessag.message = "待审核列表为空";
         } else {
             returnMessag.message = [];
 
@@ -86,6 +119,7 @@ exports = module.exports = function (req, res) {
             });
         }
         // console.log(returnMessag);
+        returnMessag.totalCnt = result.entityNumber;
         res.send(JSON.stringify(returnMessag));
     });
 };  

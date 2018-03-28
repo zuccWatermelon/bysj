@@ -418,7 +418,6 @@ export default {
         }
       },
       
-      
       handleDelete(index, row) {
           console.log(row);
           this.$confirm('此操作将永久删除该订单, 是否继续?', '提示', {

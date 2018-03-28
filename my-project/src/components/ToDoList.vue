@@ -172,8 +172,19 @@
             </el-table-column>
            </el-table>
           </div>
+          <div class="block">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              :page-size="5"
+              layout="prev, pager, next"
+              :total=totalCnt>
+            </el-pagination>
+          </div>
         </div>
       </el-row>
+      
       <p class="foot">版权所有 ©2017 中国电信浙江公司 [ 增值电信业务经营许可证 A2.B1.B2-XXXXXXXX ] ICP 证号:浙 ICP 备 XXXXXXXX号</p>
   </div>
 </template>
@@ -183,6 +194,8 @@ export default {
     data() {
       return {
         activeIndex: '3',
+        currentPage: 1,
+        totalCnt:100,
         dataHardDiskSize: '40',
         inputDiscount: '0.8',
         login: false,
@@ -215,6 +228,7 @@ export default {
       }).then(
           res=>{
             self.tableData = res.data.message
+            self.totalCnt = res.data.totalCnt
           }
       ).catch(
           error=>{
@@ -225,6 +239,32 @@ export default {
     methods: {
       handleSelect(key, keyPath) {
         return 0;
+      },
+      handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+        console.log(val);
+      },
+      handleCurrentChange(val) {
+        var formInline = this.formInline;
+        var formData = new FormData();
+        //左边是后台接收的变量的名称，右边是前台实际变量的名称
+        formData.append('systemType',formInline.systemType);
+        formData.append('period',formInline.period);
+        formData.append('currentPage',val);
+        axios({
+                method:"post",
+                url:"http://127.0.0.1:3000/api/managementSelect",
+                data: formData
+        }).then(
+            res=>{
+              this.tableData = res.data.message;
+              console.log(res.data.message);
+            }
+        ).catch(
+            error=>{
+                console.log(error);
+            }
+        );
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
@@ -275,8 +315,6 @@ export default {
       },
       onSubmit(formInline) {
         var userID = window.sessionStorage.getItem('userID');
-        console.log(formInline);
-        console.log(formInline.systemType);
         var formData = new FormData();
         formData.append('userID', userID);
         //左边是后台接收的变量的名称，右边是前台实际变量的名称
