@@ -36,175 +36,191 @@
     <hr />
     </div>
 <!-- 当el-table元素中注入data对象数组后，在el-table-column中用prop属性来对应对象中的键名即可填入数据，用label属性来定义表格的列名。可以使用width属性来定义列宽。 -->
-<div class="selectedTable">
-    <el-table
-    ref="multipleTable"
-    :data="tableData"
-    tooltip-effect="dark"
-    style="width: 100%"
-    @selection-change="handleSelectionChange">
+    <div class="shoppingCarSelect">
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="订购时长">
+          <el-input v-model="formInline.period" placeholder="订购时长"></el-input>
+        </el-form-item>
+        <el-form-item label="系统类型">
+          <el-select v-model="formInline.systemType" placeholder="系统类型">
+            <el-option label="Windows" value="5a79717cbc9a5b0370dae3b7"></el-option>
+            <el-option label="Linux" value="5a797175bc9a5b0370dae3b6"></el-option>
+          </el-select>  
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit(formInline)">查询</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <div class="selectedTable">
+      <el-table
+      ref="multipleTable"
+      :data="tableData"
+      tooltip-effect="dark"
+      style="width: 100%"
+      @selection-change="handleSelectionChange">
 
-    <!-- 以下是展开的内容 -->
-    <el-table-column type="expand">
-      <template slot-scope="props">
-        <el-form label-position="left" inline class="demo-table-expand">
-          <el-form-item label="开通时间">
-            <el-input-number style="margin-left:10px" 
-              v-model="props.row.period" 
-              @change="handlePeriod" 
-              :min="1" 
-              :max="10">
-            </el-input-number>
-            <span>月</span>
-          </el-form-item>
-          <el-form-item label="CPU">
-            <el-radio-group style="margin-left:35px" v-model="props.row.Cpu">
-              <el-radio-button label="1"></el-radio-button>
-              <el-radio-button label="2"></el-radio-button>
-              <el-radio-button label="4"></el-radio-button>
-              <el-radio-button label="8"></el-radio-button>
-              <el-radio-button label="16"></el-radio-button>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="内存">
-            <el-radio-group style="margin-left:37px"  v-model="props.row.memory">
-              <div v-if="props.row.Cpu === '1'">
+      <!-- 以下是展开的内容 -->
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="开通时间">
+              <el-input-number style="margin-left:10px" 
+                v-model="props.row.period" 
+                @change="handlePeriod" 
+                :min="1" 
+                :max="10">
+              </el-input-number>
+              <span>月</span>
+            </el-form-item>
+            <el-form-item label="CPU">
+              <el-radio-group style="margin-left:35px" v-model="props.row.Cpu">
                 <el-radio-button label="1"></el-radio-button>
                 <el-radio-button label="2"></el-radio-button>
                 <el-radio-button label="4"></el-radio-button>
                 <el-radio-button label="8"></el-radio-button>
-              </div>
-              <div v-if="props.row.Cpu === '2'">
-                <el-radio-button label="2"></el-radio-button>
-                <el-radio-button label="4"></el-radio-button>
-                <el-radio-button label="8"></el-radio-button>
                 <el-radio-button label="16"></el-radio-button>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="内存">
+              <el-radio-group style="margin-left:37px"  v-model="props.row.memory">
+                <div v-if="props.row.Cpu === '1'">
+                  <el-radio-button label="1"></el-radio-button>
+                  <el-radio-button label="2"></el-radio-button>
+                  <el-radio-button label="4"></el-radio-button>
+                  <el-radio-button label="8"></el-radio-button>
+                </div>
+                <div v-if="props.row.Cpu === '2'">
+                  <el-radio-button label="2"></el-radio-button>
+                  <el-radio-button label="4"></el-radio-button>
+                  <el-radio-button label="8"></el-radio-button>
+                  <el-radio-button label="16"></el-radio-button>
+                </div>
+                <div v-if="props.row.Cpu === '4'">
+                  <el-radio-button label="4"></el-radio-button>
+                  <el-radio-button label="8"></el-radio-button>
+                  <el-radio-button label="16"></el-radio-button>
+                  <el-radio-button label="32"></el-radio-button>
+                </div>
+                <div v-if="props.row.Cpu === '8'">
+                  <el-radio-button label="8"></el-radio-button>
+                  <el-radio-button label="16"></el-radio-button>
+                  <el-radio-button label="32"></el-radio-button>
+                  <el-radio-button label="64"></el-radio-button>
+                </div>
+                <div v-if="props.row.Cpu === '16'">
+                  <el-radio-button label="16"></el-radio-button>
+                  <el-radio-button label="32"></el-radio-button>
+                  <el-radio-button label="64"></el-radio-button>
+                  <el-radio-button label="128"></el-radio-button>
+                </div>
+              </el-radio-group>
+            </el-form-item> 
+            <el-form-item label="系统">
+              <div style="margin-left:37px;width:400px;">
+                <el-select size="small" style="width: 150px"
+                           v-model="props.row.systemType"
+                           placeholder="请选择操作系统类型"
+                           v-on:change="getType($event)">
+                  <el-option
+                          v-for="item in type"
+                          :label="item.label"
+                          :value="item.value">
+                  </el-option>
+                </el-select>
+                <el-select size="small" style="width: 150px"
+                           v-if="props.row.systemType!=''"
+                           v-model="props.row.operateSystem"
+                           placeholder="请选择操作系统"
+                           v-on:change="getSystem($event)">
+                  <el-option
+                          v-for="item in Systems"
+                          :label="item.label"
+                          :value="item.value">
+                  </el-option>
+                </el-select>
               </div>
-              <div v-if="props.row.Cpu === '4'">
-                <el-radio-button label="4"></el-radio-button>
-                <el-radio-button label="8"></el-radio-button>
-                <el-radio-button label="16"></el-radio-button>
-                <el-radio-button label="32"></el-radio-button>
-              </div>
-              <div v-if="props.row.Cpu === '8'">
-                <el-radio-button label="8"></el-radio-button>
-                <el-radio-button label="16"></el-radio-button>
-                <el-radio-button label="32"></el-radio-button>
-                <el-radio-button label="64"></el-radio-button>
-              </div>
-              <div v-if="props.row.Cpu === '16'">
-                <el-radio-button label="16"></el-radio-button>
-                <el-radio-button label="32"></el-radio-button>
-                <el-radio-button label="64"></el-radio-button>
-                <el-radio-button label="128"></el-radio-button>
-              </div>
-            </el-radio-group>
-          </el-form-item> 
-          <el-form-item label="系统">
-            <div style="margin-left:37px;width:400px;">
-              <el-select size="small" style="width: 150px"
-                         v-model="props.row.systemType"
-                         placeholder="请选择操作系统类型"
-                         v-on:change="getType($event)">
-                <el-option
-                        v-for="item in type"
-                        :label="item.label"
-                        :value="item.value">
+            </el-form-item>
+            <el-form-item label="系统盘">
+              <el-select style="width: 150px ;margin-left:24px"
+              v-model="props.row.systemHardDiskType" placeholder="请选择系统盘类型">
+                <el-option 
+                  v-for="item in disk" 
+                  :label="item.label" 
+                  :value="item.value">
                 </el-option>
               </el-select>
-              <el-select size="small" style="width: 150px"
-                         v-if="props.row.systemType!=''"
-                         v-model="props.row.operateSystem"
-                         placeholder="请选择操作系统"
-                         v-on:change="getSystem($event)">
-                <el-option
-                        v-for="item in Systems"
-                        :label="item.label"
-                        :value="item.value">
+              <span style="margin-left:10px">40G</span>
+            </el-form-item>
+            <el-form-item label="数据盘">
+              <el-select style="width: 150px;margin-left:24px"
+              v-model="props.row.dataHardDiskType" placeholder="请选择数据盘类型">
+                <el-option 
+                  v-for="item in disk" 
+                  :label="item.label" 
+                  :value="item.value">
                 </el-option>
               </el-select>
-            </div>
-          </el-form-item>
-          <el-form-item label="系统盘">
-            <el-select style="width: 150px ;margin-left:24px"
-            v-model="props.row.systemHardDiskType" placeholder="请选择系统盘类型">
-              <el-option 
-                v-for="item in disk" 
-                :label="item.label" 
-                :value="item.value">
-              </el-option>
-            </el-select>
-            <span style="margin-left:10px">40G</span>
-          </el-form-item>
-          <el-form-item label="数据盘">
-            <el-select style="width: 150px;margin-left:24px"
-            v-model="props.row.dataHardDiskType" placeholder="请选择数据盘类型">
-              <el-option 
-                v-for="item in disk" 
-                :label="item.label" 
-                :value="item.value">
-              </el-option>
-            </el-select>
-            <el-input style='width:100px'
-            placeholder="请输入内容"
-            v-model="props.row.dataHardDiskSize"
-            clearable>
-            </el-input>
-            <span>G</span>
-          </el-form-item>
-          <el-form-item label="带宽">
-            <div class="block" style='width:400px ; margin-left:38px' >
-              <el-slider v-model="props.row.bandWidth" 
-              :min="1" 
-              :max="100"
-              show-input> </el-slider>
-            </div>
-          </el-form-item>
-        </el-form>
-      </template>
-    </el-table-column>
+              <el-input style='width:100px'
+              placeholder="请输入内容"
+              v-model="props.row.dataHardDiskSize"
+              clearable>
+              </el-input>
+              <span>G</span>
+            </el-form-item>
+            <el-form-item label="带宽">
+              <div class="block" style='width:400px ; margin-left:38px' >
+                <el-slider v-model="props.row.bandWidth" 
+                :min="1" 
+                :max="100"
+                show-input> </el-slider>
+              </div>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
 
-    <!-- 以下是标题 -->
-    <el-table-column
-      type="selection"
-      width="55">
-    </el-table-column>
-    <el-table-column
-        prop="orderId"
-        label="订单编号"
-        width="180">
-    </el-table-column>
-    <el-table-column
-        prop="name"
-        label="商品名称"
-        width="180">
-    </el-table-column>
-    <el-table-column
-        prop="price"
-        label="单价"
-        width="180">
-    </el-table-column>
-    <el-table-column
-        prop="createdAt"
-        label="订单创建时间"
-        width="180">
-    </el-table-column>
-    <el-table-column
-        prop="status"
-        label="订单状态"
-        width="180">
-    </el-table-column>
-    <el-table-column label="操作">
-      <template slot-scope="scope">
-        <el-button
-          size="mini"
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)">删除
-        </el-button>
-      </template>
-     </el-table-column>
-    </el-table>
-  </div>
+      <!-- 以下是标题 -->
+      <el-table-column
+        type="selection"
+        width="55">
+      </el-table-column>
+      <el-table-column
+          prop="orderId"
+          label="订单编号"
+          width="180">
+      </el-table-column>
+      <el-table-column
+          prop="name"
+          label="商品名称"
+          width="180">
+      </el-table-column>
+      <el-table-column
+          prop="price"
+          label="单价"
+          width="180">
+      </el-table-column>
+      <el-table-column
+          prop="createdAt"
+          label="订单创建时间"
+          width="180">
+      </el-table-column>
+      <el-table-column
+          prop="status"
+          label="订单状态"
+          width="180">
+      </el-table-column>
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)">删除
+          </el-button>
+        </template>
+       </el-table-column>
+      </el-table>
+    </div>
     <div class="bottom">
       <div class="bottom-center">
         <div class="submit" @click="submitOrder()">提交审批</div>
@@ -244,7 +260,10 @@ export default {
         memory: '1',
         bandWidth: 1,
         period: 1,
-
+        formInline: {
+          systemType: '',
+          period: ''
+        },
         num: 1,
         disk: [{
           value: 'SATA',
@@ -323,6 +342,31 @@ export default {
             message: '已取消退出'
           });          
         }); 
+      },
+            onSubmit(formInline) {
+        var userID = window.sessionStorage.getItem('userID');
+        console.log(formInline);
+        console.log(formInline.systemType);
+        console.log(formInline.period);
+        var formData = new FormData();
+        formData.append('userID', userID);
+        //左边是后台接收的变量的名称，右边是前台实际变量的名称
+        formData.append('systemType',formInline.systemType);
+        formData.append('period',formInline.period);
+        axios({
+                method:"post",
+                url:"http://127.0.0.1:3000/api/shoppingCarSelect",
+                data: formData
+        }).then(
+            res=>{
+              this.tableData = res.data.message;
+              console.log(res.data.message);
+            }
+        ).catch(
+            error=>{
+                console.log(error);
+            }
+        );
       },
       toggleSelection(rows) {
         if (rows) {

@@ -75,97 +75,105 @@
                 <span slot="title"><router-link to="UserManagement" class="color" >用户管理</router-link></span>
               </el-menu-item>
             </div>
-           
           </el-menu>
-
         </el-col>
-        <div class="right-con">
-          <div class="selectedTable">
-    <el-table
-    ref="multipleTable"
-    :data="tableData"
-    tooltip-effect="dark"
-    style="width: 100%"
-    @selection-change="handleSelectionChange">
-
-    <!-- 以下是展开的内容 -->
-    <el-table-column type="expand">
-      <template slot-scope="props">
-        <el-form label-position="left" inline class="demo-table-expand">
-          
-          <el-form-item label="CPU">
-            <span>{{ props.row.Cpu }}核</span>
-          </el-form-item>
-          <el-form-item label="内存">
-            <span>{{ props.row.memory }}G</span>
-          </el-form-item> 
-          <el-form-item label="系统">
-            <span>{{ props.row.systemType }}</span>
-            <span>{{ props.row.operateSystem }}</span>
-          </el-form-item>
-          <el-form-item label="系统盘">
-            <span>{{ props.row.systemHardDiskType }}</span>
-            <span style="margin-left:10px">40G</span>
-          </el-form-item>
-          <el-form-item label="数据盘">
-            <span>{{ props.row.dataHardDiskType }}</span>
-            <span>{{ props.row.dataHardDiskSize }}</span>
-            <span>G</span>
-          </el-form-item>
-          <el-form-item label="带宽">
-            <span>{{ props.row.bandWidth }}MB</span>
-          </el-form-item>
-        </el-form>
-      </template>
-    </el-table-column>
-
-    <!-- 以下是标题 -->
-    
-    <el-table-column
-        prop="orderId"
-        label="订单编号"
-        width="180">
-    </el-table-column>
-    <el-table-column
-        prop="name"
-        label="商品名称"
-        width="180">
-    </el-table-column>
-    <el-table-column
-        prop="price"
-        label="单价"
-        width="180">
-    </el-table-column>
-    <el-table-column
-        prop="endAt"
-        label="订单截止时间"
-        width="180">
-    </el-table-column>
-    <el-table-column
-        prop="status"
-        label="订单状态"
-        width="180">
-    </el-table-column>
-    <el-table-column label="操作"width="180">
-      <template slot-scope="scope">
-        <el-button 
-          size="mini"
-          type="primary"
-          @click="handlePass(scope.$index, scope.row)">通过
-        </el-button>
-        <el-button 
-          size="mini"
-          type="danger"
-          @click="handleChange(scope.$index, scope.row)">不通过
-        </el-button>
-      </template>
-      </el-table-column>
-     </el-table>
-    </div>
-          
+      <div class="right-con">
+        <div class="managementSelect">
+          <el-form :inline="true" :model="formInline" class="demo-form-inline">
+            <el-form-item label="订购时长">
+              <el-input v-model="formInline.period" placeholder="订购时长"></el-input>
+            </el-form-item>
+            <el-form-item label="系统类型">
+              <el-select v-model="formInline.systemType" placeholder="系统类型">
+                <el-option label="Windows" value="5a79717cbc9a5b0370dae3b7"></el-option>
+                <el-option label="Linux" value="5a797175bc9a5b0370dae3b6"></el-option>
+              </el-select>  
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit(formInline)">查询</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+        <div class="selectedTable">
+          <el-table
+          ref="multipleTable"
+          :data="tableData"
+          tooltip-effect="dark"
+          style="width: 100%"
+          @selection-change="handleSelectionChange">
+          <!-- 以下是展开的内容 -->
+          <el-table-column type="expand">
+            <template slot-scope="props">
+              <el-form label-position="left" inline class="demo-table-expand">
+                <el-form-item label="CPU">
+                  <span>{{ props.row.Cpu }}核</span>
+                </el-form-item>
+                <el-form-item label="内存">
+                  <span>{{ props.row.memory }}G</span>
+                </el-form-item> 
+                <el-form-item label="系统">
+                  <span>{{ props.row.systemType }}</span>
+                  <span>{{ props.row.operateSystem }}</span>
+                </el-form-item>
+                <el-form-item label="系统盘">
+                  <span>{{ props.row.systemHardDiskType }}</span>
+                  <span style="margin-left:10px">40G</span>
+                </el-form-item>
+                <el-form-item label="数据盘">
+                  <span>{{ props.row.dataHardDiskType }}</span>
+                  <span>{{ props.row.dataHardDiskSize }}</span>
+                  <span>G</span>
+                </el-form-item>
+                <el-form-item label="带宽">
+                  <span>{{ props.row.bandWidth }}MB</span>
+                </el-form-item>
+              </el-form>
+            </template>
+          </el-table-column>
+          <!-- 以下是标题 -->
+            <el-table-column
+                prop="orderId"
+                label="订单编号"
+                width="180">
+            </el-table-column>
+            <el-table-column
+                prop="name"
+                label="商品名称"
+                width="180">
+            </el-table-column>
+            <el-table-column
+                prop="price"
+                label="单价"
+                width="180">
+            </el-table-column>
+            <el-table-column
+                prop="endAt"
+                label="订单截止时间"
+                width="180">
+            </el-table-column>
+            <el-table-column
+                prop="status"
+                label="订单状态"
+                width="180">
+            </el-table-column>
+            <el-table-column label="操作"width="180">
+              <template slot-scope="scope">
+                <el-button 
+                  size="mini"
+                  type="primary"
+                  @click="handlePass(scope.$index, scope.row)">通过
+                </el-button>
+                <el-button 
+                  size="mini"
+                  type="danger"
+                  @click="handleChange(scope.$index, scope.row)">不通过
+                </el-button>
+              </template>
+            </el-table-column>
+           </el-table>
+          </div>
         </div>
       </el-row>
-
       <p class="foot">版权所有 ©2017 中国电信浙江公司 [ 增值电信业务经营许可证 A2.B1.B2-XXXXXXXX ] ICP 证号:浙 ICP 备 XXXXXXXX号</p>
   </div>
 </template>
@@ -182,6 +190,10 @@ export default {
         form: {
           name: '',
           pwd: '',
+        },
+        formInline: {
+          systemType: '',
+          period: ''
         },
         username:window.sessionStorage.getItem('username'),
         userID:window.sessionStorage.getItem('userID'), 
@@ -260,6 +272,30 @@ export default {
             message: '已取消修改'
           });          
         });
+      },
+      onSubmit(formInline) {
+        var userID = window.sessionStorage.getItem('userID');
+        console.log(formInline);
+        console.log(formInline.systemType);
+        var formData = new FormData();
+        formData.append('userID', userID);
+        //左边是后台接收的变量的名称，右边是前台实际变量的名称
+        formData.append('systemType',formInline.systemType);
+        formData.append('period',formInline.period);
+        axios({
+                method:"post",
+                url:"http://127.0.0.1:3000/api/managementSelect",
+                data: formData
+        }).then(
+            res=>{
+              this.tableData = res.data.message;
+              console.log(res.data.message);
+            }
+        ).catch(
+            error=>{
+                console.log(error);
+            }
+        );
       },
       logout(){
         this.$confirm('是否退出?', '提示', {
@@ -398,6 +434,9 @@ export default {
   .right-con{
     float:left;
     padding-left: 25px;
+  }
+  .managementSelect{
+    margin-top: 25px;
   }
   #management /deep/ .el-col-12{width:auto;}/*强行改掉了系统里的样式*/
 </style>

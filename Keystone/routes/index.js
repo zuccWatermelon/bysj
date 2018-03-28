@@ -60,6 +60,8 @@ exports = module.exports = function (app) {
 	app.all("/api/findToDoList",routes.api.findToDoList);
 	app.all("/api/orderPass",routes.api.orderPass);
 	app.all("/api/assetSelect",routes.api.assetSelect);
+	app.all("/api/shoppingCarSelect",routes.api.shoppingCarSelect);
+	app.all("/api/managementSelect",routes.api.managementSelect);
 
 	// NOTE: To protect a route so that only admins can see it, use the requireUser middleware:
 	// app.get('/protected', middleware.requireUser, routes.views.protected);
