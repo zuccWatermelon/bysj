@@ -210,7 +210,7 @@ export default {
       formData.append('userID', userID);
       axios({
               method:"post",
-              url:"http://127.0.0.1:3000/api/findToDoList",
+              url:"http://127.0.0.1:3000/api/managementSelect",
               data: formData
       }).then(
           res=>{

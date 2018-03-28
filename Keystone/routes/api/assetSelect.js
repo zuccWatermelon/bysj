@@ -54,7 +54,7 @@ exports = module.exports = function (req, res) {
                 number.exec(function (err, result) {
                     done(err, result);
                 });
-        },
+            },
         orderItems: function (done) {//customer是别名
             var order = OrderItem.model.find();
                 order.populate('Cpu memory operateSystemType operateSystem systemHardDiskType dataHardDiskType')

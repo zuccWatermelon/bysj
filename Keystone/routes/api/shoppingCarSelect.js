@@ -17,10 +17,43 @@ exports = module.exports = function (req, res) {
     var status = req.body.status;
     var period = req.body.period;
     var userID = req.body.userID;
+    var currentPage = req.body.currentPage;
+
+    if(currentPage == null || currentPage ==''){
+        currentPage = 1;
+    }
+
     var returnMessag = {}; 
     async.parallel({//并行异步
+        entityNumber:function(done){
+            var number = OrderItem.model.count()
+            .where('status', '待提交');
+                if (cpu != null && cpu !=   `` ) {
+                    number.where('Cpu',cpu);//左边是数据库里的属性名，右边是变量名
+                }
+                if (period != null && period != ``) {
+                    number.where('period',period);
+                }
+                if (operateSystemType != null && operateSystemType != ``) {
+                    number.where('operateSystemType',operateSystemType);
+                }
+                if (memory != null && memory != ``) {
+                    number.where('memory',memory);
+                }
+                if (systemHardDiskType != null && systemHardDiskType != ``) {
+                    number.where('systemHardDiskType',systemHardDiskType);
+                }
+                if (dataHardDiskType != null && dataHardDiskType != ``) {
+                    number.where('dataHardDiskType',dataHardDiskType);
+                }
+                number.where('userID', req.body.userID)
+                number.exec(function (err, result) {
+                    done(err, result);
+                });
+            },
         orderItems: function (done) {//customer是别名
-            var order = OrderItem.model.find();
+            var order = OrderItem.model.find()
+            .where('status', '待提交');
                 order.populate('Cpu memory operateSystemType operateSystem systemHardDiskType dataHardDiskType')
                 if (cpu != null && cpu !=   `` ) {
                     order.where('Cpu',cpu);//左边是数据库里的属性名，右边是变量名
@@ -31,11 +64,6 @@ exports = module.exports = function (req, res) {
                 if (operateSystemType != null && operateSystemType != ``) {
                     order.where('operateSystemType',operateSystemType);
                 }
-                if (status != null && status != ``) {
-                    order.where('status',status);
-                }else {
-                    order.where('status', '待提交')
-                }
                 if (memory != null && memory != ``) {
                     order.where('memory',memory);
                 }
@@ -45,23 +73,21 @@ exports = module.exports = function (req, res) {
                 if (dataHardDiskType != null && dataHardDiskType != ``) {
                     order.where('dataHardDiskType',dataHardDiskType);
                 }
-
-                // order.limit(pageSize)
-                // order.skip((pageSelected - 1) * pageSize)
-
+                order.limit(5)
+                order.skip((currentPage - 1) * 5)
                 order.where('userID', req.body.userID)
                 order.exec(function (err, result) {
                     done(err, result);
                 });
             },
-    }, function (err, result) {
-        if (result.orderItems==null) {
-            returnMessag.message = "资产为空";
-        } else {
-            returnMessag.message = [];
+        }, function (err, result) {
+            if (result.orderItems==null) {
+                returnMessag.message = "购物车为空";
+            } else {
+                returnMessag.message = [];
 
-            result.orderItems.forEach(function(element){
-                var orderItem = {};
+                result.orderItems.forEach(function(element){
+                    var orderItem = {};
 
                 // console.log(element);
                 orderItem.orderId = element._id;//默认的哈希值
@@ -87,6 +113,7 @@ exports = module.exports = function (req, res) {
             });
         }
         // console.log(returnMessag);
+        returnMessag.totalCnt = result.entityNumber;
         res.send(JSON.stringify(returnMessag));
     });
 };  

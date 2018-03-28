@@ -122,8 +122,7 @@
                            v-model="props.row.systemType"
                            placeholder="请选择操作系统类型"
                            v-on:change="getType($event)">
-                  <el-option
-                          v-for="item in type"
+                  <el-option v-for="item in type"
                           :label="item.label"
                           :value="item.value">
                   </el-option>
@@ -229,6 +228,16 @@
         </div>
       </div>
     </div>
+    <div class="block">
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page.sync="currentPage"
+        :page-size="5"
+        layout="prev, pager, next"
+        :total=totalCnt>
+      </el-pagination>
+    </div>
       <p class="foot">版权所有 ©2017 中国电信浙江公司 [ 增值电信业务经营许可证 A2.B1.B2-XXXXXXXX ] ICP 证号:浙 ICP 备 XXXXXXXX号</p>
   </div>
 
@@ -239,8 +248,10 @@ export default {
     data() {
       return {
         activeIndex: '7',
-         dataHardDiskSize: '40',
-         inputDiscount: '0.8',
+        currentPage: 1,
+        totalCnt:100,
+        dataHardDiskSize: '40',
+        inputDiscount: '0.8',
         type:[{
           label:"Windows",
           value:"Windows"
@@ -295,11 +306,12 @@ export default {
       formData.append('userID', userID);
       axios({
               method:"post",
-              url:"http://127.0.0.1:3000/api/findShoppingcar",
+              url:"http://127.0.0.1:3000/api/shoppingCarSelect",
               data: formData
       }).then(
           res=>{
             self.tableData = res.data.message
+            self.totalCnt = res.data.totalCnt
             self.tableData.forEach(function(element){
               element.bandWidth = Number(element.bandWidth)
             })
@@ -311,6 +323,37 @@ export default {
       );
     },
     methods: {
+      handleSelect(key, keyPath) {
+        return 0;
+      },
+      handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+        console.log(val);
+      },
+      handleCurrentChange(val) {
+        var formInline = this.formInline;
+        var userID = window.sessionStorage.getItem('userID');
+        var formData = new FormData();
+        formData.append('userID', userID);
+        formData.append('status',formInline.status);//左边是后台接收的变量的名称，右边是前台实际变量的名称
+        formData.append('systemType',formInline.systemType);
+        formData.append('period',formInline.period);
+        formData.append('currentPage',val);
+        axios({
+                method:"post",
+                url:"http://127.0.0.1:3000/api/shoppingCarSelect",
+                data: formData
+        }).then(
+            res=>{
+              this.tableData = res.data.message;
+              console.log(res.data.message);
+            }
+        ).catch(
+            error=>{
+                console.log(error);
+            }
+        );
+      },
       handleSelect(key, keyPath) {
         return 0;
       },
@@ -343,14 +386,11 @@ export default {
           });          
         }); 
       },
-            onSubmit(formInline) {
+      onSubmit(formInline) {
         var userID = window.sessionStorage.getItem('userID');
-        console.log(formInline);
-        console.log(formInline.systemType);
-        console.log(formInline.period);
         var formData = new FormData();
         formData.append('userID', userID);
-        //左边是后台接收的变量的名称，右边是前台实际变量的名称
+        formData.append('status',formInline.status);//左边是后台接收的变量的名称，右边是前台实际变量的名称
         formData.append('systemType',formInline.systemType);
         formData.append('period',formInline.period);
         axios({
