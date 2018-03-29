@@ -116,7 +116,7 @@ exports = module.exports = function (req, res) {
                 orderItem.endAt = element.createdAt;
                 orderItem.endAt.setMonth(Number(orderItem.endAt.getMonth())+Number(orderItem.period));
                 orderItem.endAt = moment(orderItem.endAt).format("YYYY-MM-DD");
-                orderItem.price = 2 * orderItem.period * orderItem.Cpu * orderItem.memory * orderItem.dataHardDiskSize * orderItem.bandWidth;
+                // orderItem.price = 2 * orderItem.period * orderItem.Cpu * orderItem.memory * orderItem.dataHardDiskSize * orderItem.bandWidth;
                 returnMessag.message.push(orderItem);
             });
         }

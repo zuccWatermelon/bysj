@@ -63,7 +63,10 @@
       <!-- 以下是展开的内容 -->
       <el-table-column type="expand">
         <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand">
+          <el-form label-position="left"
+            inline class="demo-table-expand"
+            @change="handleprice" 
+           >
             <el-form-item label="开通时间">
               <el-input-number style="margin-left:10px" 
                 v-model="props.row.period" 
@@ -74,7 +77,9 @@
               <span>月</span>
             </el-form-item>
             <el-form-item label="CPU">
-              <el-radio-group style="margin-left:35px" v-model="props.row.Cpu">
+              <el-radio-group style="margin-left:35px" 
+                @change="handleCPU" 
+                v-model="props.row.Cpu">
                 <el-radio-button label="1"></el-radio-button>
                 <el-radio-button label="2"></el-radio-button>
                 <el-radio-button label="4"></el-radio-button>
@@ -83,7 +88,9 @@
               </el-radio-group>
             </el-form-item>
             <el-form-item label="内存">
-              <el-radio-group style="margin-left:37px"  v-model="props.row.memory">
+              <el-radio-group style="margin-left:37px" 
+                @change="handleMemory" 
+                v-model="props.row.memory">
                 <div v-if="props.row.Cpu === '1'">
                   <el-radio-button label="1"></el-radio-button>
                   <el-radio-button label="2"></el-radio-button>
@@ -162,6 +169,7 @@
               </el-select>
               <el-input style='width:100px'
               placeholder="请输入内容"
+              @change="handleDiskSize" 
               v-model="props.row.dataHardDiskSize"
               clearable>
               </el-input>
@@ -169,7 +177,8 @@
             </el-form-item>
             <el-form-item label="带宽">
               <div class="block" style='width:400px ; margin-left:38px' >
-                <el-slider v-model="props.row.bandWidth" 
+                <el-slider v-model="props.row.bandWidth"
+                @change="handlebandwidth"  
                 :min="1" 
                 :max="100"
                 show-input> </el-slider>
@@ -224,7 +233,10 @@
       <div class="bottom-center">
         <div class="submit" @click="submitOrder()">提交审批</div>
         <div class="final-price">
-          <p class="word">总价：<span class="orange sumPrice"><small>{{price}}</small></span></p>
+          <p class="word"><!-- 总价： --><span class="orange sumPrice"><small>
+            <!-- {{val[0].price}} --><!-- {{this.multipleSelection[0].price}} -->
+
+            </small></span></p>
         </div>
       </div>
     </div>
@@ -251,7 +263,6 @@ export default {
         currentPage: 1,
         totalCnt:100,
         dataHardDiskSize: '40',
-        inputDiscount: '0.8',
         type:[{
           label:"Windows",
           value:"Windows"
@@ -287,10 +298,11 @@ export default {
           name: '',
           pwd: '',
         },
-        price:80,
+
         formLabelWidth: '40px',
         tableData: [],
         multipleSelection: [],   
+        price:40,
         username:window.sessionStorage.getItem('username'),
         userID:window.sessionStorage.getItem('userID')  
       };
@@ -330,6 +342,9 @@ export default {
         console.log(`每页 ${val} 条`);
         console.log(val);
       },
+      handleprice(value){
+        console.log(value);
+      },
       handleCurrentChange(val) {
         var formInline = this.formInline;
         var userID = window.sessionStorage.getItem('userID');
@@ -357,15 +372,56 @@ export default {
       handleSelect(key, keyPath) {
         return 0;
       },
+      handleCPU(value){
+        // console.log(value);
+        this.price = 80;
+        this.price = this.price * value;
+        // this.price = this.price * value;
+        // console.log(this.price);
+      },
+      handleMemory(value){
+        // console.log(value);
+        this.price = 80;
+        this.price = this.price * value;
+        // console.log(this.price);
+      },
+      handleDiskSize(value){
+        // console.log(value);
+        if (value == 0) {
+          this.price = this.price;
+        }else{
+          this.price = 80;
+          this.price = value * this.price;
+        }
+        
+        // console.log(this.price);
+      },
+
        handlePeriod(value) {
-        console.log(value);
+        // console.log(value);
+        this.price = 80;
+        this.price = value * this.price;
+        // console.log(this.price);
+        
+        // this.multipleSelection = val;
+        // console.log(val);
+        // console.log(this.multipleSelection);
+
+        // console.log(this.multipleSelection[0].price);
+        // if (val[0]) {
+        //   console.log(val[0].price);
+        //   val[0].price = 2 * val[0].period * val[0].Cpu * val[0].memory * val[0].dataHardDiskSize * val[0].bandWidth;
+        //   console.log(this.multipleSelection[0].price);
+        // }
+
       },
-      handleNum(value) {
-        console.log(value);
+      
+      handlebandwidth(value) {
+        // console.log(value);
+        this.price = 80;
+        this.price = value * this.price;
+        // console.log(this.price);
       },
-      // handlebandwidth(value) {
-      //   console.log(value);
-      // },
       logout(){
         this.$confirm('是否退出?', '提示', {
           confirmButtonText: '确定',
@@ -490,6 +546,14 @@ export default {
             },
       handleSelectionChange(val) {
         this.multipleSelection = val;
+        console.log(val);
+        
+        if (val[0]) {
+          console.log(val[0].price);
+          val[0].price = 2 * val[0].period * val[0].Cpu * val[0].memory * val[0].dataHardDiskSize * val[0].bandWidth;
+          console.log(this.multipleSelection[0].price);
+        }
+        
       },
 
       submitOrder(){
