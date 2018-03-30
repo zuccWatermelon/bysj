@@ -350,7 +350,7 @@ export default {
         var userID = window.sessionStorage.getItem('userID');
         var formData = new FormData();
         formData.append('userID', userID);
-        formData.append('status',formInline.status);//左边是后台接收的变量的名称，右边是前台实际变量的名称
+        //左边是后台接收的变量的名称，右边是前台实际变量的名称
         formData.append('systemType',formInline.systemType);
         formData.append('period',formInline.period);
         formData.append('currentPage',val);
@@ -361,7 +361,7 @@ export default {
         }).then(
             res=>{
               this.tableData = res.data.message;
-              console.log(res.data.message);
+              // console.log(res.data.message);
             }
         ).catch(
             error=>{
@@ -446,7 +446,7 @@ export default {
         var userID = window.sessionStorage.getItem('userID');
         var formData = new FormData();
         formData.append('userID', userID);
-        formData.append('status',formInline.status);//左边是后台接收的变量的名称，右边是前台实际变量的名称
+        //左边是后台接收的变量的名称，右边是前台实际变量的名称
         formData.append('systemType',formInline.systemType);
         formData.append('period',formInline.period);
         axios({
@@ -557,6 +557,8 @@ export default {
       },
 
       submitOrder(){
+        if (this.multipleSelection[0] != '' && this.multipleSelection[0] != null) {
+        console.log(this.multipleSelection[0]);
           this.$confirm('提交审批后请等待管理员审批，是否提交订单?', '提示', {
           cancelButtonText: '取消',
           confirmButtonText: '确定',
@@ -682,8 +684,11 @@ export default {
             message: '提交错误，取消提交' 
           });          
         });
-      },
-    }
+      }else{
+        alert("请勾选需要提交审批的订单")
+      }
+    },
+  }
 }
 </script>
 

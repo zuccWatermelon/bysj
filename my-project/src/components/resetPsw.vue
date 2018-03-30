@@ -55,10 +55,10 @@
               <i class="el-icon-menu"></i>
               <span slot="title"><router-link to="ToDoList" class="color" >资源审核</router-link></span>
             </el-menu-item>
-            <el-menu-item index="4">
+            <!-- <el-menu-item index="4">
                 <i class="el-icon-menu"></i>
                 <span slot="title"><router-link to="UserManagement" class="color" >用户管理</router-link></span>
-              </el-menu-item>
+              </el-menu-item> -->
 
           </el-menu>
 

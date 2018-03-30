@@ -28,10 +28,10 @@ exports = module.exports = function (req, res) {
         entityNumber:function(done){
             var number = OrderItem.model.count();
                 if (cpu != null && cpu !=   `` ) {
-                    order.where('Cpu',cpu);//左边是数据库里的属性名，右边是变量名
+                    number.where('Cpu',cpu);//左边是数据库里的属性名，右边是变量名
                 }
                 if (period != null && period != ``) {
-                    order.where('period',period);
+                    number.where('period',period);
                 }
                 if (status != null && status != ``) {
                     number.where('status',status);
@@ -39,16 +39,16 @@ exports = module.exports = function (req, res) {
                     number.where('status', '待审批')
                 }
                 if (operateSystemType != null && operateSystemType != ``) {
-                    order.where('operateSystemType',operateSystemType);
+                    number.where('operateSystemType',operateSystemType);
                 }
                 if (memory != null && memory != ``) {
-                    order.where('memory',memory);
+                    number.where('memory',memory);
                 }
                 if (systemHardDiskType != null && systemHardDiskType != ``) {
-                    order.where('systemHardDiskType',systemHardDiskType);
+                    number.where('systemHardDiskType',systemHardDiskType);
                 }
                 if (dataHardDiskType != null && dataHardDiskType != ``) {
-                    order.where('dataHardDiskType',dataHardDiskType);
+                    number.where('dataHardDiskType',dataHardDiskType);
                 }
                 number.exec(function (err, result) {
                     done(err, result);
