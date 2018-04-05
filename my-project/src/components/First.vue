@@ -26,7 +26,7 @@
         <div class="regist-login">
           <el-menu-item index="5"> <el-button type="text" @click="regist = true"  class="color" >注册 </el-button> </el-menu-item>
           <el-menu-item index="6"><el-button type="text" @click="login = true"  class="color" > 登录 </el-button> </el-menu-item>
-        <el-dialog title="请输入登录账号" :visible.sync="login" width="30%">
+        <el-dialog title="用户登录" :visible.sync="login" width="30%">
           <el-form :model="form">
             <el-form-item class="telephone" label="账号" :label-width="formLabelWidth">
               <el-input v-model="form.telephone" auto-complete="off" clearable></el-input>
@@ -41,7 +41,7 @@
           </div>
          </el-dialog>
 
-         <el-dialog title="请输入手机号" :visible.sync="regist" width="30%">
+         <el-dialog title="用户注册" :visible.sync="regist" width="30%">
           <el-form :model="form">
             <el-form-item class="username" label="姓名" :label-width="formLabelWidth">
               <el-input v-model="form.username" auto-complete="off" clearable></el-input>
