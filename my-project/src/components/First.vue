@@ -196,8 +196,8 @@ export default {
                     // location.reload();
                     // this.$router.push({path:'/'})
                   } else {
-                    var errorInfo = res.data.msg;
-                    self.$alert('用户名或密码错误，请重新输入', '提示', {
+                    var errorInfo = res.data.message;
+                    self.$alert(errorInfo, '提示', {
                       confirmButtonText: '确定',
                       callback:action=>{
                       }

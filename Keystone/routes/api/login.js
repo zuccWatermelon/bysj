@@ -14,6 +14,13 @@ exports = module.exports = function (req, res) {
 
     if (telephone && password) {
         async.parallel({//并行异步
+            isExist:function(done){
+                Customer.model.findOne()
+                    .where('telephone',telephone)//通过telephone和password两个条件定位出一个客户             
+                    .exec(function (err, result) {
+                        done(err, result);
+                    });
+                },
             customer: function (done) {//customer是别名
                 Customer.model.findOne()
                     .where('telephone',telephone)//通过telephone和password两个条件定位出一个客户
@@ -23,7 +30,11 @@ exports = module.exports = function (req, res) {
                     });
                 },
         }, function (err, result) {
-            if (result.customer==null) {
+            if(result.isExist == null){
+                returnMessag.code = 0;
+                returnMessag.message = "对不起，账号不存在，请注册后登录";
+            }
+            else if (result.customer==null) {
                 returnMessag.code = 0;
                 returnMessag.message = "对不起，您输入账号或密码有误";
             } else {

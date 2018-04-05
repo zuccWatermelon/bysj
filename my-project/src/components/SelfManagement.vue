@@ -233,7 +233,7 @@ export default {
             confirmButtonText: '确定'
           });
         }else if(ruleForm2.pass==''||ruleForm2.pass==null){
-          this.$alert('密码不能为空', '提示', {
+          this.$alert('新密码不能为空', '提示', {
             confirmButtonText: '确定'
           });
         }else if(ruleForm2.checkPass==''||ruleForm2.checkPass==null){
@@ -270,8 +270,15 @@ export default {
                 window.sessionStorage.removeItem('username');
                 window.sessionStorage.removeItem('userID');
                 location.reload();
-              }else{
+              }else if (res.data.code=='-1' || res.data.code==-1){
                 self.$alert('原密码有误，密码修改失败，请重新输入', '提示', {
+                  confirmButtonText: '确定',
+                  callback:action=>{
+                    location.reload();
+                  }
+                });
+              }else{
+                self.$alert('新密码不得与原密码相同', '提示', {
                   confirmButtonText: '确定',
                   callback:action=>{
                     location.reload();
