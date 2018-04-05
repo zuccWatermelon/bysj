@@ -85,12 +85,7 @@
             </el-form-item>
           </el-form>
         </div>
-      
-
       </el-row>
-        
-
-
       <p class="foot">版权所有 ©2017 中国电信浙江公司 [ 增值电信业务经营许可证 A2.B1.B2-XXXXXXXX ] ICP 证号:浙 ICP 备 XXXXXXXX号</p>
   </div>
 </template>
@@ -144,6 +139,7 @@ export default {
         form: {
           name: '',
           pwd: '',
+          code: '',
         },
         username:window.sessionStorage.getItem('username'),
         userID:window.sessionStorage.getItem('userID'),
@@ -223,35 +219,81 @@ export default {
         }); 
       },
       submitForm(ruleForm2) {
+        var self = this;
         console.log(ruleForm2);
         console.log(ruleForm2.acc);
         console.log(ruleForm2.pass);
-        
-        var userID = window.sessionStorage.getItem('userID');
-        var acc = ruleForm2.acc;
-        var pass = ruleForm2.pass;
-        var formData = new FormData();
-        formData.append('userID', userID);
-        formData.append('acc',acc);
-        formData.append('pass',pass);
+        if(ruleForm2.acc==''||ruleForm2.acc==null){
+          this.$alert('用户账号不能为空', '提示', {
+            confirmButtonText: '确定'
+          });
+        }else if(ruleForm2.checkAcc==''||ruleForm2.checkAcc==null){
+          this.$alert('确认用户账号不能为空', '提示', {
+            confirmButtonText: '确定'
+          });
+        }else if(ruleForm2.acc!= ruleForm2.checkAcc){
+          this.$alert('用户账号与确认用户账号不同，请确认后输入', '提示', {
+            confirmButtonText: '确定'
+          });
+        }else if (ruleForm2.pass==''||ruleForm2.pass==null) {
+          this.$alert('新密码不能为空', '提示', {
+            confirmButtonText: '确定'
+          });
+        }else if (ruleForm2.checkPass==''||ruleForm2.checkPass==null) {
+          this.$alert('确认密码不能为空', '提示', {
+            confirmButtonText: '确定'
+          });
+        }
+        else if(ruleForm2.pass!= ruleForm2.checkPass){
+          this.$alert('密码与确认密码不同，请确认后输入', '提示', {
+            confirmButtonText: '确定'
+          });
+        }else{
+          var userID = window.sessionStorage.getItem('userID');
+          var acc = ruleForm2.acc;
+          var pass = ruleForm2.pass;
+          var formData = new FormData();
+          formData.append('userID', userID);
+          formData.append('acc',acc);
+          formData.append('pass',pass);
 
-        axios({
-              method:"post",
-              url:"http://127.0.0.1:3000/api/resetPsw",
-              data: formData
-      }).then(
-          res=>{
-            alert(res.data.message);
-            // window.sessionStorage.removeItem('username');
-            // window.sessionStorage.removeItem('userID');
-            location.reload();
+          axios({
+                method:"post",
+                url:"http://127.0.0.1:3000/api/resetPsw",
+                data: formData
+        }).then(
+            res=>{
+              // window.sessionStorage.removeItem('username');
+              // window.sessionStorage.removeItem('userID');
+              if(res.data.code=='1' || res.data.code==1){
+                self.$alert('密码重置成功', '提示', {
+                  confirmButtonText: '确定',
+                  callback:action=>{
+                    location.reload();
+                  }
+                });
+                location.reload();
+              }else if (res.data.code=='-1' || res.data.code==-1){
+                self.$alert('原密码有误，密码重置失败，请重新输入', '提示', {
+                  confirmButtonText: '确定',
+                  callback:action=>{
+                    location.reload();
+                  }
+                });
+              }else{
+                self.$alert('新密码不得与原密码相同', '提示', {
+                  confirmButtonText: '确定',
+                  callback:action=>{
+                    location.reload();
+                  }
+                });
+              }
+            }
+          ).catch(
+              error=>{
+                console.log(error);
+              });
           }
-      ).catch(
-          error=>{
-              console.log(error);
-          }
-      );
-
       },
       resetForm(formName) {
         this.$refs[formName].resetFields();
