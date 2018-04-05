@@ -24,8 +24,8 @@
         <div class="regist-login">
           <el-submenu index="6">
           <template slot="title" class="color"> 您好！{{username}} </template>
-              <el-menu-item index="6-1"><router-link to="Assets" class="color">资产</router-link> </el-menu-item>
-              <el-menu-item index="6-2"><el-button type="text" @click="logout" class="color" > 退出  </el-button> </el-menu-item>
+              <el-menu-item index="6-1"><router-link to="Assets" class="color">查看资产</router-link> </el-menu-item>
+              <el-menu-item index="6-2"><el-button type="text" @click="logout" class="color" > 退出登录  </el-button> </el-menu-item>
         </el-submenu>
           <el-menu-item index="7"> <router-link to="ShoppingCar" class="color">我的购物车 </router-link> </el-menu-item>
         </div>
@@ -145,6 +145,7 @@ export default {
         form: {
           name: '',
           pwd: '',
+          code:''
         },
         username:window.sessionStorage.getItem('username'),
         userID:window.sessionStorage.getItem('userID'),
@@ -200,14 +201,14 @@ export default {
         console.log(key, keyPath);
       },
       logout(){
-        this.$confirm('是否退出?', '提示', {
+        this.$confirm('是否退出登录?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           this.$message({
             type: 'success',
-            message: '退出成功!'
+            message: '退出登录成功!'
           });
           window.sessionStorage.removeItem('username');
           window.sessionStorage.removeItem('userID');
@@ -220,10 +221,31 @@ export default {
         }); 
       },
       submitForm(ruleForm2) {
-        // console.log(ruleForm2);
-        // console.log(ruleForm2.psw);
-        // console.log(ruleForm2.pass);
-        
+        var self = this;
+        console.log(ruleForm2);
+        console.log(ruleForm2.psw);
+        console.log(ruleForm2.pass);
+        console.log(ruleForm2.checkPass);
+
+
+        if(ruleForm2.psw==''||ruleForm2.psw==null){
+          this.$alert('原密码不能为空', '提示', {
+            confirmButtonText: '确定'
+          });
+        }else if(ruleForm2.pass==''||ruleForm2.pass==null){
+          this.$alert('密码不能为空', '提示', {
+            confirmButtonText: '确定'
+          });
+        }else if(ruleForm2.checkPass==''||ruleForm2.checkPass==null){
+          this.$alert('确认密码不能为空', '提示', {
+            confirmButtonText: '确定'
+          });
+        }else if(ruleForm2.pass!= ruleForm2.checkPass){
+          this.$alert('密码与确认密码不同，请确认后输入', '提示', {
+            confirmButtonText: '确定'
+          });
+        }else{
+
         var userID = window.sessionStorage.getItem('userID');
         var psw = ruleForm2.psw;
         var pass = ruleForm2.pass;
@@ -233,21 +255,35 @@ export default {
         formData.append('pass',pass);
 
         axios({
-              method:"post",
-              url:"http://127.0.0.1:3000/api/pswChange",
-              data: formData
-      }).then(
+          method:"post",
+          url:"http://127.0.0.1:3000/api/pswChange",
+          data: formData
+        }).then(
           res=>{
-            alert(res.data.message);
-            window.sessionStorage.removeItem('username');
-            window.sessionStorage.removeItem('userID');
-            location.reload();
+              if(res.data.code=='1' || res.data.code==1){
+                self.$alert('密码修改成功', '提示', {
+                  confirmButtonText: '确定',
+                  callback:action=>{
+                    location.reload();
+                  }
+                });
+                window.sessionStorage.removeItem('username');
+                window.sessionStorage.removeItem('userID');
+                location.reload();
+              }else{
+                self.$alert('原密码有误，密码修改失败，请重新输入', '提示', {
+                  confirmButtonText: '确定',
+                  callback:action=>{
+                    location.reload();
+                  }
+                });
+              }
           }
       ).catch(
           error=>{
               console.log(error);
-          }
-      );
+          });
+        }       
 
       },
       resetForm(formName) {
