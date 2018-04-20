@@ -299,7 +299,8 @@ export default {
             },
           }).then(
               res=>{
-                this.$router.push("/ShoppingCar");
+                // this.$router.push("/ShoppingCar");
+                location.reload();
               }
             ).catch(
               error=>{
